@@ -1,12 +1,13 @@
-import React from 'react';
-import Banner from './Components/Banner/Banner';
+import {React, useState, Fragment} from 'react';
+import Main from './Components/main/main';
 
 function App() {
-  return (
+
+    return (
       <div>
-        <Banner />
+        <Main />
       </div>
-  );
+    );
 }
 
 export default App;
