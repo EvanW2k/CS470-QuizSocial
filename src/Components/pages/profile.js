@@ -1,14 +1,16 @@
-import {useEffect} from 'react';
-import {Typography, Paper, Grid, Box, Button, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import {useEffect, useState} from 'react';
+import {Typography, Paper, Grid, Box, Button, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import profileDimensions from "../utils/profileDimensions";
 
-const quizTableComps = ['Quiz', 'Favorites', 'Date'];
+const quizTableComps = ['Quiz', 'Favorites', 'Date Created'];
 
 export default function Main() {
 
     const { userID } = useParams();
+
+    const [sortMode, setSortMode] = useState('New');
 
     const quizzes = [{name: 'quiz 1', favorites: 4, date: '2024-10-4'}, {name: 'quiz 2', favorites: 1, date: '2024-10-8'}, {name: 'quiz 3', favorites: 43, date: '2024-4-2'}];
     const bio = "Hello my name is Evan. I am a cs major currently taking 470, 460, 355, 390, and 385. TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTT TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -16,7 +18,6 @@ export default function Main() {
     const isCurrentLoggedUser = false;
     const followThisUser = true;
     const follows = 22;
-
 
 
     useEffect(() => {
@@ -111,7 +112,7 @@ export default function Main() {
                         }
                     </Grid>
                 </Grid>
-                {/*Create quiz and quiz table*/}
+                {/*Create quiz, sort, and quiz table*/}
                 <Grid container direction ='column' justifyContent="flex-start" alignItems="center" border={0}>
                     {isCurrentLoggedUser &&
                         (<Grid item>
@@ -124,6 +125,28 @@ export default function Main() {
                             </Button>
                         </Grid>)
                     }
+                    <Grid item sx={{ alignSelf: 'flex-end', mr: 7, mt: 2 }}>
+                        <Box sx={{ width: 100, border: 0 }}>
+                            <FormControl fullWidth>
+                                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                    Sort by
+                                </InputLabel>
+                                <NativeSelect
+                                    defaultValue={sortMode}
+                                    onChange={(event) => setSortMode(event.target.value)}
+                                    inputProps={{
+                                        name: 'Sort',
+                                        id: 'uncontrolled-native',
+                                    }}
+                                >
+                                    <option value={'New'}>New</option>
+                                    <option value={'Favorites'}>Favorites</option>
+                                    <option value={'Date'}>Date</option>
+                                    <option value={'Name'}>Name</option>
+                                </NativeSelect>
+                            </FormControl>
+                        </Box>
+                    </Grid>
                     <TableContainer justifyContent="flex-start" alignItems="center">
                         <Table  sx={{maxWidth: profileDimensions.page.width}}>
                             <TableHead>
