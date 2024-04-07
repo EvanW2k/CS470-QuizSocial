@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import profileDimensions from "../utils/profileDimensions";
 
-const quizTableComps = ['Quiz', 'Favorites', 'Date'];
+const quizTableComps = ['Quiz', 'Favorites', 'Date Created'];
 
 export default function Main() {
 
@@ -126,7 +126,7 @@ export default function Main() {
                         </Grid>)
                     }
                     <Grid item sx={{ alignSelf: 'flex-end', mr: 7, mt: 2 }}>
-                        <Box sx={{ width: 85, border: 0 }}>
+                        <Box sx={{ width: 100, border: 0 }}>
                             <FormControl fullWidth>
                                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                                     Sort by
