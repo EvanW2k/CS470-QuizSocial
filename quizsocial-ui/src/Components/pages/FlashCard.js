@@ -1,28 +1,25 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, { useState } from 'react';
 import { Button, Card, CardContent, Typography, Box } from '@mui/material';
-import API from '../../API_Interface/API_Interface'
-
 
 const FlashCard = () => {
-    const quizID = '001'; // Hardcoded quiz ID for testing
-    const [cards, setCards] = useState([]);
+    // Hardcoded data for testing
+    const cards = [
+        {
+            question: "What is the capital of France?",
+            answer: "Paris"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            answer: "Jupiter"
+        },
+        {
+            question: "What year did the Titanic sink?",
+            answer: "1912"
+        }
+    ];
+
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isQuestion, setIsQuestion] = useState(true);
-
-    useEffect(() => {
-        const api = new API();
-        api.getQuestionsForQuiz(quizID)
-            .then(data => {
-                if (data && data.length > 0) {
-                    setCards(data);
-                    setCurrentCardIndex(0);
-                    setIsQuestion(true);
-                } else {
-                    console.error('No questions found or empty data returned:', data);
-                }
-            })
-            .catch(error => console.error('Failed to fetch questions:', error));
-    }, []);
 
     const handlePrev = () => {
         if (currentCardIndex > 0) {
@@ -67,7 +64,7 @@ const FlashCard = () => {
                     </Box>
                 </Card>
             )}
-            {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
+            {cards.length === 0 && <Typography>No cards available.</Typography>}
         </Box>
     );
 };
