@@ -4,6 +4,12 @@ import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import { useParams } from 'react-router-dom';
 
 
@@ -13,7 +19,11 @@ export default function Main() {
     const [rating, setRating] = useState(0);
 
     const owner = "Evan_Walters";
-
+    const qaList = [
+        { question: 'Question 1', answer: 'Answer 1' },
+        { question: 'Question 2', answer: 'Answer 2' },
+        { question: 'Question 3', answer: 'Answer 3' },
+    ];
 
     return (
         <Paper
@@ -118,6 +128,27 @@ export default function Main() {
                         </Button>
                     </Grid>
                 </Grid>
+                {/* Questions and Answers */}
+                <TableContainer>
+                    <Table aria-label='questions and answers'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Questions</TableCell>
+                                <TableCell align='justify'>Answers</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {qaList.map((row) => (
+                                <TableRow
+                                    key={row.question}
+                                >
+                                    <TableCell>{row.question}</TableCell>
+                                    <TableCell align='justify'>{row.answer}</TableCell>
+                                </TableRow>    
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
         </Paper>
         
