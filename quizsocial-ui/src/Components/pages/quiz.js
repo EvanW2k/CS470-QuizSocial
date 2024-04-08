@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Typography, Paper, Grid, Rating, Button} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
@@ -55,8 +56,8 @@ export default function Main() {
                         spacing={2}
                     >
                         <Grid item>
-                            <Button variant='outlined'>
-                                Favorite<StarIcon/>
+                            <Button variant='outlined' endIcon={<StarIcon />}>
+                                Favorite
                             </Button>
                         </Grid>
                         <Grid item>
@@ -65,12 +66,21 @@ export default function Main() {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button><ThumbUpIcon/></Button>
-                            <Button><ThumbDownIcon/></Button>
+                            <IconButton aria-label='like'>
+                                <ThumbUpIcon/>
+                            </IconButton>
+                            <IconButton aria-label='dislike'>
+                                <ThumbDownIcon/>
+                            </IconButton>
                         </Grid>
                     </Grid>
                 </Grid>
                 {/* Buttons for study methods */}
+                <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                        <Button variant='outlined'>Flash Card</Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Paper>
         
