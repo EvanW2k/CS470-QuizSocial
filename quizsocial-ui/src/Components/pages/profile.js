@@ -163,7 +163,7 @@ export default function Main() {
                                 {quizzes.map((row)=>(
                                     <TableRow key={row.name}
                                               sx={{border: 0 }}>
-                                        <TableCell align="left"> <Link underline="hover" href="#">{row.name}</Link> </TableCell>
+                                        <TableCell align="left"> <Link underline="hover" href={"/quiz/" + row.name.replace(/\s/g, "")}>{row.name}</Link> </TableCell>
                                         <TableCell align="left"> {row.favorites} </TableCell>
                                         <TableCell align="left"> {row.date} </TableCell>
                                     </TableRow>
