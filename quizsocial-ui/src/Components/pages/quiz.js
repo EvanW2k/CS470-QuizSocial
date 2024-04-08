@@ -76,9 +76,46 @@ export default function Main() {
                     </Grid>
                 </Grid>
                 {/* Buttons for study methods */}
-                <Grid container spacing={2}>
-                    <Grid item xs={3}>
-                        <Button variant='outlined'>Flash Card</Button>
+                <Grid container spacing={5} justifyContent={'center'}>
+                    <Grid item>
+                        <Button 
+                            variant='outlined'
+                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                        >
+                            Flash Card
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button 
+                            variant='outlined'
+                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                        >
+                            Multiple Choice
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button 
+                            variant='outlined'
+                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                        >
+                            Fill in the Blank
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button 
+                            variant='outlined'
+                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                        >
+                            Memory Match
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button 
+                            variant='outlined'
+                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                        >
+                            Fast Multiple Choice
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>
