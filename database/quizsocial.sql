@@ -16,32 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `quiz_sets`
+-- Table structure for table `questions`
 --
 
-DROP TABLE IF EXISTS `quiz_sets`;
+DROP TABLE IF EXISTS `questions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `quiz_sets` (
-  `setID` char(36) NOT NULL,
-  `user_id` char(36) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+CREATE TABLE `questions` (
+  `questionID` char(36) NOT NULL,
+  `quizID` char(36) DEFAULT NULL,
+  `question` text NOT NULL,
+  `answer` text NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`setID`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `quiz_sets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userID`)
+  PRIMARY KEY (`questionID`),
+  KEY `quiz_set_id` (`quizID`),
+  CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `quiz_sets`
+-- Dumping data for table `questions`
 --
 
-LOCK TABLES `quiz_sets` WRITE;
-/*!40000 ALTER TABLE `quiz_sets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `quiz_sets` ENABLE KEYS */;
+LOCK TABLES `questions` WRITE;
+/*!40000 ALTER TABLE `questions` DISABLE KEYS */;
+INSERT INTO `questions` VALUES
+('00001','001','question1','answer1','2024-04-08 01:25:26','2024-04-08 01:25:26'),
+('00002','001','question2','answer2','2024-04-08 01:25:49','2024-04-08 01:25:49');
+/*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -53,14 +56,14 @@ DROP TABLE IF EXISTS `quizzes`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quizzes` (
   `quizID` char(36) NOT NULL,
-  `quiz_set_id` char(36) NOT NULL,
-  `question` text NOT NULL,
-  `answer` text NOT NULL,
+  `userID` char(36) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`quizID`),
-  KEY `quiz_set_id` (`quiz_set_id`),
-  CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`quiz_set_id`) REFERENCES `quiz_sets` (`setID`)
+  KEY `user_id` (`userID`),
+  CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,6 +73,8 @@ CREATE TABLE `quizzes` (
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
+INSERT INTO `quizzes` VALUES
+('001','b23c2d39-f009-11ee-b93a-085bd6555b53','Test set','Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43');
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +103,30 @@ CREATE TABLE `user_follows` (
 LOCK TABLES `user_follows` WRITE;
 /*!40000 ALTER TABLE `user_follows` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_follows` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_profile`
+--
+
+DROP TABLE IF EXISTS `user_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_profile` (
+  `userID` char(36) NOT NULL,
+  `bio` text DEFAULT NULL,
+  PRIMARY KEY (`userID`),
+  CONSTRAINT `user_profile_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_profile`
+--
+
+LOCK TABLES `user_profile` WRITE;
+/*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -140,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01  3:01:18
+-- Dump completed on 2024-04-08  5:33:27
