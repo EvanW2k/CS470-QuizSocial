@@ -10,6 +10,7 @@ import Favorites from '../pages/favorites';
 import Login from '../pages/login';
 import Profile from '../pages/profile';
 import Search from '../pages/search';
+import Quiz from '../pages/quiz';
 
 
 export default function Main() {
@@ -25,8 +26,9 @@ export default function Main() {
                 <Route path="/following" element={<Following />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/profile" element={<Profile/>} />
+                <Route path="/profile/:userID" element={<Profile/>} />
                 <Route path="/search" element={<Search/>} />
+                <Route path="/quiz/:quizID" element={<Quiz/>} />
             </Routes>
         </Fragment>
     )

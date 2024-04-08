@@ -24,7 +24,7 @@ const Banner = () => {
 
                 {/* Buttons */}
                 <Stack direction = 'row' spacing={2} sx={{flexGrow: 1, justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto'}}>
-                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/profile')}>
+                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/profile/123')}>
                         My Profile
                     </Button>
                     <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/activity')}>
