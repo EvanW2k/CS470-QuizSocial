@@ -1,6 +1,6 @@
 import {Link, Typography} from '@mui/material';
 import React, {useState, useEffect, Fragment} from 'react';
-//import API from './API_Interface/API_Interface';
+import API from '../../API_Interface/API_Interface';
 
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -28,28 +28,29 @@ export default function Login({setUser}) {
         }
     };
 
-    // useEffect(() => {
-    //
-    //     if( ! verifyUser || userInput.length === 0)
-    //         return;
-    //
-    //     const api = new API();
-    //     async function getUserInfo() {
-    //         api.getUserInfo(userInput)
-    //             .then( userInfo => {
-    //                 console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
-    //                 const user = userInfo.user;
-    //                 if( userInfo.status === "OK" ) {
-    //                     setUser(user);
-    //                 } else  {
-    //                     setVerifyUser(false);
-    //                     setAuthFailed(true);
-    //                 }
-    //             });
-    //     }
-    //
-    //     getUserInfo();
-    // }, [verifyUser, setUser, userInput]);
+    useEffect(() => {
+
+        if( ! verifyUser || userInput.length === 0)
+            return;
+
+
+        const api = new API();
+        async function getUserInfo() {
+            api.getUserInfo(userInput)
+                .then( userInfo => {
+                    console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
+                    const user = userInfo.user;
+                    if( userInfo.status === "OK" ) {
+                        setUser(user);
+                    } else  {
+                        setVerifyUser(false);
+                        setAuthFailed(true);
+                    }
+                });
+        }
+
+        getUserInfo();
+    }, [verifyUser, setUser, userInput]);
 
     return (
         <Fragment>

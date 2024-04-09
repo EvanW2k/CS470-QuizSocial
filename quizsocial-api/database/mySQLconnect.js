@@ -17,8 +17,8 @@ var connection = mysql.createConnection({
 
     host: 'localhost',
     port: 3306,
-    user: 'hzhang',
-    password: '2991971zxa',
+    user: 'evan',
+    password: 'space',
     database: 'quizsocial'
 });
 

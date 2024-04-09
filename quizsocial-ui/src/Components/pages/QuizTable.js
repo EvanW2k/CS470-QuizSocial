@@ -6,6 +6,7 @@ const QuizzesTable = () => {
     const [quizzes, setQuizzes] = useState([]);
 
     useEffect(() => {
+
         const fetchQuizzes = async () => {
             const api = new API();
             try {

@@ -24,13 +24,15 @@ const axiosAgent = AxiosConfigured();
 export default class APIInterface {
 
     async getUserInfo(userID) {
-        return axiosAgent.get(`login/${userID}`)
-            .then(userInfo => userInfo.data)
-            .catch(error => (
-                {
-                    error,
-                    user: undefined
-                }));
+        try {
+            const userInfo = await axiosAgent.get(`login/${userID}`);
+            return userInfo.data;
+        } catch (error) {
+            return {
+                error,
+                user: undefined
+            };
+        }
     }
 
     async getQuizById(quizID) {

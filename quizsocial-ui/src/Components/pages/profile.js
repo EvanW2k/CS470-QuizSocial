@@ -30,16 +30,16 @@ export default function Profile() {
                 p: 3,
                 margin: 'auto',
                 mt: 3,
-                justifyContent: 'center',
+                justifycontent: 'center',
                 alignItems: 'flex-start',
                 maxWidth: profileDimensions.page.width,
                 flexGrow: 1,
                 border: 0
             }}
         >
-            <Grid container direction ='column' justifyContent="center" alignItems="flex-start">
+            <Grid container direction ='column' justifycontent="center" alignItems="flex-start">
                 {/*Username and bio and picture followers follow button*/}
-                <Grid container direction='row' justifyContent="center" alignItems="flex-start">
+                <Grid container direction='row' justifycontent="center" alignItems="flex-start">
                     {/*Username and bio*/}
                     <Grid
                         direction={'column'}
@@ -64,7 +64,7 @@ export default function Profile() {
                           direction={'column'}
                           border={0}
                           maxWidth={profileDimensions.page.width/2}
-                          justifyContent="flex-start"
+                          justifycontent="flex-start"
                           alignItems="center">
                         <Grid item>
                             <Box
@@ -113,7 +113,7 @@ export default function Profile() {
                     </Grid>
                 </Grid>
                 {/*Create quiz, sort, and quiz table*/}
-                <Grid container direction ='column' justifyContent="flex-start" alignItems="center" border={0}>
+                <Grid container direction ='column' justifycontent="flex-start" alignItems="center" border={0}>
                     {isCurrentLoggedUser &&
                         (<Grid item>
                             <Button
@@ -147,7 +147,7 @@ export default function Profile() {
                             </FormControl>
                         </Box>
                     </Grid>
-                    <TableContainer justifyContent="flex-start" alignItems="center">
+                    <TableContainer justifycontent="flex-start" alignItems="center">
                         <Table  sx={{maxWidth: profileDimensions.page.width}}>
                             <TableHead>
                                 <TableRow>
