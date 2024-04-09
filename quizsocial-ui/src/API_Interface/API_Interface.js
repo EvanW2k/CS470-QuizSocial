@@ -24,30 +24,27 @@ const axiosAgent = AxiosConfigured();
 export default class APIInterface {
 
     async getUserInfo(userID) {
-        try {
-            const userInfo = await axiosAgent.get(`login/${userID}`);
-            return userInfo.data;
-        } catch (error) {
-            return {
-                error,
-                user: undefined
-            };
-        }
-    }
-
-    async getQuizById(quizID) {
-        return axiosAgent.get(`quizzes/${quizID}`)
+        return axiosAgent.get(`login/${userID}`)
+            .then(userInfo => userInfo.data)
+            .catch(error => (
+                {
+                    error,
+                    user: undefined
+                 }));
     }
 
     async allQuizzes() {
-        return axiosAgent.get(`quizzes/all-quizzes`);
+        return axiosAgent.get(`routes/all-quizzes`);
     }
 
-    async getQuestionsForQuiz(quizID) {
-        return axiosAgent.get(`quizzes/${quizID}/questions`)
+
+    async getQuestionsForQuiz(quizID){
+        return axiosAgent.get(`routes/${quizID}/questions`);
     }
 
-    async getUserProfile(userID) {
-        return axiosAgent.get(`users/${userID}/profile`)
+    async getQuizById(quizID) {
+        return axiosAgent.get(`routes/${quizID}`);
     }
+
+
 }

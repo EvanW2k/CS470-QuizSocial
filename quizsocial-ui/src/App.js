@@ -1,13 +1,13 @@
-import {React, useState, Fragment} from 'react';
-import Main from './Components/main/main';
-import QuizTable from "./Components/pages/QuizTable";
+import React,{useState, Fragment} from 'react';
+import Main from './Main';
+
 
 function App() {
 
     return (
-      <div>
-        <Main />
-      </div>
+        <div>
+            <Main />
+        </div>
     );
 }
 

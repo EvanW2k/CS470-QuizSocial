@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Project 4 
+## Hanpei Zhang
+## Project Initialization
+User can run this project by following project instruction from canvas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.Install database server.
 
-## Available Scripts
+2.Change to directory draught-services-ui and run, npm install
 
-In the project directory, you can run:
+3.Change to directory draught-server-api and do:
 
-### `npm start`
+    1.add your database user-name and password to the file, database/mySQLconnect.js.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    2.run, npm  install to install the node modules.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    3.run the API server by doing: node api_server.js 
 
-### `npm test`
+4.Run this query either at the database prompt or in the MySQL Workbench to find out the user-id of a user: SELECT * FROM scheduler_users; 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5.Change to directory draught-services-ui and start the UI server by doing: npm start. This will run the React App in a browser window where you can login. Use one of the user-id(s) from the output of the scheduler_users and click the button to log in.
 
-### `npm run build`
+## Project Overview
+This draught service app have 6 major components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Summary page 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![summary](./screenshot/read1.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Market Page
 
-### `npm run eject`
+![Market](./screenshot/read2.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Empolyees Page
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Employee](./screenshot/read3.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Route Page
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![Routes](./screenshot/read.png)
 
-## Learn More
+5. Accounts Page 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Routes](./screenshot/read4.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6. Transaction Page, this page have 5 submenus
 
-### Code Splitting
+![Transaction](./screenshot/read 5.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+7. For Transaction count, you can select the cycle to display the number of transactions for that cycle, for testing purpose I only add last 5 (not counting the last one on the table) cycles to avoid a enormous dropdown menu.
 
-### Analyzing the Bundle Size
+![Transaction](./screenshot/read7.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Transaction](./screenshot/read8.png)
 
-### Making a Progressive Web App
+8. By Account, you can select the cycle and click on individual account to get the transaction for individual accountID (I only included first 200 accounts, because my hardware is not powerful enough, loading all the accounts will take a very long time, you can lift the limit in the AccountsController.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![Transaction](./screenshot/read9.png)
 
-### Advanced Configuration
+9. By Market, same to the By Account
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![Transaction](./screenshot/read10.png)
 
-### Deployment
+10. By Routes, same operation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![Transaction](./screenshot/read11.png)
 
-### `npm run build` fails to minify
+11. All Routes, you can select the cycle, it will display all the routes with its corresponding transactions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Transaction](./screenshot/read 12.png)
+
+
+
+
+
