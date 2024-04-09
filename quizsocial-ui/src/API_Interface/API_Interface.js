@@ -34,24 +34,18 @@ export default class APIInterface {
     }
 
     async getQuizById(quizID) {
-        return axiosAgent.get(`/quizzes/${quizID}`)
-            .then(quiz => quiz.data)
-            .catch(error => ({ error, quiz: undefined }));
+        return axiosAgent.get(`quizzes/${quizID}`)
+    }
+
+    async allQuizzes() {
+        return axiosAgent.get(`quizzes/all-quizzes`);
     }
 
     async getQuestionsForQuiz(quizID) {
-        return axiosAgent.get(`/quizzes/${quizID}/questions`)
-            .then(questions => questions.data)
-            .catch(error => ({ error, questions: undefined }));
+        return axiosAgent.get(`quizzes/${quizID}/questions`)
     }
 
     async getUserProfile(userID) {
-        return axiosAgent.get(`/users/${userID}/profile`)
-            .then(profile => profile.data)
-            .catch(error => ({ error, profile: undefined }));
-    }
-
-    async allRoutes() {
-        return axiosAgent.get(`routes/all-routes`);
+        return axiosAgent.get(`users/${userID}/profile`)
     }
 }
