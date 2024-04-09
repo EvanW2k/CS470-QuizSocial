@@ -1,6 +1,6 @@
 import {Typography} from '@mui/material';
 
-export default function Main() {
+export default function Search() {
 
 
     return (

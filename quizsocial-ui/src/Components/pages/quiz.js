@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import { useParams } from 'react-router-dom';
 
 
-export default function Main() {
+export default function Quiz() {
 
     const {quizID} = useParams();
     const [rating, setRating] = useState(0);

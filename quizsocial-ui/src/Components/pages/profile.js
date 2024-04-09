@@ -6,7 +6,7 @@ import profileDimensions from "../utils/profileDimensions";
 
 const quizTableComps = ['Quiz', 'Favorites', 'Date Created'];
 
-export default function Main() {
+export default function Profile() {
 
     const { userID } = useParams();
 
