@@ -5,9 +5,7 @@ const setAccessToken = require('../../config/setAccessToken');
 require('dotenv').config();
 
 const authorizeUser = async (ctx) => {
-
         return new Promise((resolve, reject) => {
-
 
 	    // Right up here, you could inspect the provided uers_id to
 	    // make sure that it is, at the surface, a legitimate ID.

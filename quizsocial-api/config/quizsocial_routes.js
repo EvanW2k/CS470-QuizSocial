@@ -17,7 +17,7 @@ const router = require('koa-router')({
 
 router.get('/', function (ctx) {
     console.log('router.get(/)');
-    return ctx.body = 'Connected';
+    return ctx.body = 'What is up?';
 });
 
 /*
@@ -37,37 +37,26 @@ const loginRouter = require('koa-router')({
 });
 loginRouter.get('/:userID', LoginController.authorizeUser, (err) => console.log("quizsocial_routes.js: login-route error:", err));
 
-// Routes router configuration.
+// Pages router configuration.
 
-const QuizController = require('../app/Controllers/QuizController.js');
+const QuizzesController = require('../app/Controllers/QuizzesController.js');
 const quizzesRouter = require('koa-router')({
-    prefix: '/quizzes'
+    prefix: '/routes'
 });
 
 quizzesRouter.use(VerifyJWT);
-quizzesRouter.get('/:quizID', QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));
-quizzesRouter.get('/all-quizzes', QuizController.allQuizzes, err => console.log(`allquizzes ran into an error: ${err}`));
-quizzesRouter.get('/:quizID/questions', QuizController.getQuestionsForQuiz);
-
-
-const UserController = require('../app/Controllers/UserController.js');
-const usersRouter = require('koa-router')({
-    prefix: '/users'
-});
-
-usersRouter.use(VerifyJWT);
-usersRouter.get('/:userID', Authorize('admin'), UserController.getUserById, err => console.log(`getQuizById ran into an error: ${err}`));
-usersRouter.get('/:userID/profile', Authorize('admin'), UserController.getUserProfileById);
+quizzesRouter.get('/all-quizzes', QuizzesController.allQuizzes, err => console.log(`allRoutes ran into an error: ${err}`));
+quizzesRouter.get('/:quizID/', QuizzesController.getQuizById);
+quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
 
 
 /**
- * Register all of the controllers into the default controller.
+ * Register all the controllers into the default controller.
  */
 router.use(
     '',
     loginRouter.routes(),
     quizzesRouter.routes(),
-    usersRouter.routes()
 );
 
 module.exports = function (app) {
