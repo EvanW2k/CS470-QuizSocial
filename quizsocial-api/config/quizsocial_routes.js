@@ -35,7 +35,7 @@ const LoginController = require('../app/Controllers/LoginController.js');
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
-loginRouter.get('/:user_id', LoginController.authorizeUser, (err) => console.log("quizsocial_routes.js: login-route error:", err));
+loginRouter.get('/:userID', LoginController.authorizeUser, (err) => console.log("quizsocial_routes.js: login-route error:", err));
 
 // Routes router configuration.
 
@@ -45,8 +45,10 @@ const quizzesRouter = require('koa-router')({
 });
 
 quizzesRouter.use(VerifyJWT);
-quizzesRouter.get('/:quizID', Authorize('admin'), QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));
-quizzesRouter.get('/:quizID/questions', Authorize('admin'), QuizController.getQuestionsForQuiz);
+quizzesRouter.get('/:quizID', QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));
+quizzesRouter.get('/all-quizzes', QuizController.allQuizzes, err => console.log(`allquizzes ran into an error: ${err}`));
+quizzesRouter.get('/:quizID/questions', QuizController.getQuestionsForQuiz);
+
 
 const UserController = require('../app/Controllers/UserController.js');
 const usersRouter = require('koa-router')({
@@ -56,6 +58,7 @@ const usersRouter = require('koa-router')({
 usersRouter.use(VerifyJWT);
 usersRouter.get('/:userID', Authorize('admin'), UserController.getUserById, err => console.log(`getQuizById ran into an error: ${err}`));
 usersRouter.get('/:userID/profile', Authorize('admin'), UserController.getUserProfileById);
+
 
 /**
  * Register all of the controllers into the default controller.
