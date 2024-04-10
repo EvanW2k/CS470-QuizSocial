@@ -1,73 +1,51 @@
-import API from '../../API_Interface/API_Interface'
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import API from '../../API_Interface/API_Interface';  // Adjust the import path as necessary
 
-
-export default function FlashCard(props) {
-    const [cards, setCards] = useState([]);
-    const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [isQuestion, setIsQuestion] = useState(true);  // State to toggle between question and answer
+const QuizzesTable = () => {
+    const [quizzes, setQuizzes] = useState([]);
 
     useEffect(() => {
-        const fetchQuizzes = async () => {
-            const api = new API();
-            try {
-                const response = await api.getQuestionsForQuiz('001');  // Assuming '001' is the quizID you want
-                if (response.data && response.data.length > 0) {
-                    setCards(response.data);
-                } else {
-                    console.log('No quizzes found');
-                }
-            } catch (error) {
-                console.error('Failed to fetch quizzes:', error);
-            }
-        };
+
+        const api = new API();
+        async function fetchQuizzes () {
+                const response = await api.allQuizzes();
+                console.log(`data from the DB ${JSON.stringify(response)}`);
+                setQuizzes(response.data);
+        }
 
         fetchQuizzes();
     }, []);
 
-    const handlePrev = () => {
-        if (currentCardIndex > 0) {
-            setCurrentCardIndex(currentCardIndex - 1);
-        }
-    };
-
-    const handleNext = () => {
-        if (currentCardIndex < cards.length - 1) {
-            setCurrentCardIndex(currentCardIndex + 1);
-        }
-    };
-
-    const flipCard = () => {
-        setIsQuestion(!isQuestion);
-    };
-
     return (
-        <Box sx={{ maxWidth: 650, margin: 'auto', textAlign: 'center', mt: 4 }}>
-            {cards.length > 0 && (
-                <Card variant="outlined" sx={{ mb: 2 }}>
-                    <CardContent>
-                        <Typography variant="h5" sx={{ fontSize: 20, mb: 2 }}>
-                            {isQuestion ? 'Question' : 'Answer'}:
-                        </Typography>
-                        <Typography sx={{ fontSize: 18 }}>
-                            {isQuestion ? cards[currentCardIndex].question : cards[currentCardIndex].answer}
-                        </Typography>
-                    </CardContent>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around', p: 2 }}>
-                        <Button onClick={handlePrev} disabled={currentCardIndex === 0}>
-                            Previous
-                        </Button>
-                        <Button onClick={flipCard}>
-                            Flip
-                        </Button>
-                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}>
-                            Next
-                        </Button>
-                    </Box>
-                </Card>
-            )}
-            {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
-        </Box>
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Quiz ID</TableCell>
+                        <TableCell align="right">User ID</TableCell>
+                        <TableCell align="right">Title</TableCell>
+                        <TableCell align="right">Description</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {quizzes.map((quiz) => (
+                        <TableRow
+                            key={quiz.quizID}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                {quiz.quizID}
+                            </TableCell>
+                            <TableCell align="right">{quiz.userID}</TableCell>
+                            <TableCell align="right">{quiz.title}</TableCell>
+                            <TableCell align="right">{quiz.description}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 };
+
+export default QuizzesTable;
