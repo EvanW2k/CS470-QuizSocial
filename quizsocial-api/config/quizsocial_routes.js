@@ -17,7 +17,7 @@ const router = require('koa-router')({
 
 router.get('/', function (ctx) {
     console.log('router.get(/)');
-    return ctx.body = 'What is up?';
+    return ctx.body = 'Connected';
 });
 
 /*
@@ -37,26 +37,37 @@ const loginRouter = require('koa-router')({
 });
 loginRouter.get('/:userID', LoginController.authorizeUser, (err) => console.log("quizsocial_routes.js: login-route error:", err));
 
-// Pages router configuration.
+// Routes router configuration.
 
-const QuizzesController = require('../app/Controllers/QuizzesController.js');
+const QuizController = require('../app/Controllers/QuizController.js');
 const quizzesRouter = require('koa-router')({
-    prefix: '/routes'
+    prefix: '/quizzes'
 });
 
 quizzesRouter.use(VerifyJWT);
-quizzesRouter.get('/all-quizzes', QuizzesController.allQuizzes, err => console.log(`allRoutes ran into an error: ${err}`));
-quizzesRouter.get('/:quizID/', QuizzesController.getQuizById);
-quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
+quizzesRouter.get('/:quizID', Authorize('admin'),QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));
+quizzesRouter.get('/all-quizzes', Authorize('admin'),QuizController.allQuizzes, err => console.log(`allquizzes ran into an error: ${err}`));
+quizzesRouter.get('/:quizID/questions',Authorize('admin'), QuizController.getQuestionsForQuiz);
+
+
+const UserController = require('../app/Controllers/UserController.js');
+const usersRouter = require('koa-router')({
+    prefix: '/users'
+});
+
+usersRouter.use(VerifyJWT);
+usersRouter.get('/:userID', Authorize('admin'), UserController.getUserById, err => console.log(`getQuizById ran into an error: ${err}`));
+usersRouter.get('/:userID/profile', Authorize('admin'), UserController.getUserProfileById);
 
 
 /**
- * Register all the controllers into the default controller.
+ * Register all of the controllers into the default controller.
  */
 router.use(
     '',
     loginRouter.routes(),
     quizzesRouter.routes(),
+    usersRouter.routes()
 );
 
 module.exports = function (app) {

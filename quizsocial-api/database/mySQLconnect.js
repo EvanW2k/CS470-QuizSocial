@@ -23,3 +23,4 @@ var connection = mysql.createConnection({
 });
 
 module.exports = connection;
+
