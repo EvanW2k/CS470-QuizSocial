@@ -1,41 +1,37 @@
+import React, { useState } from 'react';
+import { Button, Card, CardContent, Typography, Box } from '@mui/material';
 
-import API from '../../API_Interface/API_Interface'
-import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+const FlashCard = () => {
+    // Hardcoded data for testing
+    const cards = [
+        {
+            question: "What is the capital of France?",
+            answer: "Paris"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            answer: "Jupiter"
+        },
+        {
+            question: "What year did the Titanic sink?",
+            answer: "1912"
+        }
+    ];
 
-
-export default function FlashCard(props) {
-    const [cards, setCards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [isQuestion, setIsQuestion] = useState(true);  // State to toggle between question and answer
-
-    useEffect(() => {
-        const fetchQuizzes = async () => {
-            const api = new API();
-            try {
-                const response = await api.getQuestionsForQuiz('001');  // Assuming '001' is the quizID you want
-                if (response.data && response.data.length > 0) {
-                    setCards(response.data);
-                } else {
-                    console.log('No quizzes found');
-                }
-            } catch (error) {
-                console.error('Failed to fetch quizzes:', error);
-            }
-        };
-
-        fetchQuizzes();
-    }, []);
+    const [isQuestion, setIsQuestion] = useState(true);
 
     const handlePrev = () => {
         if (currentCardIndex > 0) {
             setCurrentCardIndex(currentCardIndex - 1);
+            setIsQuestion(true);
         }
     };
 
     const handleNext = () => {
         if (currentCardIndex < cards.length - 1) {
             setCurrentCardIndex(currentCardIndex + 1);
+            setIsQuestion(true);
         }
     };
 
@@ -44,7 +40,7 @@ export default function FlashCard(props) {
     };
 
     return (
-        <Box sx={{ maxWidth: 650, margin: 'auto', textAlign: 'center', mt: 4 }}>
+        <Box sx={{ maxWidth: 600, margin: 'auto', textAlign: 'center', mt: 4 }}>
             {cards.length > 0 && (
                 <Card variant="outlined" sx={{ mb: 2 }}>
                     <CardContent>
@@ -68,7 +64,9 @@ export default function FlashCard(props) {
                     </Box>
                 </Card>
             )}
-            {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
+            {cards.length === 0 && <Typography>No cards available.</Typography>}
         </Box>
     );
 };
+
+export default FlashCard;

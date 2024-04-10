@@ -38,7 +38,7 @@ export default function Quiz() {
                 border: 0
             }}
         >
-            {/* Container for the whole page */}
+            {/* Container for the whole page */} 
             <Grid container direction='column' justifyContent='center' alignItems='flex-start'>
                 {/* Container for quiz info at the top */}
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start'>
@@ -57,11 +57,11 @@ export default function Quiz() {
                         </Grid>
                     </Grid>
                     {/* Favorite, copy */}
-                    <Grid
-                        container
-                        direction='column'
-                        justifyContent='flex-start'
-                        maxWidth={500}
+                    <Grid 
+                        container 
+                        direction='column' 
+                        justifyContent='flex-start' 
+                        maxWidth={500} 
                         alignItems='center'
                         spacing={2}
                     >
@@ -88,7 +88,7 @@ export default function Quiz() {
                 {/* Buttons for study methods */}
                 <Grid container spacing={5} justifyContent={'center'}>
                     <Grid item>
-                        <Button
+                        <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
                         >
@@ -96,7 +96,7 @@ export default function Quiz() {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button
+                        <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
                         >
@@ -104,7 +104,7 @@ export default function Quiz() {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button
+                        <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
                         >
@@ -112,7 +112,7 @@ export default function Quiz() {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button
+                        <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
                         >
@@ -120,7 +120,7 @@ export default function Quiz() {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button
+                        <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
                         >
@@ -144,14 +144,14 @@ export default function Quiz() {
                                 >
                                     <TableCell>{row.question}</TableCell>
                                     <TableCell align='justify'>{row.answer}</TableCell>
-                                </TableRow>
+                                </TableRow>    
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </Grid>
         </Paper>
-
+        
     )
 
 }

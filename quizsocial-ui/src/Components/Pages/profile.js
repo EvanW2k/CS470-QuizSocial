@@ -118,9 +118,9 @@ export default function Profile() {
                         (<Grid item>
                             <Button
                                 sx={{
-                                    border: 1,
-                                    mt: 2
-                                }}>
+                                border: 1,
+                                mt: 2
+                            }}>
                                 Create Quiz
                             </Button>
                         </Grid>)
@@ -152,11 +152,11 @@ export default function Profile() {
                             <TableHead>
                                 <TableRow>
                                     {
-                                        quizTableComps.map((component) => (
-                                            <TableCell align="left">
-                                                {component}
-                                            </TableCell>
-                                        ))}
+                                      quizTableComps.map((component) => (
+                                        <TableCell align="left">
+                                            {component}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
