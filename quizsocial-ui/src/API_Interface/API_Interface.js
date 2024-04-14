@@ -33,17 +33,28 @@ export default class APIInterface {
                  }));
     }
 
+    async getUserById(userID) {
+        return axiosAgent.get(`user/${userID}/user-info`);
+    }
+    async getUserProfileById(userID) {
+        return axiosAgent.get(`user/${userID}/user-profile`);
+    }
+
+    async getFollowsById (userID) {
+        return axiosAgent.get(`user/${userID}/follows`);
+    }
+
     async allQuizzes() {
-        return axiosAgent.get(`routes/all-quizzes`);
+        return axiosAgent.get(`quizzes/all-quizzes`);
     }
 
 
     async getQuestionsForQuiz(quizID){
-        return axiosAgent.get(`routes/${quizID}/questions`);
+        return axiosAgent.get(`quizzes/${quizID}/questions`);
     }
 
     async getQuizById(quizID) {
-        return axiosAgent.get(`routes/${quizID}`);
+        return axiosAgent.get(`quizzes/${quizID}`);
     }
 
 

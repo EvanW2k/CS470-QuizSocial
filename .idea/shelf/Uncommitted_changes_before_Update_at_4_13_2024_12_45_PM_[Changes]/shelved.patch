@@ -1,0 +1,56 @@
+Index: quizsocial-ui/src/API_Interface/API_Interface.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import axios from 'axios';\r\n\r\nconst AxiosConfigured = () => {\r\n    // Indicate to the API that all requests for this app are AJAX\r\n    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';\r\n\r\n    // Set the baseURL for all requests to the API domain instead of the current domain\r\n    // axios.defaults.baseURL = `http://localhost:8443/api/v1`;\r\n    axios.defaults.baseURL = `http://localhost:8443/api/v1`;\r\n\r\n\r\n    // Allow the browser to send cookies to the API domain (which include auth_token)\r\n    axios.defaults.withCredentials = true;\r\n\r\n\r\n//    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf_token;\r\n\r\n    return axios;\r\n};\r\n\r\n\r\nconst axiosAgent = AxiosConfigured();\r\n\r\nexport default class APIInterface {\r\n\r\n    async getUserInfo(userID) {\r\n        try {\r\n            const userInfo = await axiosAgent.get(`login/${userID}`);\r\n            return userInfo.data;\r\n        } catch (error) {\r\n            return {\r\n                error,\r\n                user: undefined\r\n            };\r\n        }\r\n    }\r\n\r\n    async getQuizById(quizID) {\r\n        return axiosAgent.get(`quizzes/${quizID}`)\r\n    }\r\n\r\n    async allQuizzes() {\r\n        return axiosAgent.get(`quizzes/all-quizzes`);\r\n    }\r\n\r\n    async getQuestionsForQuiz(quizID) {\r\n        return axiosAgent.get(`quizzes/${quizID}/questions`)\r\n    }\r\n\r\n    async getUserProfile(userID) {\r\n        return axiosAgent.get(`users/${userID}/profile`)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/quizsocial-ui/src/API_Interface/API_Interface.js b/quizsocial-ui/src/API_Interface/API_Interface.js
+--- a/quizsocial-ui/src/API_Interface/API_Interface.js	(revision eb497c3ba6a72be3b2aaaca2c91cc4e3fd1da534)
++++ b/quizsocial-ui/src/API_Interface/API_Interface.js	(date 1712794013432)
+@@ -40,6 +40,7 @@
+     }
+ 
+     async allQuizzes() {
++        console.log("interfacing with all-quizzes");
+         return axiosAgent.get(`quizzes/all-quizzes`);
+     }
+ 
+Index: quizsocial-api/config/quizsocial_routes.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Authorize = require('../app/Middleware/Authorize.js');\r\nconst VerifyJWT = require('../app/Middleware/VerifyJWT.js');\r\n\r\n\r\n/*\r\n|--------------------------------------------------------------------------\r\n| Default router\r\n|--------------------------------------------------------------------------\r\n|\r\n| Default router is used to define any routes that don't belong to a\r\n| controller. Also used as a parent container for the other routers.\r\n|\r\n*/\r\nconst router = require('koa-router')({\r\n    prefix: '/api/v1'\r\n});\r\n\r\nrouter.get('/', function (ctx) {\r\n    console.log('router.get(/)');\r\n    return ctx.body = 'Connected';\r\n});\r\n\r\n/*\r\n|--------------------------------------------------------------------------\r\n| login router\r\n|--------------------------------------------------------------------------\r\n|\r\n| Description\r\n|\r\n*/\r\n\r\n// Login router configuration.\r\n\r\nconst LoginController = require('../app/Controllers/LoginController.js');\r\nconst loginRouter = require('koa-router')({\r\n    prefix: '/login'\r\n});\r\nloginRouter.get('/:userID', LoginController.authorizeUser, (err) => console.log(\"quizsocial_routes.js: login-route error:\", err));\r\n\r\n// Routes router configuration.\r\n\r\nconst QuizController = require('../app/Controllers/QuizController.js');\r\nconst quizzesRouter = require('koa-router')({\r\n    prefix: '/quizzes'\r\n});\r\n\r\nquizzesRouter.use(VerifyJWT);\r\nquizzesRouter.get('/:quizID', QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));\r\nquizzesRouter.get('/all-quizzes', QuizController.allQuizzes, err => console.log(`allquizzes ran into an error: ${err}`));\r\nquizzesRouter.get('/:quizID/questions', QuizController.getQuestionsForQuiz);\r\n\r\n\r\nconst UserController = require('../app/Controllers/UserController.js');\r\nconst usersRouter = require('koa-router')({\r\n    prefix: '/users'\r\n});\r\n\r\nusersRouter.use(VerifyJWT);\r\nusersRouter.get('/:userID', Authorize('admin'), UserController.getUserById, err => console.log(`getQuizById ran into an error: ${err}`));\r\nusersRouter.get('/:userID/profile', Authorize('admin'), UserController.getUserProfileById);\r\n\r\n\r\n/**\r\n * Register all of the controllers into the default controller.\r\n */\r\nrouter.use(\r\n    '',\r\n    loginRouter.routes(),\r\n    quizzesRouter.routes(),\r\n    usersRouter.routes()\r\n);\r\n\r\nmodule.exports = function (app) {\r\n    app.use(router.routes());\r\n    app.use(router.allowedMethods());\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/quizsocial-api/config/quizsocial_routes.js b/quizsocial-api/config/quizsocial_routes.js
+--- a/quizsocial-api/config/quizsocial_routes.js	(revision eb497c3ba6a72be3b2aaaca2c91cc4e3fd1da534)
++++ b/quizsocial-api/config/quizsocial_routes.js	(date 1712793888553)
+@@ -44,7 +44,7 @@
+     prefix: '/quizzes'
+ });
+ 
+-quizzesRouter.use(VerifyJWT);
++//quizzesRouter.use(VerifyJWT);
+ quizzesRouter.get('/:quizID', QuizController.getQuizById, err => console.log(`getQuizById ran into an error: ${err}`));
+ quizzesRouter.get('/all-quizzes', QuizController.allQuizzes, err => console.log(`allquizzes ran into an error: ${err}`));
+ quizzesRouter.get('/:quizID/questions', QuizController.getQuestionsForQuiz);
+Index: quizsocial-api/app/Controllers/QuizController.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const dbConnection = require('../../database/mySQLconnect');\r\nconst dateFormat = require('dateformat');\r\n\r\nfunction now() {\r\n    return dateFormat(new Date(), \"yyyy-mm-dd HH:MM:ss\");\r\n}\r\n\r\nconst allQuizzes = async (ctx) => {\r\n    console.log('all quizzes called.');\r\n    return new Promise((resolve, reject) => {\r\n        const query = `\r\n                       SELECT *\r\n                        FROM \r\n                            quizzes\r\n                        ORDER BY quizID\r\n                        `;\r\n        dbConnection.query({\r\n            sql: query,\r\n        }, (error, tuples) => {\r\n            if (error) {\r\n                console.log(\"Connection error in RoutesController::allRoutes\", error);\r\n                return reject(error);\r\n            }\r\n            ctx.body = tuples;\r\n            ctx.status = 200;\r\n            return resolve();\r\n        });\r\n    }).catch(err => {\r\n        console.log(\"Database connection error in allRoutes.\", err);\r\n        // The UI side will have to look for the value of status and\r\n        // if it is not 200, act appropriately.\r\n        ctx.body = [];\r\n        ctx.status = 500;\r\n    });\r\n}\r\n\r\nconst getQuizById = (ctx) => {\r\n    return new Promise((resolve, reject) => {\r\n        const query = `\r\n            SELECT * FROM quizzes\r\n            WHERE quizID = ?\r\n        `;\r\n        dbConnection.query({\r\n            sql: query,\r\n            values: [ctx.params.quizID]\r\n        }, (error, tuples) => {\r\n            if (error) {\r\n                console.log(\"Connection error in QuizController::getQuizById\", error);\r\n                ctx.body = [];\r\n                ctx.status = 500;\r\n                return reject(error);\r\n            }\r\n            ctx.body = tuples;\r\n            ctx.status = 200;\r\n            return resolve();\r\n        });\r\n    }).catch(err => {\r\n        console.log(\"Database connection error in getQuizById.\", err);\r\n        ctx.body = [];\r\n        ctx.status = 500;\r\n    });\r\n}\r\n\r\nconst getQuestionsForQuiz = (ctx) => {\r\n    return new Promise((resolve, reject) => {\r\n        const query = \"SELECT * FROM questions WHERE quizID = ?\";\r\n        dbConnection.query({\r\n            sql: query,\r\n            values: [ctx.params.quizID]\r\n        }, (error, tuples) => {\r\n            if (error) {\r\n                console.log(\"Connection error in QuizController::getQuestionsForQuiz\", error);\r\n                ctx.body = [];\r\n                ctx.status = 500;\r\n                return reject(error);\r\n            }\r\n            ctx.body = tuples;\r\n            ctx.status = 200;\r\n            return resolve();\r\n        });\r\n    }).catch(err => {\r\n        console.log(\"Database connection error in getQuestionsForQuiz.\", err);\r\n        ctx.body = [];\r\n        ctx.status = 500;\r\n    });\r\n}\r\n\r\n\r\nmodule.exports = {\r\n    getQuizById,\r\n    getQuestionsForQuiz,\r\n    allQuizzes\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/quizsocial-api/app/Controllers/QuizController.js b/quizsocial-api/app/Controllers/QuizController.js
+--- a/quizsocial-api/app/Controllers/QuizController.js	(revision eb497c3ba6a72be3b2aaaca2c91cc4e3fd1da534)
++++ b/quizsocial-api/app/Controllers/QuizController.js	(date 1712642997278)
+@@ -8,6 +8,8 @@
+ const allQuizzes = async (ctx) => {
+     console.log('all quizzes called.');
+     return new Promise((resolve, reject) => {
++
++        console.log('all quizzes called!!!!!!!!!!!!!!!!!!!!!!!.');
+         const query = `
+                        SELECT *
+                         FROM 

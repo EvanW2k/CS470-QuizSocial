@@ -3,7 +3,7 @@ import Banner from './Components/Banner/Banner';
 import {Router, Routes, Route} from 'react-router-dom'
 
 
-import Login from './Login';
+import Login from './Components/Pages/login';
 import Activity from './Components/Pages/activity';
 import Following from './Components/Pages/following';
 import Favorites from './Components/Pages/favorites';
@@ -15,20 +15,21 @@ import Search from  './Components/Pages/search'
 
 export default function Main() {
 
-    const [user, setUser] = useState(undefined);
+    const [userID, setUserID] = useState(undefined);
+    
 
     return (
         <Fragment>
-            <Banner/>
+            <Banner userID={userID} setUserID={setUserID}/>
             <Routes>
                 <Route path="/"  element={<Home/>}/>
-                <Route path="/login" element={<Login user={user} setUser={setUser} />} />
+                <Route path="/login" element={<Login setUserID={setUserID} />} />
                 <Route path="/activity" element={<Activity />} />
                 <Route path="/following" element={<Following />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/profile/:userID" element={<Profile/>} />
+                <Route path="/profile/:userID" element={<Profile loggedInUser={userID}/>} />
                 <Route path="/quiz/:quizID" element={<Quiz/>} />
-                <Route path="/register" element={<Register user={user} setUser={setUser} />} />
+                <Route path="/register" element={<Register userID={userID} setUserID={setUserID} />} />
                 <Route path="/search" element={<Search/>} />
             </Routes>
         </Fragment>

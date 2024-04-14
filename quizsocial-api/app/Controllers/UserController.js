@@ -71,7 +71,41 @@ const getUserProfileById = (ctx) => {
     });
 }
 
+const getFollowsById = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT COUNT(*) AS count
+            FROM user_follows
+            WHERE followed_id = ?
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::getFollowsById", error);
+                ctx.body = [];
+                ctx.status = 500;
+                return reject(error);
+            }
+            if (tuples.length === 0) {
+                ctx.body = "No user found with the given ID.";
+                ctx.status = 404; // Not Found
+            } else {
+                ctx.body = tuples[0]; // Assuming userID is unique, so only one record should be returned.
+                ctx.status = 200;
+            }
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in getFollowsById.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+    });
+}
+
 module.exports = {
     getUserById,
-    getUserProfileById
+    getUserProfileById,
+    getFollowsById
 };

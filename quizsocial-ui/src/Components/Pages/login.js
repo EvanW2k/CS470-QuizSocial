@@ -1,6 +1,7 @@
 import {Link, Typography} from '@mui/material';
 import React, {useState, useEffect, Fragment} from 'react';
 import API from '../../API_Interface/API_Interface';
+import { useNavigate } from 'react-router-dom';
 
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -8,18 +9,36 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
-export default function Login({setUser}) {
+export default function Login({setUserID}) {
 
-    const [userInput, setUserInput] = useState('');
+    const navigate = useNavigate();
+
+    const [userIdInput, setUserIdInput] = useState('');
+    const [userPassInput, setUserPassInput] = useState('');
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
-    const handleInputChange = event => {
-        console.log("handleInputChange called.");
+    const handleIdInputChange = event => {
+        console.log("handleIdInputChange called.");
 
 //        event.stopPropagation();
 //        event.preventDefault();
 
-        setUserInput(event.target.value);
+        setUserIdInput(event.target.value);
+        setAuthFailed(false);
+
+        if(event.key === "Enter") {
+            console.log("handleKeyPress: Verify user input.");
+            setVerifyUser(true);
+        }
+    };
+
+    const handlePassInputChange = event => {
+        console.log("handlePassInputChange called.");
+
+//        event.stopPropagation();
+//        event.preventDefault();
+
+        setUserPassInput(event.target.value);
         setAuthFailed(false);
 
         if(event.key === "Enter") {
@@ -30,19 +49,24 @@ export default function Login({setUser}) {
 
     useEffect(() => {
 
-        if( ! verifyUser || userInput.length === 0)
+        if( ! verifyUser || userIdInput.length === 0 || userPassInput.length === 0)
             return;
 
 
         const api = new API();
         async function getUserInfo() {
-            api.getUserInfo(userInput)
+            api.getUserInfo(userIdInput)
                 .then( userInfo => {
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
-                    const user = userInfo.user;
-                    if( userInfo.status === "OK" ) {
-                        setUser(user);
+                    const loggingUserID = userInfo.user.userID;
+                    const userPass = userInfo.user.password;
+                    if( userInfo.status === "OK" && userPass === userPassInput) {
+
+                        setUserID(loggingUserID);
+                        setVerifyUser(false);
+                        navigate(`/profile/${loggingUserID}`)
                     } else  {
+                        console.log(`No user exists with id: ${userIdInput}`);
                         setVerifyUser(false);
                         setAuthFailed(true);
                     }
@@ -50,7 +74,7 @@ export default function Login({setUser}) {
         }
 
         getUserInfo();
-    }, [verifyUser, setUser, userInput]);
+    }, [verifyUser, setUserID]);
 
     return (
         <Fragment>
@@ -59,11 +83,25 @@ export default function Login({setUser}) {
                 <TextField
                     error={authFailed}
                     id="outlined-error-helper-text"
-                    label="Login with userID"
+                    label="UserID"
                     placeholder=""
-                    value={userInput}
+                    value={userIdInput}
                     helperText="Only for existing users!"
-                    onChange={handleInputChange}
+                    onChange={handleIdInputChange}
+                />
+                <Divider />
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={3}>
+
+                <TextField
+                    error={authFailed}
+                    id="outlined-error-helper-text"
+                    label="Password"
+                    placeholder=""
+                    value={userPassInput}
+                    type="password"
+                    helperText=""
+                    onChange={handlePassInputChange}
                 />
                 <Divider />
             </Box>

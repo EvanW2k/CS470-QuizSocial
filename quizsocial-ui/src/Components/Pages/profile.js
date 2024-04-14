@@ -1,28 +1,58 @@
 import {useEffect, useState} from 'react';
 import {Typography, Paper, Grid, Box, Button, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
 import { useParams } from 'react-router-dom';
-
+import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
+import API from '../../API_Interface/API_Interface';
 
 const quizTableComps = ['Quiz', 'Favorites', 'Date Created'];
 
-export default function Profile() {
+export default function Profile({loggedInUser}) {
 
     const { userID } = useParams();
 
     const [sortMode, setSortMode] = useState('New');
 
-    const quizzes = [{name: 'quiz 1', favorites: 4, date: '2024-10-4'}, {name: 'quiz 2', favorites: 1, date: '2024-10-8'}, {name: 'quiz 3', favorites: 43, date: '2024-4-2'}];
-    const bio = "Hello my name is Evan. I am a cs major currently taking 470, 460, 355, 390, and 385. TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTT TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TESTffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
-    const userName = "Evan_Walters";
-    const isCurrentLoggedUser = false;
-    const followThisUser = true;
-    const follows = 22;
+    const [userInfo, setUserInfo] = useState(undefined);
+    const [userProfileInfo, setUserProfileInfo] = useState(undefined);
+    const [follows, setFollows] = useState(0);
+    const [userQuizzes, setUserQuizzes] = useState([]);
 
+    const [isCurrentLoggedUser, setIsCurrentLoggedUser] = useState(false);
+
+
+    const quizzes = [{name: 'quiz 1', favorites: 4, date: '2024-10-4'}, {name: 'quiz 2', favorites: 1, date: '2024-10-8'}, {name: 'quiz 3', favorites: 43, date: '2024-4-2'}];
+    const followThisUser = false;
 
     useEffect(() => {
-        // do an api query for all userid info
+
+        const api = new API();
+        async function getAllUserInfoById() {
+
+            userID === loggedInUser ? setIsCurrentLoggedUser(true) : setIsCurrentLoggedUser(false);
+
+            api.getUserById(userID)
+                .then( userJSONstring => {
+                    console.log(`api returns user INFO and it is: ${JSON.stringify(userJSONstring)}`);
+                    setUserInfo(userJSONstring.data);
+                });
+            api.getUserProfileById(userID)
+                .then( userProfileJSONstring => {
+                    console.log(`api returns user PROFILE INFO and it is: ${JSON.stringify(userProfileJSONstring)}`);
+                    setUserProfileInfo(userProfileJSONstring.data);
+                });
+            api.getFollowsById(userID)
+                .then( followCountJSONstring => {
+                    console.log(`api returns user follows and it is: ${JSON.stringify(followCountJSONstring)}`);
+                    setFollows(followCountJSONstring.data.count);
+                });
+        }
+
+        getAllUserInfoById();
     }, []);
+
+    if (!userInfo || !userProfileInfo)
+        return;
 
     return (
         <Paper
@@ -37,9 +67,9 @@ export default function Profile() {
                 border: 0
             }}
         >
-            <Grid container direction ='column' justifycontent="center" alignItems="flex-start">
+            <Grid container direction ='column' justifyContent="center" alignItems="center">
                 {/*Username and bio and picture followers follow button*/}
-                <Grid container direction='row' justifycontent="center" alignItems="flex-start">
+                <Grid container direction='row' justifyContent="space-between" alignItems="flex-start">
                     {/*Username and bio*/}
                     <Grid
                         direction={'column'}
@@ -49,12 +79,12 @@ export default function Profile() {
                     >
                         <Grid item sx={{ml: 2}} border={0}>
                             <Typography sx={{ fontSize: '24px', fontWeight: 'bold', cursor: 'auto'}}>
-                                {userName}
+                                {userInfo.username}
                             </Typography>
                         </Grid>
                         <Grid item sx={{ml: 2, mt: 2}} border={0} >
                             <Typography sx={{ fontSize: '14px', fontWeight: 'bold', wordBreak: "break-word", cursor: 'auto'}}>
-                                {bio}
+                                {userProfileInfo.bio}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -64,7 +94,7 @@ export default function Profile() {
                           direction={'column'}
                           border={0}
                           maxWidth={profileDimensions.page.width/2}
-                          justifycontent="flex-start"
+                          justifyContent="flex-start"
                           alignItems="center">
                         <Grid item>
                             <Box
@@ -113,41 +143,43 @@ export default function Profile() {
                     </Grid>
                 </Grid>
                 {/*Create quiz, sort, and quiz table*/}
-                <Grid container direction ='column' justifycontent="flex-start" alignItems="center" border={0}>
-                    {isCurrentLoggedUser &&
-                        (<Grid item>
-                            <Button
-                                sx={{
-                                border: 1,
-                                mt: 2
-                            }}>
-                                Create Quiz
-                            </Button>
-                        </Grid>)
-                    }
-                    <Grid item sx={{ alignSelf: 'flex-end', mr: 7, mt: 2 }}>
-                        <Box sx={{ width: 100, border: 0 }}>
-                            <FormControl fullWidth>
-                                <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                                    Sort by
-                                </InputLabel>
-                                <NativeSelect
-                                    defaultValue={sortMode}
-                                    onChange={(event) => setSortMode(event.target.value)}
-                                    inputProps={{
-                                        name: 'Sort',
-                                        id: 'uncontrolled-native',
-                                    }}
-                                >
-                                    <option value={'New'}>New</option>
-                                    <option value={'Favorites'}>Favorites</option>
-                                    <option value={'Date'}>Date</option>
-                                    <option value={'Name'}>Name</option>
-                                </NativeSelect>
-                            </FormControl>
-                        </Box>
+                <Grid container direction ='column' justifyContent="flex-start" alignItems="flex-start" border={0} mt={3}>
+                    <Grid container direction ='row' justifyContent="space-between" alignItems="flex-end" border={0}>
+                        {isCurrentLoggedUser &&
+                            (<Grid item>
+                                <Button
+                                    sx={{
+                                        border: 1,
+                                        mt: 2
+                                    }}>
+                                    Create Quiz
+                                </Button>
+                            </Grid>)
+                        }
+                        <Grid item sx={{ alignSelf: 'flex-end', mr: 8, mt: 0 }}>
+                            <Box sx={{ width: 100, border: 0 }}>
+                                <FormControl fullWidth>
+                                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                        Sort by
+                                    </InputLabel>
+                                    <NativeSelect
+                                        defaultValue={sortMode}
+                                        onChange={(event) => setSortMode(event.target.value)}
+                                        inputProps={{
+                                            name: 'Sort',
+                                            id: 'uncontrolled-native',
+                                        }}
+                                    >
+                                        <option value={'New'}>New</option>
+                                        <option value={'Favorites'}>Favorites</option>
+                                        <option value={'Date'}>Date</option>
+                                        <option value={'Name'}>Name</option>
+                                    </NativeSelect>
+                                </FormControl>
+                            </Box>
+                        </Grid>
                     </Grid>
-                    <TableContainer justifycontent="flex-start" alignItems="center">
+                    <TableContainer justifyContent="flex-start" alignItems="center">
                         <Table  sx={{maxWidth: profileDimensions.page.width}}>
                             <TableHead>
                                 <TableRow>

@@ -2,13 +2,8 @@ import React, {useState, Fragment} from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const Banner = () => {
+const Banner = ({userID, setUserID}) => {
     const navigate = useNavigate();
-
-
-
-    let loggedin = false;   // place holder for where logged in or not
-
 
     const handleNavigate = (path) => {
         navigate(path);
@@ -24,7 +19,7 @@ const Banner = () => {
 
                 {/* Buttons */}
                 <Stack direction = 'row' spacing={2} sx={{flexGrow: 1, justifyContent: 'center', marginLeft: 'auto', marginRight: 'auto'}}>
-                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/profile/123')}>
+                    <Button sx={{ color: 'white' }} onClick={() => {userID !== undefined ? handleNavigate(`/profile/${userID}`) : handleNavigate('/login')}}>
                         My Profile
                     </Button>
                     <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/activity')}>
@@ -42,10 +37,16 @@ const Banner = () => {
                 </Stack>
 
                 {/* Login/Logout */}
-                <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px' }} onClick={() => handleNavigate('/login')}>
-                    {loggedin ? "Logout" : "Login"}
-                </Typography>
 
+                {userID != undefined ? (
+                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px' }} onClick={() => {setUserID(undefined); handleNavigate('/')}}>
+                        Logout
+                    </Typography>
+                ) : (
+                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px' }} onClick={() => handleNavigate('/login')}>
+                        Login
+                    </Typography>
+                )}
             </Toolbar>
         </AppBar>
     );

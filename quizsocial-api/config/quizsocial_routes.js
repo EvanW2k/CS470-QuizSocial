@@ -38,10 +38,19 @@ const loginRouter = require('koa-router')({
 loginRouter.get('/:userID', LoginController.authorizeUser, (err) => console.log("quizsocial_routes.js: login-route error:", err));
 
 // Pages router configuration.
+const UserController = require('../app/Controllers/UserController.js');
+const userRouter = require('koa-router')({
+    prefix: '/user'
+});
+
+userRouter.use(VerifyJWT);
+userRouter.get('/:userID/user-info', UserController.getUserById, err => console.log(`getUserById ran into an error: ${err}`));
+userRouter.get('/:userID/user-profile', UserController.getUserProfileById, err => console.log(`getUserProfileById ran into an error: ${err}`));
+userRouter.get('/:userID/follows', UserController.getFollowsById, err => console.log(`getFollowsById ran into an error: ${err}`));
 
 const QuizzesController = require('../app/Controllers/QuizzesController.js');
 const quizzesRouter = require('koa-router')({
-    prefix: '/routes'
+    prefix: '/quizzes'
 });
 
 quizzesRouter.use(VerifyJWT);
@@ -56,6 +65,7 @@ quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
 router.use(
     '',
     loginRouter.routes(),
+    userRouter.routes(),
     quizzesRouter.routes(),
 );
 
