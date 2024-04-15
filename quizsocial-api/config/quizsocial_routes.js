@@ -55,7 +55,8 @@ const quizzesRouter = require('koa-router')({
 
 quizzesRouter.use(VerifyJWT);
 quizzesRouter.get('/all-quizzes', QuizzesController.allQuizzes, err => console.log(`allRoutes ran into an error: ${err}`));
-quizzesRouter.get('/:quizID/', QuizzesController.getQuizById);
+quizzesRouter.get('/byID/:userID', QuizzesController.getQuizByUserId);
+quizzesRouter.get('/:quizID', QuizzesController.getQuizById);
 quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
 
 
