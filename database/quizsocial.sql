@@ -69,8 +69,39 @@ CREATE TABLE `quiz_favorites` (
 
 LOCK TABLES `quiz_favorites` WRITE;
 /*!40000 ALTER TABLE `quiz_favorites` DISABLE KEYS */;
+INSERT INTO `quiz_favorites` VALUES (2,'k.yuen','2024-04-16 02:08:47'),(2,'h.zhang','2024-04-16 02:10:44'),(3,'h.zhang','2024-04-16 02:10:51');
 /*!40000 ALTER TABLE `quiz_favorites` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = cp850 */ ;
+/*!50003 SET character_set_results = cp850 */ ;
+/*!50003 SET collation_connection  = cp850_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_on_fav_insert` AFTER INSERT ON `quiz_favorites` FOR EACH ROW update quizzes set num_favorites = num_favorites+1 where quizID = new.quizID */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = cp850 */ ;
+/*!50003 SET character_set_results = cp850 */ ;
+/*!50003 SET collation_connection  = cp850_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `update_on_fav_delete` AFTER DELETE ON `quiz_favorites` FOR EACH ROW update quizzes set num_favorites = num_favorites-1 where quizID = old.quizID */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `quizzes`
@@ -83,6 +114,7 @@ CREATE TABLE `quizzes` (
   `quizID` int NOT NULL AUTO_INCREMENT,
   `userID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `num_favorites` int NOT NULL DEFAULT '0',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -99,7 +131,7 @@ CREATE TABLE `quizzes` (
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set','Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43'),(2,'e.walters','My Math quiz #1',NULL,'2024-04-13 17:35:36','2024-04-13 17:35:36'),(3,'e.walters','My Math quiz #2',NULL,'2024-04-13 17:35:40','2024-04-13 17:35:40');
+INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set',0,'Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43'),(2,'e.walters','My Math quiz #1',2,NULL,'2024-04-13 17:35:36','2024-04-15 19:10:44'),(3,'e.walters','My Math quiz #2',1,NULL,'2024-04-13 17:35:40','2024-04-15 19:10:51');
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,4 +243,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13 17:49:54
+-- Dump completed on 2024-04-15 19:12:34
