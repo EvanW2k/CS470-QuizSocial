@@ -1,7 +1,7 @@
-import {Link, Typography} from '@mui/material';
+import {Typography} from '@mui/material';
 import React, {useState, useEffect, Fragment} from 'react';
 import API from '../../API_Interface/API_Interface';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -74,7 +74,7 @@ export default function Login({setUserID}) {
         }
 
         getUserInfo();
-    }, [verifyUser, setUserID]);
+    }, [verifyUser, setUserID, setVerifyUser]);
 
     return (
         <Fragment>
@@ -118,7 +118,7 @@ export default function Login({setUserID}) {
                 <Typography sx={{ fontSize: '14px'}}>
                     Need an account?&nbsp;
 
-                    <Link underline="hover" href={"/register/"}>
+                    <Link underline="hover" to={"/register/"}>
                         Register Here
                     </Link>
                 </Typography>

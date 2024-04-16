@@ -35,6 +35,7 @@ const allQuizzes = async (ctx) => {
 }
 
 const getQuizById = (ctx) => {
+    console.log("Getting quiz by ID")
     return new Promise((resolve, reject) => {
         const query = `
             SELECT * 
