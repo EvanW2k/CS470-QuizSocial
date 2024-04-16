@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {Typography, Paper, Grid, Box, Button, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import {Typography, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
+import { useParams, Link } from 'react-router-dom';
 import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
 import API from '../../API_Interface/API_Interface';
@@ -13,8 +13,8 @@ export default function Profile({loggedInUser}) {
 
     const [sortMode, setSortMode] = useState('New');
 
-    const [userInfo, setUserInfo] = useState(undefined);
-    const [userProfileInfo, setUserProfileInfo] = useState(undefined);
+    const [userInfo, setUserInfo] = useState([]);
+    const [userProfileInfo, setUserProfileInfo] = useState([]);
     const [follows, setFollows] = useState(0);
     const [userQuizzes, setUserQuizzes] = useState([]);
 
@@ -45,6 +45,11 @@ export default function Profile({loggedInUser}) {
                 .then( followCountJSONstring => {
                     console.log(`api returns user follows and it is: ${JSON.stringify(followCountJSONstring)}`);
                     setFollows(followCountJSONstring.data.count);
+                });
+            api.getQuizByUserId(userID)
+                .then( userQuizzesJSONstring => {
+                    console.log(`quizzes: ${JSON.stringify(userQuizzesJSONstring)}`);
+                    setUserQuizzes(userQuizzesJSONstring.data);
                 });
         }
 
@@ -192,12 +197,12 @@ export default function Profile({loggedInUser}) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {quizzes.map((row)=>(
-                                    <TableRow key={row.name}
+                                {userQuizzes.map((row)=>(
+                                    <TableRow key={row.title}
                                               sx={{border: 0 }}>
-                                        <TableCell align="left"> <Link underline="hover" href={"/quiz/" + row.name.replace(/\s/g, "")}>{row.name}</Link> </TableCell>
-                                        <TableCell align="left"> {row.favorites} </TableCell>
-                                        <TableCell align="left"> {row.date} </TableCell>
+                                        <TableCell align="left"> <Link under line="hover" to={`/quiz/${row.quizID}`} >{row.title}</Link> </TableCell>
+                                        <TableCell align="left"> {0} </TableCell>
+                                        <TableCell align="left"> {row.created_at} </TableCell>
                                     </TableRow>
 
                                 ))}

@@ -11,19 +11,40 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useParams } from 'react-router-dom';
+import API from '../../API_Interface/API_Interface';
 
 
 export default function Quiz() {
 
     const {quizID} = useParams();
+
+    const [isCurrentLoggedUser, setIsCurrentLoggedUser] = useState(false);
+    const [quizInfo, setQuizInfo] = useState([]);
+    const [questions, setQuestions] = useState([]);
     const [rating, setRating] = useState(0);
 
-    const owner = "Evan_Walters";
-    const qaList = [
-        { question: 'Question 1', answer: 'Answer 1' },
-        { question: 'Question 2', answer: 'Answer 2' },
-        { question: 'Question 3', answer: 'Answer 3' },
-    ];
+    useEffect(() => {
+        const api = new API();
+
+        async function getQuizInfoById() {
+
+            api.getQuizById(quizID)
+                .then( quizJSONstring => {
+                    console.log(`api returns: ${JSON.stringify(quizJSONstring)}`);
+                    setQuizInfo(quizJSONstring.data);
+                });
+            
+            api.getQuestionsForQuiz(quizID)
+                .then( questionsJSONstring => {
+                    console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
+                    setQuestions(questionsJSONstring.data)
+                })
+        } 
+        
+        getQuizInfoById();
+    }, []);
+
+    console.log('quiz info:', quizInfo);
 
     return (
         <Paper
@@ -44,9 +65,9 @@ export default function Quiz() {
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start'>
                     <Grid direction='column' maxWidth={500}>
                         <Grid item container direction='column' sx={{marginBottom: 2}}>
-                            <Typography variant='h3'>{quizID}</Typography>
+                            <Typography variant='h3'>{quizInfo.title}</Typography>
                         </Grid>
-                        <Grid item sx={{marginBottom: 2}}>{"Owner: " + owner}</Grid>
+                        <Grid item sx={{marginBottom: 2}}>{"By: " + quizInfo.username}</Grid>
                         <Grid item sx={{marginBottom: 2}}>
                             <Rating
                                 value={rating}
@@ -138,7 +159,7 @@ export default function Quiz() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {qaList.map((row) => (
+                            {questions.map((row) => (
                                 <TableRow
                                     key={row.question}
                                 >

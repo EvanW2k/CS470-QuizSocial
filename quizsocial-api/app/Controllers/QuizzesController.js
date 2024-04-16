@@ -5,8 +5,8 @@ function now() {
     return dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 }
 
-
 const allQuizzes = async (ctx) => {
+    console.log('all quizzes called.');
     return new Promise((resolve, reject) => {
         const query = `
                        SELECT *
@@ -35,10 +35,18 @@ const allQuizzes = async (ctx) => {
 }
 
 const getQuizById = (ctx) => {
+    console.log("Getting quiz by ID")
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT * FROM quizzes
-            WHERE quizID = ?
+            SELECT * 
+            FROM
+                users u
+            JOIN
+                quizzes q
+            ON
+                u.userID = q.userID
+            WHERE
+                q.quizID = ?
         `;
         dbConnection.query({
             sql: query,
@@ -50,12 +58,40 @@ const getQuizById = (ctx) => {
                 ctx.status = 500;
                 return reject(error);
             }
-            ctx.body = tuples;
+            ctx.body = tuples[0]; // should only have 1 quiz match
             ctx.status = 200;
             return resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getQuizById.", err);
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
+
+const getQuizByUserId = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT *
+            FROM
+                quizzes
+            WHERE
+                userID = ?
+            `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID],
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizController::getQuizByUserId", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in getQuizByUserId.", err);
         ctx.body = [];
         ctx.status = 500;
     });
@@ -88,5 +124,6 @@ const getQuestionsForQuiz = (ctx) => {
 module.exports = {
     getQuizById,
     getQuestionsForQuiz,
-    allQuizzes
+    allQuizzes,
+    getQuizByUserId,
 };

@@ -3,15 +3,16 @@ import Banner from '../Banner/Banner';
 import {Router, Routes, Route} from 'react-router-dom'
 
 
-import Home from '../pages/home';
-import Activity from '../pages/activity';
-import Following from '../pages/following';
-import Favorites from '../pages/favorites';
-import Login from '../pages/login';
-import Register from '../pages/register'
-import Profile from '../pages/profile';
-import Search from '../pages/search';
-import Quiz from '../pages/quiz';
+import Home from '../Pages/home';
+import Activity from '../Pages/activity';
+import Following from '../Pages/following';
+import Favorites from '../Pages/favorites';
+import Login from '../Pages/login';
+import Register from '../Pages/register'
+import Profile from '../Pages/profile';
+import Search from '../Pages/search';
+import Quiz from '../Pages/quiz';
+import createQuiz from '../Pages/createQuiz';
 
 
 export default function Main() {
@@ -31,6 +32,7 @@ export default function Main() {
                 <Route path="/profile/:userID" element={<Profile/>} />
                 <Route path="/search" element={<Search/>} />
                 <Route path="/quiz/:quizID" element={<Quiz/>} />
+                <Route path="/createQuiz" element={<createQuiz/>} />
             </Routes>
         </Fragment>
     )

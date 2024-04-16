@@ -85,7 +85,6 @@ const getQuestionsForQuiz = (ctx) => {
     });
 }
 
-
 module.exports = {
     getQuizById,
     getQuestionsForQuiz,

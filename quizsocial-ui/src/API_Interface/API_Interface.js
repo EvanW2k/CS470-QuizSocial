@@ -48,7 +48,6 @@ export default class APIInterface {
         return axiosAgent.get(`quizzes/all-quizzes`);
     }
 
-
     async getQuestionsForQuiz(quizID){
         return axiosAgent.get(`quizzes/${quizID}/questions`);
     }
@@ -57,5 +56,7 @@ export default class APIInterface {
         return axiosAgent.get(`quizzes/${quizID}`);
     }
 
-
+    async getQuizByUserId(userID) {
+        return axiosAgent.get(`quizzes/byID/${userID}`);
+    }
 }
