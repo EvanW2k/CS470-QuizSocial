@@ -12,7 +12,7 @@ export default function FlashCard(props) {
         const fetchQuizzes = async () => {
             const api = new API();
             try {
-                const response = await api.getQuestionsForQuiz('001');  // Assuming '001' is the quizID you want
+                const response = await api.getQuestionsForQuiz('1'); 
                 if (response.data && response.data.length > 0) {
                     setCards(response.data);
                 } else {
