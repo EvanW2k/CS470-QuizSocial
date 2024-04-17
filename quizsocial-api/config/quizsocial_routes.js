@@ -48,6 +48,8 @@ userRouter.get('/:userID/user-info', UserController.getUserById, err => console.
 userRouter.get('/:userID/user-profile', UserController.getUserProfileById, err => console.log(`getUserProfileById ran into an error: ${err}`));
 userRouter.get('/:userID/follows', UserController.getFollowsById, err => console.log(`getFollowsById ran into an error: ${err}`));
 
+userRouter.get('/search', UserController.getUserByName);
+
 const QuizzesController = require('../app/Controllers/QuizzesController.js');
 const quizzesRouter = require('koa-router')({
     prefix: '/quizzes'
@@ -58,6 +60,7 @@ quizzesRouter.get('/all-quizzes', QuizzesController.allQuizzes, err => console.l
 quizzesRouter.get('/byID/:userID', QuizzesController.getQuizByUserId);
 quizzesRouter.get('/:quizID', QuizzesController.getQuizById);
 quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
+quizzesRouter.get('/search', QuizzesController.getQuizzesByTitle);
 
 
 /**

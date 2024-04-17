@@ -36,6 +36,10 @@ export default class APIInterface {
     async getUserById(userID) {
         return axiosAgent.get(`user/${userID}/user-info`);
     }
+
+    async getUserByName(username) {
+        return axiosAgent.get(`user/${username}/search`);
+    }
     async getUserProfileById(userID) {
         return axiosAgent.get(`user/${userID}/user-profile`);
     }

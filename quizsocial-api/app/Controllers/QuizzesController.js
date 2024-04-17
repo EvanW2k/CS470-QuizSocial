@@ -121,9 +121,46 @@ const getQuestionsForQuiz = (ctx) => {
     });
 }
 
+const getQuizzesByTitle = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT quizID, userID, title, description
+            FROM quizzes
+            WHERE title LIKE ?
+        `;
+        const titleSearch = `%${ctx.query.title}%`; // Prepare the search term with wildcards
+
+        dbConnection.query({
+            sql: query,
+            values: [titleSearch]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizController::getQuizzesByTitle", error);
+                ctx.body = "Error accessing the database";
+                ctx.status = 500;
+                return reject(error);
+            }
+            if (tuples.length === 0) {
+                ctx.body = "No quizzes found with the given title part.";
+                ctx.status = 404; // Not Found
+            } else {
+                ctx.body = tuples; // Returns all matching records
+                ctx.status = 200;
+            }
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in getQuizzesByTitle.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+    });
+}
+
+
 module.exports = {
     getQuizById,
     getQuestionsForQuiz,
     allQuizzes,
     getQuizByUserId,
+    getQuizzesByTitle
 };
