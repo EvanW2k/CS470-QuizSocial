@@ -18,7 +18,7 @@ const MatchGame = () => {
     const fetchQuizzes = async () => {
         const api = new API();
         try {
-            const response = await api.getQuestionsForQuiz('001');
+            const response = await api.getQuestionsForQuiz('1');
             const pairsNeeded = gameSize * gameSize / 2;  // Calculate needed pairs based on game size
 
             if (response.data && response.data.length >= pairsNeeded) {
