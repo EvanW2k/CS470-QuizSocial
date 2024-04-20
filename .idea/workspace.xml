@@ -4,22 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Uptodate api connections">
-      <change afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/FollowController.js" afterDir="false" />
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/quizsocial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/quizsocial.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/QuizController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/FillingTheBank.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/FlashCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/MatchGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712642589463</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me">
+      <option name="closed" value="true" />
+      <created>1713576385398</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713576385398</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +122,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login and Register (with navigation). &#10;+ some minor changes" />
     <MESSAGE value="Uptodate api connections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Uptodate api connections" />
+    <MESSAGE value="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me" />
+    <option name="LAST_COMMIT_MESSAGE" value="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me" />
   </component>
 </project>
