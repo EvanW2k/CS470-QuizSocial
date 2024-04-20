@@ -49,6 +49,18 @@ userRouter.get('/:userID/user-profile', UserController.getUserProfileById, err =
 userRouter.get('/:userID/follows', UserController.getFollowsById, err => console.log(`getFollowsById ran into an error: ${err}`));
 
 userRouter.get('/search', UserController.getUserByName);
+userRouter.post('/create/:userID', UserController.createUserByIdAndPass, err => console.log(`createUserByIdAndPass ran into an error: ${err}`));
+userRouter.delete('/delete/:userID', UserController.deleteUserById, err => console.log(`deleteUserById ran into an error: ${err}`));
+
+
+const FollowController = require('../app/Controllers/FollowController.js');
+const followRouter = require('koa-router')({
+    prefix: '/follow'
+});
+
+followRouter.get('/:userID/following', FollowController.getFollowingByUserID, err => console.log(`getFollowingByUserID ran into an error: ${err}`));
+followRouter.post('/createFollow/:followerID/:followedID', FollowController.createFollowWithIDs, err => console.log(`createFollowWithIDs ran into an error: ${err}`));
+followRouter.delete('/deleteFollow/:followerID/:followedID', FollowController.deleteFollowWithIDs, err => console.log(`deleteFollowWithIDs ran into an error: ${err}`));
 
 const QuizzesController = require('../app/Controllers/QuizzesController.js');
 const quizzesRouter = require('koa-router')({
@@ -70,6 +82,7 @@ router.use(
     '',
     loginRouter.routes(),
     userRouter.routes(),
+    followRouter.routes(),
     quizzesRouter.routes(),
 );
 

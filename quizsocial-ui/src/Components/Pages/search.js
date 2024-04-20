@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, ToggleButtonGroup, ToggleButton, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -75,7 +76,7 @@ export default function SearchPage() {
                             {searchResults.map((row) => (
                                 <TableRow key={row.userID}>
                                     <TableCell component="th" scope="row">
-                                        {row.userID}
+                                        <Link under line="hover" to={`/profile/${row.userID}`} >{row.userID}</Link>
                                     </TableCell>
                                     <TableCell align="right">{row.username}</TableCell>
                                     <TableCell align="right">{row.email}</TableCell>

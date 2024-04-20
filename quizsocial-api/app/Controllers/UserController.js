@@ -8,7 +8,7 @@ function now() {
 const getUserById = (ctx) => {
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT userID, username, email, created_at, updated_at
+            SELECT userID, username, email, created_at, updated_at, num_follows
             FROM users
             WHERE userID = ?
         `;
@@ -19,7 +19,7 @@ const getUserById = (ctx) => {
             if (error) {
                 console.log("Connection error in UserController::getUserById", error);
                 ctx.body = [];
-                ctx.status = 500;
+                ctx.status = 422;
                 return reject(error);
             }
             if (tuples.length === 0) {
@@ -34,7 +34,7 @@ const getUserById = (ctx) => {
     }).catch(err => {
         console.log("Database connection error in getUserById.", err);
         ctx.body = "Error accessing the database";
-        ctx.status = 500;
+        ctx.status = 509;
     });
 }
 
@@ -53,7 +53,7 @@ const getUserByName = (ctx) => {
             if (error) {
                 console.log("Connection error in UserController::getUserByName", error);
                 ctx.body = [];
-                ctx.status = 500;
+                ctx.status = 440;
                 return reject(error);
             }
             if (tuples.length === 0) {
@@ -68,7 +68,7 @@ const getUserByName = (ctx) => {
     }).catch(err => {
         console.log("Database connection error in getUserByName.", err);
         ctx.body = "Error accessing the database";
-        ctx.status = 500;
+        ctx.status = 506;
     });
 }
 
@@ -88,7 +88,7 @@ const getUserProfileById = (ctx) => {
             if (error) {
                 console.log("Connection error in UserController::getUserProfileById", error);
                 ctx.body = "Error accessing database for user profile";
-                ctx.status = 500;
+                ctx.status = 407;
                 return reject(error);
             }
             if (tuples.length === 0) {
@@ -103,7 +103,7 @@ const getUserProfileById = (ctx) => {
     }).catch(err => {
         console.log("Database connection error in getUserProfileById.", err);
         ctx.body = "Error accessing the database";
-        ctx.status = 500;
+        ctx.status = 501;
     });
 }
 
@@ -121,7 +121,7 @@ const getFollowsById = (ctx) => {
             if (error) {
                 console.log("Connection error in UserController::getFollowsById", error);
                 ctx.body = [];
-                ctx.status = 500;
+                ctx.status = 406;
                 return reject(error);
             }
             if (tuples.length === 0) {
@@ -140,9 +140,67 @@ const getFollowsById = (ctx) => {
     });
 }
 
+const createUserByIdAndPass = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO users (userID, username, password) 
+            VALUES (?, ?, ?);
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID, ctx.params.userID, ctx.request.body.password]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::createUserByIdAndPass", error);
+                ctx.body = [];
+                ctx.status = 400;
+                return reject(error);
+            }
+
+            ctx.body = "User created successfully"; // Assuming userID is unique, so only one record should be returned.
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in createUserByIdAndPass.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 502;
+    });
+}
+
+const deleteUserById = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM users  
+            WHERE userID = ?;
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID, ctx.params.userID, ctx.request.body.password]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::deleteUserByIdAndPass", error);
+                ctx.body = [];
+                ctx.status = 400;
+                return reject(error);
+            }
+
+            ctx.body = "User deleted successfully"; // Assuming userID is unique, so only one record should be returned.
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in deleteUserByIdAndPass.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 502;
+    });
+}
+
 module.exports = {
     getUserById,
     getUserByName,
     getUserProfileById,
-    getFollowsById
+    getFollowsById,
+    createUserByIdAndPass,
+    deleteUserById
 };

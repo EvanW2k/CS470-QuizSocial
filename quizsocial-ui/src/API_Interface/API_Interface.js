@@ -48,6 +48,27 @@ export default class APIInterface {
         return axiosAgent.get(`user/${userID}/follows`);
     }
 
+
+    async createUserByIdAndPass (userID, password) {
+        return axiosAgent.post(`user/create/${userID}`, {password});
+    }
+
+    async deleteUserById (userID) {
+        return axiosAgent.delete(`user/delete/${userID}`);
+    }
+
+    async getFollowingByUserID (userID) {
+        return axiosAgent.get(`follow/${userID}/following`);
+    }
+
+    async createFollowWithIDs (followerID, followedID) {
+        return axiosAgent.post(`follow/createFollow/${followerID}/${followedID}`);
+    }
+
+    async deleteFollowWithIDs (followerID, followedID) {
+        return axiosAgent.delete(`follow/deleteFollow/${followerID}/${followedID}`);
+    }
+
     async allQuizzes() {
         return axiosAgent.get(`quizzes/all-quizzes`);
     }

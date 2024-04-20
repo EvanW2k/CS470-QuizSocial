@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Button, TextField } from '@mui/material';
-import API from '../../API_Interface/API_Interface';
+import API from '../../../API_Interface/API_Interface';
 
 export default function FlashCard(props) {
     const [cards, setCards] = useState([]);

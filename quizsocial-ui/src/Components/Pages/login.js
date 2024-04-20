@@ -78,7 +78,12 @@ export default function Login({setUserID}) {
 
     return (
         <Fragment>
-            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={10}>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" border={0} mt={6}>
+                <Typography variant="h4">
+                    Login
+                </Typography>
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={4}>
 
                 <TextField
                     error={authFailed}

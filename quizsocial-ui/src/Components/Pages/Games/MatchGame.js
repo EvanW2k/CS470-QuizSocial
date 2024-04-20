@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material';
-import API from '../../API_Interface/API_Interface';
+import API from '../../../API_Interface/API_Interface';
 
 const MatchGame = () => {
     const [cards, setCards] = useState([]);
