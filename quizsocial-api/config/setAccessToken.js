@@ -5,8 +5,8 @@ function setAccessToken(ctx, user) {
     console.log('setAccessToken:: cookie = ', ctx.cookies.get('access_token'));
     console.log('setAccessToken:: ctx.state contains', ctx.state);
 
-    // Create an expiration date 20 minutes in the future for the user's access_token *cookie*
-    const exp_date = Date.now() + (20 * 60 * 1000);
+    // Create an expiration date 30 minutes in the future for the user's access_token *cookie*
+    const exp_date = Date.now() + (30 * 60 * 1000);
 
 
     // Set the data that will be sent in the user's access_token. The exp setting should probably

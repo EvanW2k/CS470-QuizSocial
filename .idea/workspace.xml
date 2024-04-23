@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me">
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile">
+      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/quizsocial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/quizsocial.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/setAccessToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/setAccessToken.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +95,7 @@
       <workItem from="1713037453487" duration="17718000" />
       <workItem from="1713149738169" duration="3511000" />
       <workItem from="1713231021577" duration="1942000" />
+      <workItem from="1713811716145" duration="12715000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -113,7 +121,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713576385398</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Few more db tweaks">
+      <option name="closed" value="true" />
+      <created>1713576877214</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713576877214</updated>
+    </task>
+    <task id="LOCAL-00005" summary="DB: quiz rating should be set right with this update">
+      <option name="closed" value="true" />
+      <created>1713832963706</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713832963706</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +147,9 @@
     <MESSAGE value="Login and Register (with navigation). &#10;+ some minor changes" />
     <MESSAGE value="Uptodate api connections" />
     <MESSAGE value="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me" />
-    <option name="LAST_COMMIT_MESSAGE" value="Register and Follow/Unfollow&#10;&#10;- Now when you register on the register page a user is added to DB&#10;&#10;- profile follow/unfollow button is fully functional with database&#10;&#10;- added links to search bar to help me" />
+    <MESSAGE value="Few more db tweaks" />
+    <MESSAGE value="DB: quiz rating should be set right with this update" />
+    <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
   </component>
 </project>

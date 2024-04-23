@@ -157,7 +157,7 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `rating_delete` AFTER DELETE ON `quiz_ratings` FOR EACH ROW if (select count(*) from quiz_ratings where quizID = old.quizID) > 0 then
 update quizzes set rating = (select avg(rating) from quiz_ratings where quizID = old.quizID) where quizID = old.quizID;
-else 
+else
 UPDATE quizzes SET rating = NULL WHERE quizID = OLD.quizID;
 end if */;;
 DELIMITER ;
@@ -179,6 +179,7 @@ CREATE TABLE `quizzes` (
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `rating` float DEFAULT NULL,
   `num_favorites` int NOT NULL DEFAULT '0',
+  `isPublic` tinyint(1) DEFAULT '1',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -195,7 +196,7 @@ CREATE TABLE `quizzes` (
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set',NULL,0,'Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43'),(2,'e.walters','My Math quiz #1',3.5,2,NULL,'2024-04-13 17:35:36','2024-04-19 18:23:55'),(3,'e.walters','My Math quiz #2',NULL,1,NULL,'2024-04-13 17:35:40','2024-04-15 19:10:51');
+INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set',NULL,0,1,'Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43'),(2,'e.walters','My Math quiz #1',3.5,2,1,NULL,'2024-04-22 00:00:00','2024-04-22 20:10:59'),(3,'e.walters','My Math quiz #2',NULL,1,1,NULL,'2024-04-13 17:35:40','2024-04-15 19:10:51');
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,6 +268,8 @@ DROP TABLE IF EXISTS `user_profile`;
 CREATE TABLE `user_profile` (
   `userID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `bio` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `imageURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `color` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`userID`),
   CONSTRAINT `user_profile_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -278,7 +281,7 @@ CREATE TABLE `user_profile` (
 
 LOCK TABLES `user_profile` WRITE;
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
-INSERT INTO `user_profile` VALUES ('ali.kooshesh',''),('b23c2d39-f009-11ee-b93a-085bd6555b53',''),('Daffy_Duck',''),('Donald-Duck-122',''),('e.walters','Hello my name is Evan. I like making quizzes about math, cs, and sometimes geography!'),('george.washington',''),('h.zhang','My name is Hanpei, This is my quiz social page!'),('Jennifer_W',''),('Joe.Smith',''),('k.yuen','Helllllo'),('Math.Tutor',''),('new.user',''),('quizMaker22',''),('user55443245','');
+INSERT INTO `user_profile` VALUES ('ali.kooshesh','',NULL,NULL),('b23c2d39-f009-11ee-b93a-085bd6555b53','',NULL,NULL),('Daffy_Duck','',NULL,NULL),('Donald-Duck-122','',NULL,NULL),('e.walters','Hello my name is Evan. I like making quizzes about math, cs, and sometimes geography! I also am a CS major at SSU!',NULL,NULL),('george.washington','',NULL,NULL),('h.zhang','My name is Hanpei, This is my quiz social page!',NULL,NULL),('Jennifer_W','',NULL,NULL),('Joe.Smith','',NULL,NULL),('k.yuen','Helllllo',NULL,NULL),('Math.Tutor','',NULL,NULL),('new.user','',NULL,NULL),('quizMaker22','',NULL,NULL),('user55443245','',NULL,NULL);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +310,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('ali.kooshesh','ali.kooshesh',NULL,'MyPassword',1,'2024-04-19 14:09:48','2024-04-19 17:44:32'),('b23c2d39-f009-11ee-b93a-085bd6555b53','newUser','newuser@example.com','userPassword',0,'2024-04-01 02:24:16','2024-04-01 02:24:16'),('Daffy_Duck','Daffy_Duck',NULL,'321',0,'2024-04-19 17:22:41','2024-04-19 17:22:41'),('Donald-Duck-122','Donald-Duck-122',NULL,'abc',1,'2024-04-19 17:16:22','2024-04-19 17:42:33'),('e.walters','Evan 2k','waltersev@sonoma.edu','password',6,'2024-04-13 17:02:21','2024-04-19 17:45:45'),('george.washington','george.washington',NULL,'1776',1,'2024-04-19 17:30:22','2024-04-19 17:43:01'),('h.zhang','Zeroxa','zhangha@sonoma.edu','password',4,'2024-04-13 17:04:13','2024-04-19 17:44:39'),('Jennifer_W','Jennifer_W',NULL,'password',0,'2024-04-19 17:45:21','2024-04-19 17:45:21'),('Joe.Smith','Joe.Smith',NULL,'123',1,'2024-04-19 16:22:39','2024-04-19 17:42:27'),('k.yuen','Kathy','yuenk@sonoma.edu','password',2,'2024-04-13 17:03:48','2024-04-19 17:44:04'),('Math.Tutor','Math.Tutor',NULL,'pass',0,'2024-04-19 17:27:34','2024-04-19 17:27:34'),('new.user','new.user',NULL,'mypassword',1,'2024-04-19 13:58:46','2024-04-19 17:42:21'),('quizMaker22','quizMaker22',NULL,'quiz',2,'2024-04-19 17:26:59','2024-04-19 17:44:43'),('user55443245','user55443245',NULL,'quizSocialUser',0,'2024-04-19 17:26:13','2024-04-19 17:26:13');
+INSERT INTO `users` VALUES ('ali.kooshesh','ali.kooshesh',NULL,'MyPassword',1,'2024-04-19 14:09:48','2024-04-19 17:44:32'),('b23c2d39-f009-11ee-b93a-085bd6555b53','newUser','newuser@example.com','userPassword',0,'2024-04-01 02:24:16','2024-04-01 02:24:16'),('Daffy_Duck','Daffy_Duck',NULL,'321',0,'2024-04-19 17:22:41','2024-04-19 17:22:41'),('Donald-Duck-122','Donald-Duck-122',NULL,'abc',1,'2024-04-19 17:16:22','2024-04-19 17:42:33'),('e.walters','Evan_Walters','waltersev@sonoma.edu','password',6,'2024-04-13 17:02:21','2024-04-22 19:46:33'),('george.washington','george.washington',NULL,'1776',1,'2024-04-19 17:30:22','2024-04-19 17:43:01'),('h.zhang','Zeroxa','zhangha@sonoma.edu','password',4,'2024-04-13 17:04:13','2024-04-19 17:44:39'),('Jennifer_W','Jennifer_W',NULL,'password',0,'2024-04-19 17:45:21','2024-04-19 17:45:21'),('Joe.Smith','Joe.Smith',NULL,'123',1,'2024-04-19 16:22:39','2024-04-19 17:42:27'),('k.yuen','Kathy','yuenk@sonoma.edu','password',2,'2024-04-13 17:03:48','2024-04-19 17:44:04'),('Math.Tutor','Math.Tutor',NULL,'pass',0,'2024-04-19 17:27:34','2024-04-19 17:27:34'),('new.user','new.user',NULL,'mypassword',1,'2024-04-19 13:58:46','2024-04-19 17:42:21'),('quizMaker22','quizMaker22',NULL,'quiz',2,'2024-04-19 17:26:59','2024-04-19 17:44:43'),('user55443245','user55443245',NULL,'quizSocialUser',0,'2024-04-19 17:26:13','2024-04-19 17:26:13');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -336,4 +339,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-22 17:39:49
+-- Dump completed on 2024-04-22 20:16:56

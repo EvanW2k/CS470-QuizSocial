@@ -196,11 +196,75 @@ const deleteUserById = (ctx) => {
     });
 }
 
+const alterProfileById = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE user_profile
+            set bio = ?
+            where userID = ?
+            ;
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.request.body.bio, ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::alterProfileById", error);
+                ctx.body = [];
+                ctx.status = 400;
+                return reject(error);
+            }
+
+            ctx.body = "Profile altered successfully"; // Assuming userID is unique, so only one record should be returned.
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in alterProfileById.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 502;
+    });
+}
+
+const alterUserById = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE users
+            set username = ?
+            where userID = ?
+            ;
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.request.body.username, ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::alterUserById", error);
+                ctx.body = [];
+                ctx.status = 400;
+                return reject(error);
+            }
+
+            ctx.body = "User altered successfully"; // Assuming userID is unique, so only one record should be returned.
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in alterUserById.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 502;
+    });
+}
+
+
+
 module.exports = {
     getUserById,
     getUserByName,
     getUserProfileById,
     getFollowsById,
     createUserByIdAndPass,
-    deleteUserById
+    deleteUserById,
+    alterProfileById,
+    alterUserById
 };

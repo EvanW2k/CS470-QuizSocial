@@ -23,6 +23,7 @@ const axiosAgent = AxiosConfigured();
 
 export default class APIInterface {
 
+    // users
     async getUserInfo(userID) {
         return axiosAgent.get(`login/${userID}`)
             .then(userInfo => userInfo.data)
@@ -44,10 +45,6 @@ export default class APIInterface {
         return axiosAgent.get(`user/${userID}/user-profile`);
     }
 
-    async getFollowsById (userID) {
-        return axiosAgent.get(`user/${userID}/follows`);
-    }
-
 
     async createUserByIdAndPass (userID, password) {
         return axiosAgent.post(`user/create/${userID}`, {password});
@@ -57,6 +54,20 @@ export default class APIInterface {
         return axiosAgent.delete(`user/delete/${userID}`);
     }
 
+    async alterProfileById (userID, bio) {
+        return axiosAgent.post(`user/${userID}/alter-profile`, {bio});
+    }
+
+    async alterUserById (userID, username) {
+        return axiosAgent.post(`user/${userID}/alter-user`, {username});
+    }
+
+
+    // follows
+
+    async getFollowsById (userID) {
+        return axiosAgent.get(`user/${userID}/follows`);
+    }
     async getFollowingByUserID (userID) {
         return axiosAgent.get(`follow/${userID}/following`);
     }
@@ -69,6 +80,8 @@ export default class APIInterface {
         return axiosAgent.delete(`follow/deleteFollow/${followerID}/${followedID}`);
     }
 
+
+    // quizzes
     async allQuizzes() {
         return axiosAgent.get(`quizzes/all-quizzes`);
     }

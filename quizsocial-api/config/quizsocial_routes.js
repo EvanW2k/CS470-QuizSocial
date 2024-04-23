@@ -52,6 +52,8 @@ userRouter.get('/search', UserController.getUserByName);
 userRouter.post('/create/:userID', UserController.createUserByIdAndPass, err => console.log(`createUserByIdAndPass ran into an error: ${err}`));
 userRouter.delete('/delete/:userID', UserController.deleteUserById, err => console.log(`deleteUserById ran into an error: ${err}`));
 
+userRouter.post('/:userID/alter-profile', UserController.alterProfileById, err=> console.log(`alterProfileById ran into an error: ${err}`));
+userRouter.post('/:userID/alter-user', UserController.alterUserById, err=> console.log(`alterUserById ran into an error: ${err}`));
 
 const FollowController = require('../app/Controllers/FollowController.js');
 const followRouter = require('koa-router')({

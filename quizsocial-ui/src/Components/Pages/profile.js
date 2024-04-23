@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
-import {Typography, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
+import {Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
 import API from '../../API_Interface/API_Interface';
 
-const quizTableComps = ['Quiz', 'Favorites', 'Date Created'];
+const quizTableComps = ['Quiz', 'Favorites', 'Rating', 'Date Created'];
 
 export default function Profile({loggedInUser}) {
 
@@ -69,6 +70,27 @@ export default function Profile({loggedInUser}) {
         }
         createFollow();
         setFollowThisUser(true);
+    }
+
+    const handleSortChange = event => {
+        setSortMode(event.target.value);
+
+        // resort quizzes
+        if (sortMode === "Name") {
+            return setUserQuizzes([...userQuizzes].sort((a, b) => a.title.localeCompare(b.title)));
+        } else if (sortMode === "Favorites") {
+            return setUserQuizzes([...userQuizzes].sort((a, b) => b.num_favorites - a.num_favorites));
+        } else if (sortMode === "Rating") {
+            return setUserQuizzes([...userQuizzes].sort((a, b) => b.rating - a.rating));
+        } else if (sortMode === "New") {
+            return setUserQuizzes([...userQuizzes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
+        } else if (sortMode === "Old") {
+            return setUserQuizzes([...userQuizzes].sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
+        } else {
+            // Default to sorting by quizName if sortMode is not recognized
+            return setUserQuizzes([...userQuizzes].sort((a, b) => a.quizID.localeCompare(b.quizID)));
+        }
+
     }
 
     useEffect(() => {
@@ -161,58 +183,81 @@ export default function Profile({loggedInUser}) {
                     </Grid>
                     {/*picture follows and follow button*/}
                     <Grid container
-                          spacing={2}
-                          direction={'column'}
+                          direction="row-reverse"
                           border={0}
                           maxWidth={profileDimensions.page.width/2}
                           justifyContent="flex-start"
                           alignItems="center">
-                        <Grid item>
-                            <Box
-                                sx={{
-                                    border: 1,
-                                    width: profileDimensions.picture.width,
-                                    height: profileDimensions.picture.height
-                                }}
-                            >
-                                Picture
-                            </Box>
+                        <Grid container
+                              width={profileDimensions.page.width/2 - 350}
+                              direction={'column'}
+                              border={0}
+                              mr={5}
+                              justifyContent="flex-start"
+                              alignItems="center">
+                            <Grid item>
+                                <Box
+                                    sx={{
+                                        border: 1,
+                                        width: profileDimensions.picture.width,
+                                        height: profileDimensions.picture.height
+                                    }}
+                                >
+                                    Picture
+                                </Box>
+                            </Grid>
+                            <Grid item>
+                                <Box
+                                    sx={{
+                                        border: 0,
+                                        mt: 2
+                                    }}
+                                >
+                                    Followers: {userInfo.num_follows}
+                                </Box>
+                            </Grid>
+                            {!isCurrentLoggedUser &&
+                                (<Grid item>
+                                    {followThisUser ? (
+                                        <Button
+                                            sx={{
+                                                border: 1,
+                                                mt: 2
+                                            }}
+                                            onClick={handleUnfollow} // Add onClick event handler for unfollow
+                                        >
+                                            Unfollow
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            sx={{
+                                                border: 1,
+                                                mt: 2
+                                            }}
+                                            onClick={handleFollow} // Add onClick event handler for follow
+                                        >
+                                            Follow
+                                        </Button>
+                                    )}
+                                </Grid>)
+                            }
                         </Grid>
-                        <Grid item>
-                            <Box
-                                sx={{
-                                    border: 0,
-                                    mt: 2
-                                }}
+                        {isCurrentLoggedUser && (
+                            <Grid item
+                                  border={0}
+                                  alignSelf="flex-start"
+                                  justifySelf="center"
+                                  alignContent="center"
+                                  justifyContent="center"
                             >
-                                Followers: {userInfo.num_follows}
-                            </Box>
-                        </Grid>
-                        {!isCurrentLoggedUser &&
-                            (<Grid item>
-                                {followThisUser ? (
-                                    <Button
-                                        sx={{
-                                            border: 1,
-                                            mt: 2
-                                        }}
-                                        onClick={handleUnfollow} // Add onClick event handler for unfollow
-                                    >
-                                        Unfollow
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        sx={{
-                                            border: 1,
-                                            mt: 2
-                                        }}
-                                        onClick={handleFollow} // Add onClick event handler for follow
-                                    >
-                                        Follow
-                                    </Button>
-                                )}
-                            </Grid>)
-                        }
+                                <IconButton
+                                    onClick={() => {
+                                        navigate(`/edit-profile/${loggedInUser}`);
+                                    }}>
+                                    <SettingsIcon/>
+                                </IconButton>
+                            </Grid>
+                        )}
                     </Grid>
                 </Grid>
                 {/*Create quiz, sort, and quiz table*/}
@@ -240,7 +285,7 @@ export default function Profile({loggedInUser}) {
                                         </InputLabel>
                                         <NativeSelect
                                             defaultValue={sortMode}
-                                            onChange={(event) => setSortMode(event.target.value)}
+                                            onChange={handleSortChange}
                                             inputProps={{
                                                 name: 'Sort',
                                                 id: 'uncontrolled-native',
@@ -248,8 +293,9 @@ export default function Profile({loggedInUser}) {
                                         >
                                             <option value={'New'}>New</option>
                                             <option value={'Favorites'}>Favorites</option>
-                                            <option value={'Date'}>Date</option>
+                                            <option value={'Rating'}>Rating</option>
                                             <option value={'Name'}>Name</option>
+                                            <option value={'Old'}>Old</option>
                                         </NativeSelect>
                                     </FormControl>
                                 </Box>
@@ -262,19 +308,26 @@ export default function Profile({loggedInUser}) {
                                 <TableRow>
                                     {
                                       quizTableComps.map((component, idx) => (
-                                        <TableCell align="left" key={idx}>
-                                            {component}
-                                        </TableCell>
+                                          component !== "Date Created" ? (
+                                            <TableCell align="left" key={idx}>
+                                                {component}
+                                            </TableCell>
+                                          ) : (
+                                              <TableCell align="right" key={idx}>
+                                                  {component}
+                                              </TableCell>
+                                          )
                                     ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {userQuizzes.map((row)=>(
                                     <TableRow key={row.title}
-                                              sx={{border: 0 }}>
+                                              sx={{border: 0}}>
                                         <TableCell align="left"> <Link under line="hover" to={`/quiz/${row.quizID}`} >{row.title}</Link> </TableCell>
-                                        <TableCell align="left"> {0} </TableCell>
-                                        <TableCell align="left"> {row.created_at} </TableCell>
+                                        <TableCell align="left"> {row.num_favorites} </TableCell>
+                                        <TableCell align="left"> {row.rating} </TableCell>
+                                        <TableCell align="right"> {row.created_at.split("T")[0]} </TableCell>
                                     </TableRow>
 
                                 ))}
