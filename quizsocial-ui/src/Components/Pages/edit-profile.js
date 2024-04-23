@@ -25,6 +25,17 @@ export default function EditProfile ({loggedInUser}) {
     const [colorField, setColorField] = useState('blue');   // for color of the users profile
 
 
+    const [imageError, setImageError] = useState(false);
+
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
+    useEffect(() => {
+        // Reset imageError state when pictureField changes
+        setImageError(false);
+    }, [pictureField]);
+
     const handleUserNameChange = event => {
         console.log("handleUserNameChange called.");
 
@@ -37,6 +48,12 @@ export default function EditProfile ({loggedInUser}) {
         setBioField(event.target.value);
 
     };
+
+    const handleImageChange = event => {
+        console.log("handleImageChange called.");
+
+        setPictureField(event.target.value);
+    }
 
     const handleSubmitChanges = () => {
 
@@ -67,7 +84,7 @@ export default function EditProfile ({loggedInUser}) {
 
             // bio and later.... picture and color
             try {
-                const result = await api.alterProfileById(loggedInUser, bioField);
+                const result = await api.alterProfileById(loggedInUser, bioField, pictureField);
                 if (result.status === 200) {
                     // Handle success
                     console.log("Changed profile info successfully");
@@ -102,6 +119,8 @@ export default function EditProfile ({loggedInUser}) {
                 .then( userProfileJSONstring => {
                     console.log(`api returns user PROFILE INFO and it is: ${JSON.stringify(userProfileJSONstring)}`);
                     setBioField(userProfileJSONstring.data.bio);
+                    setPictureField(userProfileJSONstring.data.imageURL);
+                    setColorField(userProfileJSONstring.data.color);
                 });
         }
 
@@ -114,7 +133,7 @@ export default function EditProfile ({loggedInUser}) {
             sx={{
                 p: 3,
                 margin: 'auto',
-                mt: 3,
+                mt: 1,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -132,7 +151,7 @@ export default function EditProfile ({loggedInUser}) {
             >
                 {/*username*/}
                 <Grid container direction="column" width="45%" justifyContent="center"  alignItems="center" sx={{ border: 0 }}>
-                    <Typography variant="h6" fontSize="22px" align="left" alignSelf="flex-start">
+                    <Typography variant="h6" fontSize="20px" align="left" alignSelf="flex-start">
                         Username
                     </Typography>
                     <Grid item container justifyContent="center" xs={8} sx={{ border: 0 }}> {/* Decreased xs value */}
@@ -153,8 +172,8 @@ export default function EditProfile ({loggedInUser}) {
                     </Grid>
                 </Grid>
                 {/*bio*/}
-                <Grid container direction="column" width="90%" justifyContent="center" alignItems="center" sx={{ border: 0, mt: 2 }}>
-                    <Typography variant="h6" fontSize="22px" align="left" alignSelf="flex-start">
+                <Grid container direction="column" width="90%" justifyContent="center" alignItems="center" sx={{ border: 0, mt: 0 }}>
+                    <Typography variant="h6" fontSize="20px" align="left" alignSelf="flex-start">
                         Bio
                     </Typography>
                     <Grid item container justifyContent="center" xs={8} sx={{ border: 0 }}> {/* Decreased xs value */}
@@ -176,6 +195,53 @@ export default function EditProfile ({loggedInUser}) {
                         </FormControl>
                     </Grid>
                 </Grid>
+
+                <Grid container direction="column" width="90%" justifyContent="center"  alignItems="center" sx={{ border: 0, mt: 2 }}>
+                    <Typography variant="h6" fontSize="20px" align="left" alignSelf="flex-start">
+                        Profile Picture
+                    </Typography>
+                    <Grid item container direction='row' justifyContent="center" xs={8} sx={{ border: 0 }}> {/* Decreased xs value */}
+                        <FormControl fullWidth variant="outlined">
+                            <TextField
+                                id="outlined-multiline-flexible"
+                                placeholder="imageURL"
+                                value={pictureField}
+                                helperText="Provide an image link to display on your profile"
+                                onChange={handleImageChange}
+                                sx={{ width: '100%' }} // Ensure TextField takes full width
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Typography variant="h6" fontSize="10px" alignSelf="center" mt={2} mr={5}>
+                        Image:
+                    </Typography>
+                    <Box
+                        sx={{
+                            border: 1,
+                            width: 70,
+                            height: 70,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {imageError ? (
+                            <Typography fontSize="14px"  color="red" fontWeight="bold" style={{ textAlign: 'center' }}>
+                                Problem with image
+                            </Typography>
+                        ) : (
+
+                            <img
+                                src={pictureField}
+                                alt="Profile Picture"
+                                width={70}
+                                height={70}
+                                onError={handleImageError}
+                            />
+                        )}
+                    </Box>
+                </Grid>
+
                 <Grid item container justifyContent="center" alignItems="center" border={0} mt={5}>
                     <Button variant="outlined"
                             onClick={() => handleSubmitChanges()}

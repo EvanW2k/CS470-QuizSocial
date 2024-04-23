@@ -77,7 +77,7 @@ const getUserByName = (ctx) => {
 const getUserProfileById = (ctx) => {
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT userID, bio
+            SELECT userID, bio, imageURL, color
             FROM user_profile
             WHERE userID = ?
         `;
@@ -200,13 +200,13 @@ const alterProfileById = (ctx) => {
     return new Promise((resolve, reject) => {
         const query = `
             UPDATE user_profile
-            set bio = ?
+            set bio = ?, imageURL = ?
             where userID = ?
             ;
         `;
         dbConnection.query({
             sql: query,
-            values: [ctx.request.body.bio, ctx.params.userID]
+            values: [ctx.request.body.bio, ctx.request.body.image, ctx.params.userID]
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in UserController::alterProfileById", error);

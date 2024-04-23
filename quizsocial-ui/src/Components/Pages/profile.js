@@ -24,6 +24,12 @@ export default function Profile({loggedInUser}) {
 
     const [followThisUser, setFollowThisUser] = useState(undefined);
 
+    const [imageError, setImageError] = useState(false);
+
+    const handleImageError = () => {
+        setImageError(true);
+    };
+
     const handleUnfollow = () => {
         const api = new API();
         async function deleteFollow() {
@@ -200,10 +206,23 @@ export default function Profile({loggedInUser}) {
                                     sx={{
                                         border: 1,
                                         width: profileDimensions.picture.width,
-                                        height: profileDimensions.picture.height
+                                        height: profileDimensions.picture.height,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    Picture
+                                    {imageError ? (
+                                        <Typography fontSize="14px"  color="red" fontWeight="bold" style={{ textAlign: 'center' }}>
+                                            Problem with image
+                                        </Typography>
+                                    ) : (
+                                        <img src={userProfileInfo.imageURL}
+                                             alt="Profile Picture"
+                                             width={128}
+                                             height={128}
+                                             onError={handleImageError}/>
+                                    )}
                                 </Box>
                             </Grid>
                             <Grid item>

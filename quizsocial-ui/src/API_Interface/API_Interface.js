@@ -54,8 +54,8 @@ export default class APIInterface {
         return axiosAgent.delete(`user/delete/${userID}`);
     }
 
-    async alterProfileById (userID, bio) {
-        return axiosAgent.post(`user/${userID}/alter-profile`, {bio});
+    async alterProfileById (userID, bio, image) {
+        return axiosAgent.post(`user/${userID}/alter-profile`, {bio, image});
     }
 
     async alterUserById (userID, username) {

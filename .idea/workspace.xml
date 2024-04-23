@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile">
-      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/quizsocial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/quizsocial.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/setAccessToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/setAccessToken.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +91,8 @@
       <workItem from="1713037453487" duration="17718000" />
       <workItem from="1713149738169" duration="3511000" />
       <workItem from="1713231021577" duration="1942000" />
-      <workItem from="1713811716145" duration="12715000" />
+      <workItem from="1713811716145" duration="13452000" />
+      <workItem from="1713902464233" duration="3446000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -137,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713832963706</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile">
+      <option name="closed" value="true" />
+      <created>1713842249967</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1713842249967</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
