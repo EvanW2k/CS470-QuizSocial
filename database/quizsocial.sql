@@ -31,7 +31,7 @@ CREATE TABLE `questions` (
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`questionID`),
   KEY `quiz_set_id` (`quizID`),
-  CONSTRAINT `fk_quiz_id_2` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`) ON DELETE CASCADE
+  CONSTRAINT `fk_quiz_id_2` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -58,8 +58,8 @@ CREATE TABLE `quiz_favorites` (
   `favorited_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `fk_user_id` (`userID`),
   KEY `fk_quiz_id` (`quizID`),
-  CONSTRAINT `fk_quiz_id` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`) ON DELETE CASCADE,
-  CONSTRAINT `fk_user_id` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE
+  CONSTRAINT `fk_quiz_id` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,8 +117,8 @@ CREATE TABLE `quiz_ratings` (
   `rated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   KEY `quizID` (`quizID`),
   KEY `userID` (`userID`),
-  CONSTRAINT `quiz_ratings_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`) ON DELETE CASCADE,
-  CONSTRAINT `quiz_ratings_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE
+  CONSTRAINT `quiz_ratings_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`),
+  CONSTRAINT `quiz_ratings_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,7 +128,7 @@ CREATE TABLE `quiz_ratings` (
 
 LOCK TABLES `quiz_ratings` WRITE;
 /*!40000 ALTER TABLE `quiz_ratings` DISABLE KEYS */;
-INSERT INTO `quiz_ratings` VALUES (2,'k.yuen',3.5,'2024-04-19 17:58:58'),(2,'h.zhang',4.5,'2024-04-19 18:13:40');
+INSERT INTO `quiz_ratings` VALUES (2,'k.yuen',3.5,'2024-04-19 17:58:58');
 /*!40000 ALTER TABLE `quiz_ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -177,15 +177,15 @@ CREATE TABLE `quizzes` (
   `quizID` int NOT NULL AUTO_INCREMENT,
   `userID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `num_favorites` int NOT NULL DEFAULT '0',
   `rating` float DEFAULT NULL,
+  `num_favorites` int NOT NULL DEFAULT '0',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`quizID`),
   KEY `user_id` (`userID`),
-  CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
-  CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE
+  CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  CONSTRAINT `quizzes_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -195,7 +195,7 @@ CREATE TABLE `quizzes` (
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set',0,'Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43',NULL),(2,'e.walters','My Math quiz #1',2,NULL,'2024-04-13 17:35:36','2024-04-19 18:13:40',4),(3,'e.walters','My Math quiz #2',1,NULL,'2024-04-13 17:35:40','2024-04-15 19:10:51',NULL);
+INSERT INTO `quizzes` VALUES (1,'b23c2d39-f009-11ee-b93a-085bd6555b53','Test set',NULL,0,'Quiz set for testing','2024-04-08 01:18:43','2024-04-08 01:18:43'),(2,'e.walters','My Math quiz #1',3.5,2,NULL,'2024-04-13 17:35:36','2024-04-19 18:23:55'),(3,'e.walters','My Math quiz #2',NULL,1,NULL,'2024-04-13 17:35:40','2024-04-15 19:10:51');
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,4 +336,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-19 18:22:00
+-- Dump completed on 2024-04-22 17:39:49
