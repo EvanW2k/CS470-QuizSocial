@@ -119,7 +119,7 @@ CREATE TABLE `quiz_ratings` (
   KEY `userID` (`userID`),
   CONSTRAINT `quiz_ratings_ibfk_1` FOREIGN KEY (`quizID`) REFERENCES `quizzes` (`quizID`),
   CONSTRAINT `quiz_ratings_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

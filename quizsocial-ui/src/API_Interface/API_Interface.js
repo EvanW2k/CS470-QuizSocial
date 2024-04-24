@@ -97,4 +97,8 @@ export default class APIInterface {
     async getQuizByUserId(userID) {
         return axiosAgent.get(`quizzes/byID/${userID}`);
     }
+
+    async getQuizRatings(quizID) {
+        return axiosAgent.get(`quizzes/rating/${quizID}`);
+    }
 }

@@ -156,11 +156,60 @@ const getQuizzesByTitle = (ctx) => {
     });
 }
 
+const getQuizRatings = (ctx) => {
+    console.log("Getting quiz ratings");
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT rating
+            FROM quizzes
+            WHERE quizID = ?
+        `;
+
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizController::getQuizRatings", error);
+                ctx.body = [];
+                ctx.status = 500;
+                return reject(error);
+            }
+            ctx.body = tuples[0];
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connecttion error in getQuizRatings.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+    });
+}
+
+
+const rateQuiz = (ctx) => {
+    console.log("Rating a quiz");
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO quiz_ratings (quizID, userID, rating)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE rating
+        `;
+        
+        dbConnection.query({
+            sql: query,
+            values: []
+        })
+        
+    });
+}
+
 
 module.exports = {
     getQuizById,
     getQuestionsForQuiz,
     allQuizzes,
     getQuizByUserId,
-    getQuizzesByTitle
+    getQuizzesByTitle,
+    getQuizRatings
 };

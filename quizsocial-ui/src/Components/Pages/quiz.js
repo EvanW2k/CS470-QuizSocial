@@ -10,11 +10,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { useParams } from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
 
 
-export default function Quiz() {
+export default function Quiz({loggedInUser}) {
 
     const {quizID} = useParams();
 
@@ -22,6 +22,8 @@ export default function Quiz() {
     const [quizInfo, setQuizInfo] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [rating, setRating] = useState(0);
+
+
 
     useEffect(() => {
         const api = new API();
@@ -32,19 +34,29 @@ export default function Quiz() {
                 .then( quizJSONstring => {
                     console.log(`api returns: ${JSON.stringify(quizJSONstring)}`);
                     setQuizInfo(quizJSONstring.data);
+                    let userID = quizInfo.userID;
+                    if (loggedInUser === userID) {
+                        setIsCurrentLoggedUser(true);
+                    }
                 });
             
             api.getQuestionsForQuiz(quizID)
                 .then( questionsJSONstring => {
                     console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
-                    setQuestions(questionsJSONstring.data)
+                    setQuestions(questionsJSONstring.data);
+                })
+
+            api.getQuizRatings(quizID)
+                .then( ratingsJSONstring => {
+                    console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
+                    setRating(ratingsJSONstring.data.rating);
                 })
         } 
         
         getQuizInfoById();
-    }, []);
-
-    console.log('quiz info:', quizInfo);
+        console.log('logged in', loggedInUser);
+        console.log(isCurrentLoggedUser);
+    }, [setIsCurrentLoggedUser])
 
     return (
         <Paper
@@ -71,6 +83,7 @@ export default function Quiz() {
                         <Grid item sx={{marginBottom: 2}}>
                             <Rating
                                 value={rating}
+                                precision={0.5}
                                 onChange={(event, newRating) => {
                                     setRating(newRating)
                                 }}

@@ -286,6 +286,9 @@ export default function Profile({loggedInUser}) {
                             {isCurrentLoggedUser &&
                                 (<Grid item>
                                     <Button
+                                        onClick={() => {
+                                            navigate(`/createQuiz`)
+                                        }}
                                         sx={{
                                             border: 1,
                                             mt: 2
@@ -343,7 +346,14 @@ export default function Profile({loggedInUser}) {
                                 {userQuizzes.map((row)=>(
                                     <TableRow key={row.title}
                                               sx={{border: 0}}>
-                                        <TableCell align="left"> <Link under line="hover" to={`/quiz/${row.quizID}`} >{row.title}</Link> </TableCell>
+                                        <TableCell align="left"> 
+                                            <Link 
+                                                under line="hover" 
+                                                to={`/quiz/${row.quizID}`} 
+                                            >
+                                                {row.title}
+                                            </Link> 
+                                        </TableCell>
                                         <TableCell align="left"> {row.num_favorites} </TableCell>
                                         <TableCell align="left"> {row.rating} </TableCell>
                                         <TableCell align="right"> {row.created_at.split("T")[0]} </TableCell>

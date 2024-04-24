@@ -12,7 +12,8 @@ import Profile from './Components/Pages/profile';
 import EditProfile from './Components/Pages/edit-profile';
 import Quiz from './Components/Pages/quiz';
 import Register from './Components/Pages/register';
-import Search from  './Components/Pages/search'
+import Search from  './Components/Pages/search';
+import CreateQuiz from './Components/Pages/createQuiz';
 
 export default function Main() {
 
@@ -30,9 +31,10 @@ export default function Main() {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile/:userID" element={<Profile loggedInUser={userID}/>} />
                 <Route path="/edit-profile/:userID" element={<EditProfile loggedInUser={userID}/>} />
-                <Route path="/quiz/:quizID" element={<Quiz/>} />
+                <Route path="/quiz/:quizID" element={<Quiz loggedInUser={userID}/>} />
                 <Route path="/register" element={<Register userID={userID} setUserID={setUserID} />} />
                 <Route path="/search" element={<Search/>} />
+                <Route path="/createQuiz" element={<CreateQuiz loggedInUser={userID}/>} />
             </Routes>
         </Fragment>
     )
