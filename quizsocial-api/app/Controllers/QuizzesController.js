@@ -198,7 +198,7 @@ const rateQuiz = (ctx) => {
         
         dbConnection.query({
             sql: query,
-            values: []
+            values: [ctx.params.quizID, ctx.]
         })
         
     });
@@ -207,8 +207,13 @@ const rateQuiz = (ctx) => {
 const createQuiz = (ctx) => {
     return new Promise((resolve, reject) => {
         const query = `
-                
+            INSERT INTO quizzes (userID, title, isPublic)
+            VALUES (?, ?, ?)
         `;
+        dbConnection.query({
+            sql: query,
+            values: []
+        })
     });
 }
 
