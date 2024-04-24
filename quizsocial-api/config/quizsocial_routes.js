@@ -47,7 +47,7 @@ userRouter.use(VerifyJWT);
 userRouter.get('/:userID/user-info', UserController.getUserById, err => console.log(`getUserById ran into an error: ${err}`));
 userRouter.get('/:userID/user-profile', UserController.getUserProfileById, err => console.log(`getUserProfileById ran into an error: ${err}`));
 userRouter.get('/:userID/follows', UserController.getFollowsById, err => console.log(`getFollowsById ran into an error: ${err}`));
-
+userRouter.get('/search-info', UserController.getALlUserInfoByID, err => console.log(`getAllUserInfoByID ran into an error: ${err}`));
 userRouter.get('/search', UserController.getUserByName);
 userRouter.post('/create/:userID', UserController.createUserByIdAndPass, err => console.log(`createUserByIdAndPass ran into an error: ${err}`));
 userRouter.delete('/delete/:userID', UserController.deleteUserById, err => console.log(`deleteUserById ran into an error: ${err}`));
@@ -71,10 +71,10 @@ const quizzesRouter = require('koa-router')({
 
 quizzesRouter.use(VerifyJWT);
 quizzesRouter.get('/all-quizzes', QuizzesController.allQuizzes, err => console.log(`allRoutes ran into an error: ${err}`));
+quizzesRouter.get('/search', QuizzesController.getQuizzesByTitle);
 quizzesRouter.get('/byID/:userID', QuizzesController.getQuizByUserId);
 quizzesRouter.get('/:quizID', QuizzesController.getQuizById);
 quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
-quizzesRouter.get('/search', QuizzesController.getQuizzesByTitle);
 quizzesRouter.get('/rating/:quizID', QuizzesController.getQuizRatings);
 
 

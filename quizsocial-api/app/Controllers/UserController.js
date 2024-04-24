@@ -256,6 +256,42 @@ const alterUserById = (ctx) => {
     });
 }
 
+const getALlUserInfoByID = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT u.*, up.*
+            FROM users u
+            INNER JOIN user_profile up ON u.userID = up.userID
+            WHERE u.userName like ?
+
+        `;
+        const userInfoSearch = `%${ctx.query.username}%`; // Use query instead of params
+        dbConnection.query({
+            sql: query,
+            values: [userInfoSearch]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::getUserByName", error);
+                ctx.body = [];
+                ctx.status = 440;
+                return reject(error);
+            }
+            if (tuples.length === 0) {
+                ctx.body = "No user found with the given username part.";
+                ctx.status = 404;
+            } else {
+                ctx.body = tuples;
+                ctx.status = 200;
+            }
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in getUserByName.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 506;
+    });
+}
+
 
 
 module.exports = {
@@ -266,5 +302,6 @@ module.exports = {
     createUserByIdAndPass,
     deleteUserById,
     alterProfileById,
-    alterUserById
+    alterUserById,
+    getALlUserInfoByID
 };

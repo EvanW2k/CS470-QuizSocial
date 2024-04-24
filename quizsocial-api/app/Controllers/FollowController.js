@@ -62,24 +62,28 @@ const deleteFollowWithIDs = (ctx) => {
 }
 
 const getFollowingByUserID = (ctx) => {
+    console.log("Getting following info");
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT * FROM user_follows
-            WHERE follower_id = ?
+            SELECT uf.follower_id, uf.followed_id, uf.followed_date, up.bio, up.imageURL, up.color
+            FROM user_follows uf
+            INNER JOIN user_profile up ON uf.followed_id = up.userID
+            WHERE uf.follower_id = ?
         `;
+
         dbConnection.query({
             sql: query,
             values: [ctx.params.userID]
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in FollowController::getFollowingByUserID", error);
-                ctx.body = [];
-                ctx.status = 505;
+                ctx.body = "Error accessing the database";
+                ctx.status = 500;
                 return reject(error);
             }
             if (tuples.length === 0) {
                 ctx.body = "This user doesn't follow any other user.";
-                ctx.status = 203; // Not Found
+                ctx.status = 404;
             } else {
                 ctx.body = tuples;
                 ctx.status = 200;
@@ -92,6 +96,8 @@ const getFollowingByUserID = (ctx) => {
         ctx.status = 500;
     });
 }
+
+
 
 module.exports = {
     getFollowingByUserID,

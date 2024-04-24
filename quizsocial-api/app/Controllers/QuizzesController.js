@@ -195,12 +195,12 @@ const rateQuiz = (ctx) => {
             VALUES (?, ?, ?)
             ON DUPLICATE KEY UPDATE rating
         `;
-        
+
         dbConnection.query({
             sql: query,
-            values: [ctx.params.quizID, ctx.]
+            values: []
         })
-        
+
     });
 }
 
