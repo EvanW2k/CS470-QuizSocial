@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography, Paper, Grid, Rating, Button} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
@@ -9,13 +9,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate, Link} from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
 
 
 export default function Quiz({loggedInUser}) {
 
     const {quizID} = useParams();
+    const navigate = useNavigate();
 
     const [isCurrentLoggedUser, setIsCurrentLoggedUser] = useState(false);
     const [quizInfo, setQuizInfo] = useState([]);
@@ -31,7 +32,7 @@ export default function Quiz({loggedInUser}) {
 
             api.getQuizById(quizID)
                 .then( quizJSONstring => {
-                    console.log(`api returns: ${JSON.stringify(quizJSONstring)}`);
+                    console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
                     setQuizInfo(quizJSONstring.data);
                     let userID = quizInfo.userID;
                     if (loggedInUser === userID) {
@@ -57,6 +58,16 @@ export default function Quiz({loggedInUser}) {
         console.log(isCurrentLoggedUser);
     }, [setIsCurrentLoggedUser])
 
+    const goToFlashCards = () => {
+        navigate(`/flash-cards/${quizID}`);
+    };
+    const goToMatchGame = () => {
+        navigate(`/match-game/${quizID}`);
+    };
+    const goToFillingTheBlank = () => {
+        navigate(`/filling-the-blank/${quizID}`);
+    };
+
     return (
         <Paper
             sx={{
@@ -70,7 +81,8 @@ export default function Quiz({loggedInUser}) {
                 border: 0
             }}
         >
-            {/* Container for the whole page */} 
+            {/* Container for the whole page */
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!", quizInfo.userID)}
             <Grid container direction='column' justifyContent='center' alignItems='flex-start'>
                 {/* Container for quiz info at the top */}
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start'>
@@ -78,7 +90,15 @@ export default function Quiz({loggedInUser}) {
                         <Grid item container direction='column' sx={{marginBottom: 2}}>
                             <Typography variant='h3'>{quizInfo.title}</Typography>
                         </Grid>
-                        <Grid item sx={{marginBottom: 2}}>{"By: " + quizInfo.username}</Grid>
+                        <Grid item sx={{ marginBottom: 2 }}>
+                            {"By: "}
+                            <Link
+                                underline="hover" // corrected the property name
+                                to={`/profile/${quizInfo.userID}`} // dynamically building the URL
+                            >
+                                {quizInfo.username}
+                            </Link>
+                        </Grid>
                         <Grid item sx={{marginBottom: 2}}>
                             <Rating
                                 value={rating}
@@ -118,9 +138,10 @@ export default function Quiz({loggedInUser}) {
                 {/* Buttons for study methods */}
                 <Grid container spacing={5} justifyContent={'center'}>
                     <Grid item>
-                        <Button 
+                        <Button
                             variant='outlined'
-                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                            style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
+                            onClick={goToFlashCards}
                         >
                             Flash Card
                         </Button>
@@ -134,17 +155,19 @@ export default function Quiz({loggedInUser}) {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button 
+                        <Button
                             variant='outlined'
-                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                            style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
+                            onClick={goToFillingTheBlank}
                         >
                             Fill in the Blank
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button 
+                        <Button
                             variant='outlined'
-                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                            style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
+                            onClick={goToMatchGame}
                         >
                             Memory Match
                         </Button>

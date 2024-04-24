@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, ToggleButtonGroup, ToggleButton, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {
+    Box, TextField, Button, ToggleButtonGroup, ToggleButton,
+    Typography, Card, CardContent, CardActions, CardMedia
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {Link} from "react-router-dom";
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchType, setSearchType] = useState('username'); // Default search type
+    const [searchType, setSearchType] = useState('username');
     const [searchResults, setSearchResults] = useState([]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
+    useEffect(() => {
+        setSearchResults([])
+        setSearchTerm('')
+    }, [searchType]);
     const handleTypeChange = (event, newType) => {
         if (newType !== null) {
             setSearchType(newType);
@@ -19,23 +26,33 @@ export default function SearchPage() {
     };
 
     const performSearch = () => {
+        let url;
         if (searchType === 'username' && searchTerm) {
-            axios.get(`/user/search?username=${encodeURIComponent(searchTerm)}`)
-                .then(response => {
-                    setSearchResults(response.data); // Assuming the response data is the array of users
-                })
-                .catch(error => {
-                    console.error('Search failed:', error);
-                    setSearchResults([]); // Clear results on error
-                });
+            url = `/user/search-info?username=${encodeURIComponent(searchTerm)}`;
+        } else if (searchType === 'quiz' && searchTerm) {
+            url = `/quizzes/search?title=${encodeURIComponent(searchTerm)}`;
+        } else {
+            return;
         }
+
+        axios.get(url)
+            .then(response => {
+                if (Array.isArray(response.data)) {
+                    setSearchResults(response.data);
+                } else {
+                    console.error('Expected array, got:', response.data);
+                    setSearchResults([]);
+                }
+            })
+            .catch(error => {
+                console.error('Search failed:', error);
+                setSearchResults([]);
+            });
     };
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
-            <Typography variant="h4" sx={{ mb: 4 }}>
-                Search
-            </Typography>
+            <Typography variant="h4" sx={{ mb: 4 }}>Search</Typography>
             <TextField
                 label="Search"
                 variant="outlined"
@@ -49,42 +66,51 @@ export default function SearchPage() {
                 onChange={handleTypeChange}
                 sx={{ mb: 2 }}
             >
-                <ToggleButton value="username" aria-label="username">
-                    Username
-                </ToggleButton>
-                <ToggleButton value="quiz" aria-label="quiz">
-                    Quiz
-                </ToggleButton>
-                <ToggleButton value="question" aria-label="question">
-                    Question
-                </ToggleButton>
+                <ToggleButton value="username" aria-label="username">Username</ToggleButton>
+                <ToggleButton value="quiz" aria-label="quiz">Quiz</ToggleButton>
             </ToggleButtonGroup>
             <Button variant="contained" onClick={performSearch} sx={{ width: '80%', maxWidth: 500 }}>
                 Search
             </Button>
             {searchResults.length > 0 && (
-                <TableContainer component={Paper} sx={{ mt: 2, maxWidth: 900, width: '100%' }}>
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>User ID</TableCell>
-                                <TableCell align="right">Username</TableCell>
-                                <TableCell align="right">Email</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {searchResults.map((row) => (
-                                <TableRow key={row.userID}>
-                                    <TableCell component="th" scope="row">
-                                        <Link under line="hover" to={`/profile/${row.userID}`} >{row.userID}</Link>
-                                    </TableCell>
-                                    <TableCell align="right">{row.username}</TableCell>
-                                    <TableCell align="right">{row.email}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
+                    {searchResults.map((result) => (
+                        searchType === 'username' ?
+                            <Card key={result.userID} sx={{ display: 'flex', flexDirection: 'row', mb: 2, width: '100%', maxWidth: 700 }}>
+                                <CardMedia
+                                    component="img"
+                                    sx={{ width: 151 }}
+                                    image= {result.imageURL}
+                                    alt="Placeholder"
+                                />
+                                <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
+                                    <Typography variant="h6" noWrap>{result.username}</Typography>
+                                    <Typography variant="subtitle1" color="text.secondary" noWrap>
+                                        ID: {result.userID}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small" component={Link} to={`/profile/${result.userID}`}>
+                                        View Profile
+                                    </Button>
+                                </CardActions>
+                            </Card> :
+                            <Card key={result.quizID} sx={{ mb: 2, width: '100%', maxWidth: 700 }}>
+                                <CardContent>
+                                    <Typography variant="h6" noWrap>{result.title}</Typography>
+                                    <Typography variant="subtitle1" color="text.secondary" noWrap>
+                                        ID: {result.quizID}
+                                    </Typography>
+                                    <Typography variant="body1">{result.description}</Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small" component={Link} to={`/quiz/${result.quizID}`}>
+                                        View Quiz
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                    ))}
+                </Box>
             )}
         </Box>
     );

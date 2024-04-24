@@ -80,24 +80,31 @@ export default function Profile({loggedInUser}) {
 
     const handleSortChange = event => {
         setSortMode(event.target.value);
-
-        // resort quizzes
-        if (sortMode === "Name") {
-            return setUserQuizzes([...userQuizzes].sort((a, b) => a.title.localeCompare(b.title)));
-        } else if (sortMode === "Favorites") {
-            return setUserQuizzes([...userQuizzes].sort((a, b) => b.num_favorites - a.num_favorites));
-        } else if (sortMode === "Rating") {
-            return setUserQuizzes([...userQuizzes].sort((a, b) => b.rating - a.rating));
-        } else if (sortMode === "New") {
-            return setUserQuizzes([...userQuizzes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
-        } else if (sortMode === "Old") {
-            return setUserQuizzes([...userQuizzes].sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
-        } else {
-            // Default to sorting by quizName if sortMode is not recognized
-            return setUserQuizzes([...userQuizzes].sort((a, b) => a.quizID.localeCompare(b.quizID)));
-        }
-
     }
+
+    useEffect(() => {
+        if (userQuizzes.length > 0) {
+            switch (sortMode) {
+                case "Name":
+                    setUserQuizzes([...userQuizzes].sort((a, b) => a.title.localeCompare(b.title)));
+                    break;
+                case "Favorites":
+                    setUserQuizzes([...userQuizzes].sort((a, b) => b.num_favorites - a.num_favorites));
+                    break;
+                case "Rating":
+                    setUserQuizzes([...userQuizzes].sort((a, b) => b.rating - a.rating));
+                    break;
+                case "New":
+                    setUserQuizzes([...userQuizzes].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
+                    break;
+                case "Old":
+                    setUserQuizzes([...userQuizzes].sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [sortMode, userQuizzes]);
 
     useEffect(() => {
         const api = new API();

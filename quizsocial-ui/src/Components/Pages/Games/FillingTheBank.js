@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Button, TextField } from '@mui/material';
 import API from '../../../API_Interface/API_Interface';
-
-export default function FlashCard(props) {
+import { useParams } from 'react-router-dom';
+export default function FillingTheBlank(props) {
+    const { quizID } = useParams();
     const [cards, setCards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
@@ -12,7 +13,7 @@ export default function FlashCard(props) {
         const fetchQuizzes = async () => {
             const api = new API();
             try {
-                const response = await api.getQuestionsForQuiz('1'); 
+                const response = await api.getQuestionsForQuiz(quizID);
                 if (response.data && response.data.length > 0) {
                     setCards(response.data);
                 } else {

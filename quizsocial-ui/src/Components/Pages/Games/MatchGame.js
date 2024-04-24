@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material';
 import API from '../../../API_Interface/API_Interface';
+import { useParams } from 'react-router-dom';
 
 const MatchGame = () => {
+    const { quizID } = useParams();
+    console.log("MatchGame Loaded", quizID);
     const [cards, setCards] = useState([]);
     const [flippedIndices, setFlippedIndices] = useState([]);
     const [matchedPairs, setMatchedPairs] = useState([]);
     const [gameOver, setGameOver] = useState(false);
-    const [gameSize, setGameSize] = useState(0); // 0 implies no size selected
+    const [gameSize, setGameSize] = useState(0);
 
     useEffect(() => {
         if (gameSize !== 0) {
@@ -18,8 +21,8 @@ const MatchGame = () => {
     const fetchQuizzes = async () => {
         const api = new API();
         try {
-            const response = await api.getQuestionsForQuiz('1');
-            const pairsNeeded = gameSize * gameSize / 2;  // Calculate needed pairs based on game size
+            const response = await api.getQuestionsForQuiz(quizID);
+            const pairsNeeded = gameSize * gameSize / 2;
 
             if (response.data && response.data.length >= pairsNeeded) {
                 // Create potential pairs
@@ -28,7 +31,7 @@ const MatchGame = () => {
                     { id: d.questionID + '-a', content: d.answer, type: 'answer', questionID: d.questionID }
                 ]);
 
-                // Shuffle cards to randomize the board layout
+
                 const shuffledCards = shuffleArray(potentialPairs);
 
                 setCards(shuffledCards);
@@ -52,7 +55,7 @@ const MatchGame = () => {
         if (newFlippedIndices.length === 2) {
             const match = checkForMatch(newFlippedIndices);
             if (match) {
-                const newMatches = [...matchedPairs, newFlippedIndices[0], newFlippedIndices[1]]; // Add both indices of the matched cards
+                const newMatches = [...matchedPairs, newFlippedIndices[0], newFlippedIndices[1]];
                 setMatchedPairs(newMatches);
                 setFlippedIndices([]);
                 checkGameOver(newMatches);
@@ -71,7 +74,7 @@ const MatchGame = () => {
     };
 
     const checkGameOver = (matches) => {
-        if (matches.length === cards.length) { // Check if the length of matchedPairs equals the number of cards
+        if (matches.length === cards.length) {
             console.log('Game ended');
             setGameOver(true);
         }
@@ -88,6 +91,9 @@ const MatchGame = () => {
     return (
         <Box sx={{ flexGrow: 1, textAlign: 'center', maxWidth: 800, margin: 'auto' }}>
             <Typography variant="h4" sx={{ m: 4 }}>Match Game</Typography>
+            {gameOver && (
+                <Typography variant="h5" sx={{ mt: 4 }}>You got it!</Typography>
+            )}
             {!gameSize ? (
                 <Box>
                     <Button variant="contained" onClick={() => setGameSize(4)}>4x4 Game</Button>
@@ -110,9 +116,7 @@ const MatchGame = () => {
                     ))}
                 </Grid>
             )}
-            {gameOver && (
-                <Typography variant="h5" sx={{ mt: 4 }}>You got it!</Typography>
-            )}
+
         </Box>
     );
 };

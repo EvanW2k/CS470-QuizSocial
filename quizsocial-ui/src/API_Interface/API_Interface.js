@@ -101,4 +101,8 @@ export default class APIInterface {
     async getQuizRatings(quizID) {
         return axiosAgent.get(`quizzes/rating/${quizID}`);
     }
+
+    async getALlUserInfoByID(userName) {
+        return axiosAgent.get(`/search-info?${userName}`);
+    }
 }

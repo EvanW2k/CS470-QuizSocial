@@ -1,18 +1,19 @@
-import API from '../../../API_Interface/API_Interface'
+import API from '../../../API_Interface/API_Interface';
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-
-export default function FlashCard(props) {
+function FlashCard() {
+    const { quizID } = useParams();
     const [cards, setCards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [isQuestion, setIsQuestion] = useState(true);  // State to toggle between question and answer
+    const [isQuestion, setIsQuestion] = useState(true);
 
     useEffect(() => {
         const fetchQuizzes = async () => {
             const api = new API();
             try {
-                const response = await api.getQuestionsForQuiz('1'); 
+                const response = await api.getQuestionsForQuiz(quizID);
                 if (response.data && response.data.length > 0) {
                     setCards(response.data);
                 } else {
@@ -24,7 +25,7 @@ export default function FlashCard(props) {
         };
 
         fetchQuizzes();
-    }, []);
+    }, [quizID]);
 
     const handlePrev = () => {
         if (currentCardIndex > 0) {
@@ -70,5 +71,6 @@ export default function FlashCard(props) {
             {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
         </Box>
     );
-};
+}
 
+export default FlashCard;
