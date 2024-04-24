@@ -2,8 +2,7 @@ import {useEffect, useState} from 'react';
 import {Typography, Paper, Grid, Rating, Button} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/Star';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -110,11 +109,8 @@ export default function Quiz({loggedInUser}) {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <IconButton aria-label='like'>
-                                <ThumbUpIcon/>
-                            </IconButton>
-                            <IconButton aria-label='dislike'>
-                                <ThumbDownIcon/>
+                            <IconButton aria-label='settings'>
+                                <SettingsIcon/>
                             </IconButton>
                         </Grid>
                     </Grid>
