@@ -268,7 +268,7 @@ DROP TABLE IF EXISTS `user_profile`;
 CREATE TABLE `user_profile` (
   `userID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `bio` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `imageURL` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'https://i.imgur.com/V4RclNb.png',
+  `imageURL` text COLLATE utf8mb4_general_ci,
   `color` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`userID`),
   CONSTRAINT `user_profile_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE
@@ -281,7 +281,7 @@ CREATE TABLE `user_profile` (
 
 LOCK TABLES `user_profile` WRITE;
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
-INSERT INTO `user_profile` VALUES ('ali.kooshesh','','https://i.imgur.com/V4RclNb.png',NULL),('b23c2d39-f009-11ee-b93a-085bd6555b53','','https://i.imgur.com/V4RclNb.png',NULL),('Daffy_Duck','Quacktastic comedian with a flair for the dramatic','https://i.imgur.com/4kXExgW.jpeg',NULL),('Donald-Duck-122','Sailor extraordinaire and Disney\'s feathered icon!','https://i.imgur.com/8vLUh6z.png',NULL),('e.walters','Hello my name is Evan. I like making quizzes about math, cs, and sometimes geography! I am also a CS major at SSU!','https://i.imgur.com/q7OMfuDb.jpg',NULL),('george.washington','Founding Father, Commander-in-Chief of the Continental Army, and first President of the United States.','https://i.imgur.com/5q2jg9ib.jpg',NULL),('h.zhang','My name is Hanpei, This is my quiz social page!','https://i.imgur.com/V4RclNb.png',NULL),('Jennifer_W','','https://i.imgur.com/V4RclNb.png',NULL),('Joe.Smith','','https://i.imgur.com/V4RclNb.png',NULL),('k.yuen','Helllllo','https://i.imgur.com/V4RclNb.png',NULL),('Math.Tutor','','https://i.imgur.com/V4RclNb.png',NULL),('new.user','','https://i.imgur.com/V4RclNb.png',NULL),('quizMaker22','','https://i.imgur.com/V4RclNb.png',NULL),('user55443245','','https://i.imgur.com/V4RclNb.png',NULL);
+INSERT INTO `user_profile` VALUES ('ali.kooshesh','','https://i.imgur.com/V4RclNb.png',NULL),('b23c2d39-f009-11ee-b93a-085bd6555b53','','https://i.imgur.com/V4RclNb.png',NULL),('Daffy_Duck','Quacktastic comedian with a flair for the dramatic','https://i.imgur.com/4kXExgW.jpeg',NULL),('Donald-Duck-122','Sailor extraordinaire and Disney\'s feathered icon!','https://i.imgur.com/8vLUh6z.png',NULL),('e.walters','Hello my name is Evan. I like making quizzes about math, cs, and sometimes geography! I am also a CS major at SSU!','https://i.imgur.com/q7OMfuDb.jpg',NULL),('george.washington','Founding Father, Commander-in-Chief of the Continental Army, and first President of the United States.','https://i.imgur.com/5q2jg9ib.jpg',NULL),('h.zhang','My name is Hanpei, This is my quiz social page!','https://i.imgur.com/V4RclNb.png',NULL),('Jennifer_W','','https://i.imgur.com/V4RclNb.png',NULL),('Joe.Smith','','https://i.imgur.com/V4RclNb.png',NULL),('k.yuen','Helllllo','https://i.imgur.com/V4RclNb.png',NULL),('Math.Tutor','','https://i.imgur.com/V4RclNb.png',NULL),('new.user','','https://www.catschool.co/wp-content/uploads/2023/06/orange-tabby-kitten.png',NULL),('quizMaker22','','https://i.imgur.com/V4RclNb.png',NULL),('user55443245','','https://i.imgur.com/V4RclNb.png',NULL);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +310,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('ali.kooshesh','ali.kooshesh',NULL,'MyPassword',1,'2024-04-19 14:09:48','2024-04-19 17:44:32'),('b23c2d39-f009-11ee-b93a-085bd6555b53','newUser','newuser@example.com','userPassword',0,'2024-04-01 02:24:16','2024-04-01 02:24:16'),('Daffy_Duck','The Real Daffy Duck',NULL,'321',1,'2024-04-19 17:22:41','2024-04-24 12:17:56'),('Donald-Duck-122','Donald-Duck-122',NULL,'abc',1,'2024-04-19 17:16:22','2024-04-19 17:42:33'),('e.walters','Evan_Walters','waltersev@sonoma.edu','password',6,'2024-04-13 17:02:21','2024-04-22 19:46:33'),('george.washington','Washington',NULL,'1776',1,'2024-04-19 17:30:22','2024-04-24 12:10:42'),('h.zhang','Zeroxa','zhangha@sonoma.edu','password',4,'2024-04-13 17:04:13','2024-04-19 17:44:39'),('Jennifer_W','Jennifer_W',NULL,'password',0,'2024-04-19 17:45:21','2024-04-19 17:45:21'),('Joe.Smith','Joe.Smith',NULL,'123',1,'2024-04-19 16:22:39','2024-04-19 17:42:27'),('k.yuen','Kathy','yuenk@sonoma.edu','password',3,'2024-04-13 17:03:48','2024-04-22 20:31:28'),('Math.Tutor','Math.Tutor',NULL,'pass',0,'2024-04-19 17:27:34','2024-04-19 17:27:34'),('new.user','new.user',NULL,'mypassword',1,'2024-04-19 13:58:46','2024-04-19 17:42:21'),('quizMaker22','quizMaker22',NULL,'quiz',2,'2024-04-19 17:26:59','2024-04-19 17:44:43'),('user55443245','user55443245',NULL,'quizSocialUser',0,'2024-04-19 17:26:13','2024-04-19 17:26:13');
+INSERT INTO `users` VALUES ('ali.kooshesh','ali.kooshesh',NULL,'MyPassword',1,'2024-04-19 14:09:48','2024-04-19 17:44:32'),('b23c2d39-f009-11ee-b93a-085bd6555b53','newUser','newuser@example.com','userPassword',0,'2024-04-01 02:24:16','2024-04-01 02:24:16'),('Daffy_Duck','The Real Daffy Duck',NULL,'321',1,'2024-04-19 17:22:41','2024-04-24 12:17:56'),('Donald-Duck-122','Donald-Duck-122',NULL,'abc',1,'2024-04-19 17:16:22','2024-04-19 17:42:33'),('e.walters','Evan_Walters','waltersev@sonoma.edu','password',6,'2024-04-13 17:02:21','2024-04-22 19:46:33'),('george.washington','Washington',NULL,'1776',1,'2024-04-19 17:30:22','2024-04-24 12:10:42'),('h.zhang','Zeroxa','zhangha@sonoma.edu','password',4,'2024-04-13 17:04:13','2024-04-19 17:44:39'),('Jennifer_W','Jennifer_W',NULL,'password',0,'2024-04-19 17:45:21','2024-04-19 17:45:21'),('Joe.Smith','Joe.Smith',NULL,'123',1,'2024-04-19 16:22:39','2024-04-19 17:42:27'),('k.yuen','Kathy','yuenk@sonoma.edu','password',3,'2024-04-13 17:03:48','2024-04-22 20:31:28'),('Math.Tutor','Math.Tutor',NULL,'pass',0,'2024-04-19 17:27:34','2024-04-19 17:27:34'),('new.user','Cat Attack',NULL,'mypassword',1,'2024-04-19 13:58:46','2024-04-24 12:32:53'),('quizMaker22','quizMaker22',NULL,'quiz',2,'2024-04-19 17:26:59','2024-04-19 17:44:43'),('user55443245','user55443245',NULL,'quizSocialUser',0,'2024-04-19 17:26:13','2024-04-19 17:26:13');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -339,4 +339,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-24 12:18:12
+-- Dump completed on 2024-04-24 12:33:26
