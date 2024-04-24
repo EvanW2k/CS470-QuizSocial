@@ -1,11 +1,18 @@
-import {Typography, Paper, Grid, Button, TextField, Form} from '@mui/material';
+import React, {useState, useEffect, Fragment} from 'react';
+import {Typography, Paper, Grid, Button, TextField, Form, Select} from '@mui/material';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
+import {InputLabel, FormControl, MenuItem} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import API from '../../API_Interface/API_Interface';
 
-export default function createQuiz(loggedInUser) {
+export default function CreateQuiz(loggedInUser) {
 
-    const data = [{question: 1, answer: 2}]
+    const [isPublic, setIsPublic] = useState(1);
+    const data = [{question: 1, answer: 2}];
+
+    const handlePrivacy = event => {
+        setIsPublic(event.target.value);
+    };
 
     return (
         <Paper
@@ -34,6 +41,32 @@ export default function createQuiz(loggedInUser) {
                     </Grid>
                 </Grid>
 
+                {/* setting quiz public/private or delete */}
+                <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={2}>
+                    <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
+                        <Grid item>
+                            <FormControl sx={{width: 200}}>
+                                <InputLabel id='quiz-privacy'>Privacy Setting</InputLabel>
+                                <Select
+                                    value={isPublic}
+                                    label='Privacy'
+                                    onChange={handlePrivacy}
+                                >
+                                    <MenuItem value={1}>Public</MenuItem>
+                                    <MenuItem value={0}>Private</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction='column' justifyContext='center' marginTop={2} width={500}>
+                        <Grid item>
+                            <Button variant='outlined' sx={{width: 100}}>
+                                Delete
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
                 {/* for adding quiz questions */}
                 <Grid
                     container
@@ -42,7 +75,7 @@ export default function createQuiz(loggedInUser) {
                     alignItems='flex-start'
                     border={0}
                     spacing={2}
-                    bottomMargin={2}
+                    marginBottom={2}
                 >
                     <Grid item justifyContent='left'bottomMargin={2}>
                         <Typography variant='h5'>

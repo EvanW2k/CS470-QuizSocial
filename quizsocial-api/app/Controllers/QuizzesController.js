@@ -204,6 +204,14 @@ const rateQuiz = (ctx) => {
     });
 }
 
+const createQuiz = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+                
+        `;
+    });
+}
+
 
 module.exports = {
     getQuizById,
