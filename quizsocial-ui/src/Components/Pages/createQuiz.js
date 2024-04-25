@@ -3,16 +3,48 @@ import {Typography, Paper, Grid, Button, TextField, Form, Select} from '@mui/mat
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
 import {InputLabel, FormControl, MenuItem} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
 
 export default function CreateQuiz(loggedInUser) {
+    const navigate = useNavigate();
 
     const [isPublic, setIsPublic] = useState(1);
-    const data = [{question: 1, answer: 2}];
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [title, setTitle] = useState('');
+    const [quizData, setQuizData] = useState([]);
 
     const handlePrivacy = event => {
         setIsPublic(event.target.value);
     };
+
+    const handleQuizNameChange = event => {
+        setTitle(event.target.value);
+    }
+
+    const handleQuestionChange = event => {
+        setQuestion(event.target.value);
+    };
+
+    const handleAnswerChange = event => {
+        setAnswer(event.target.value);
+    };
+
+    const handleAddQuizItem = () => {
+        if (question.length > 0 && answer.length > 0) {
+            console.log(question, answer);
+        }
+
+        setQuizData([...quizData, {question: question, answer: answer}]);
+
+        console.log('added new question and answer');
+        console.log(quizData);
+        setQuestion('');
+        setAnswer('');
+    };
+
+    
 
     return (
         <Paper
@@ -37,7 +69,14 @@ export default function CreateQuiz(loggedInUser) {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='Quiz Name' variant='outlined' sx={{width:500}} />
+                        <TextField 
+                            id='outlined-basic' 
+                            label='Quiz Name' 
+                            variant='outlined' 
+                            sx={{width:500}} 
+                            value={title}
+                            onChange={handleQuizNameChange}
+                        />
                     </Grid>
                 </Grid>
 
@@ -46,7 +85,7 @@ export default function CreateQuiz(loggedInUser) {
                     <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
                         <Grid item>
                             <FormControl sx={{width: 200}}>
-                                <InputLabel id='quiz-privacy'>Privacy Setting</InputLabel>
+                                <InputLabel id='quiz-privacy'>Privacy</InputLabel>
                                 <Select
                                     value={isPublic}
                                     label='Privacy'
@@ -59,11 +98,7 @@ export default function CreateQuiz(loggedInUser) {
                         </Grid>
                     </Grid>
                     <Grid container direction='column' justifyContext='center' marginTop={2} width={500}>
-                        <Grid item>
-                            <Button variant='outlined' sx={{width: 100}}>
-                                Delete
-                            </Button>
-                        </Grid>
+                        
                     </Grid>
                 </Grid>
 
@@ -89,7 +124,14 @@ export default function CreateQuiz(loggedInUser) {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <TextField id='outlined-basic' label='Question' variant='outlined' sx={{width:500}} />
+                            <TextField 
+                                id='outlined-basic' 
+                                label='Question' 
+                                variant='outlined' 
+                                sx={{width:500}} 
+                                value={question}
+                                onChange={handleQuestionChange}
+                            />
                         </Grid>
                     </Grid>
                     <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={2} marginTop={0} >
@@ -99,11 +141,19 @@ export default function CreateQuiz(loggedInUser) {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <TextField id='outlined-basic' label='Answer' variant='outlined' sx={{width:500}} />
+                            <TextField 
+                                id='outlined-basic' 
+                                label='Answer' 
+                                variant='outlined' 
+                                sx={{width:500}} 
+                                value={answer}
+                                onChange={handleAnswerChange}
+                            />
+
                         </Grid>
                     </Grid>
                     <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={5} marginTop={0}>
-                        <Button variant='outlined'>
+                        <Button variant='outlined' onClick={() => {handleAddQuizItem()}}>
                             Add
                         </Button>
                     </Grid>
@@ -129,7 +179,7 @@ export default function CreateQuiz(loggedInUser) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.map((row, index) => (
+                                {quizData.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{row.question}</TableCell>
                                         <TableCell>{row.answer}</TableCell>
@@ -145,6 +195,23 @@ export default function CreateQuiz(loggedInUser) {
                     </TableContainer>
                 </Grid>
                 
+                {/* create and delete quiz button */}
+                <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginTop={2} marginBottom={2}>
+                    <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
+                        <Grid item justifyContext='center'>
+                            <Button variant='outlined'>
+                                Create Quiz
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container direction='column' justifyContext='center' marginTop={2} width={500}>
+                        <Grid item>
+                            <Button variant='outlined' onClick={() => {navigate(`/profile/${loggedInUser.loggedInUser}`)}}>
+                                Discard Quiz
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Paper>
     )
