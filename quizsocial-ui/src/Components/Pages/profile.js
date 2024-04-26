@@ -364,6 +364,22 @@ export default function Profile({loggedInUser}) {
                                         <TableCell align="left"> {row.num_favorites} </TableCell>
                                         <TableCell align="left"> {row.rating} </TableCell>
                                         <TableCell align="right"> {row.created_at.split("T")[0]} </TableCell>
+                                        <TableCell align="right">
+                                            {
+                                                isCurrentLoggedUser ? (
+                                                    <IconButton
+                                                    onClick={() => {
+                                                        //navigate(`/edit-quiz`);
+                                                    }}>
+                                                        <SettingsIcon/>
+                                                    </IconButton>
+                                                ) : (
+                                                    <IconButton disabled>
+                                                        <SettingsIcon style={{ color: 'transparent' }}/>
+                                                    </IconButton>
+                                                )
+                                            }
+                                        </TableCell>
                                     </TableRow>
 
                                 ))}
