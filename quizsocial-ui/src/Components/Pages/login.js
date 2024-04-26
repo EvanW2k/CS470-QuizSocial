@@ -58,18 +58,23 @@ export default function Login({setUserID}) {
             api.getUserInfo(userIdInput)
                 .then( userInfo => {
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
-                    const loggingUserID = userInfo.user.userID;
-                    const userPass = userInfo.user.password;
-                    if( userInfo.status === "OK" && userPass === userPassInput) {
+                    if( userInfo.status === "OK") {
 
-                        setUserID(loggingUserID);
-                        setVerifyUser(false);
-                        navigate(`/profile/${loggingUserID}`)
-                    } else  {
-                        console.log(`No user exists with id: ${userIdInput}`);
-                        setVerifyUser(false);
-                        setAuthFailed(true);
+                        const userPass = userInfo.user.password;
+                        // pass check
+                        if (userPass === userPassInput) {
+                            const loggingUserID = userInfo.user.userID;
+                            setUserID(loggingUserID);
+                            setVerifyUser(false);
+                            navigate(`/profile/${loggingUserID}`)
+                            return;
+                        }
                     }
+
+                    console.log(`Incorrect user id or password`);
+                    setVerifyUser(false);
+                    setAuthFailed(true);
+
                 });
         }
 
@@ -105,7 +110,7 @@ export default function Login({setUserID}) {
                     placeholder=""
                     value={userPassInput}
                     type="password"
-                    helperText=""
+                    helperText={authFailed ? "Incorrect UserID or Password" : ""}
                     onChange={handlePassInputChange}
                 />
                 <Divider />
