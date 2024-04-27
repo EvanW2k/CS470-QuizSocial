@@ -1,10 +1,30 @@
 import {useEffect, useState} from 'react';
-import {Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
+import {
+    Typography,
+    IconButton,
+    Paper,
+    Grid,
+    Box,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    InputLabel,
+    FormControl,
+    NativeSelect,
+    Select,
+    MenuItem
+} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
 import API from '../../API_Interface/API_Interface';
+
+import "../../App.css";
 
 const quizTableComps = ['Quiz', 'Favorites', 'Rating', 'Date Created'];
 
@@ -165,11 +185,11 @@ export default function Profile({loggedInUser}) {
                 p: 3,
                 margin: 'auto',
                 mt: 3,
-                justifycontent: 'center',
+                justifyContent: 'center',
                 alignItems: 'flex-start',
                 maxWidth: profileDimensions.page.width,
                 flexGrow: 1,
-                border: 0
+                border: 0,
             }}
         >
             <Grid container direction='column' justifyContent="center" alignItems="center">
@@ -239,7 +259,9 @@ export default function Profile({loggedInUser}) {
                                         mt: 2
                                     }}
                                 >
-                                    Followers: {userInfo.num_follows}
+                                    <Typography variant={'h7'}>
+                                        {userInfo.num_follows} Followers
+                                    </Typography>
                                 </Box>
                             </Grid>
                             {!isCurrentLoggedUser &&
@@ -297,9 +319,12 @@ export default function Profile({loggedInUser}) {
                                             navigate(`/createQuiz`)
                                         }}
                                         sx={{
-                                            border: 1,
-                                            mt: 2
+                                            border: 0,
+                                            mt: 2,
+                                            color: 'white', // Text color
+                                            backgroundColor: '#535C91', // Background color
                                         }}>
+
                                         Create Quiz
                                     </Button>
                                 </Grid>)
@@ -307,25 +332,26 @@ export default function Profile({loggedInUser}) {
                         </Box>
                         <Box border={0}>
                             <Grid item sx={{ justifySelf: 'flex-end', mr: 8, mt: 0}}>
-                                <Box sx={{ width: 100, border: 0 }}>
+                                <Box sx={{ width: 130, border: 0}}>
                                     <FormControl fullWidth>
                                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                                             Sort by
                                         </InputLabel>
-                                        <NativeSelect
+                                        <Select
                                             defaultValue={sortMode}
                                             onChange={handleSortChange}
+                                            backgroundColor={'#070F2B'}
                                             inputProps={{
                                                 name: 'Sort',
                                                 id: 'uncontrolled-native',
                                             }}
                                         >
-                                            <option value={'New'}>New</option>
-                                            <option value={'Favorites'}>Favorites</option>
-                                            <option value={'Rating'}>Rating</option>
-                                            <option value={'Name'}>Name</option>
-                                            <option value={'Old'}>Old</option>
-                                        </NativeSelect>
+                                            <MenuItem value={'New'}>New</MenuItem>
+                                            <MenuItem value={'Favorites'}>Favorites</MenuItem>
+                                            <MenuItem value={'Rating'}>Rating</MenuItem>
+                                            <MenuItem value={'Name'}>Name</MenuItem>
+                                            <MenuItem value={'Old'}>Old</MenuItem>
+                                        </Select>
                                     </FormControl>
                                 </Box>
                             </Grid>
@@ -347,19 +373,24 @@ export default function Profile({loggedInUser}) {
                                               </TableCell>
                                           )
                                     ))}
+                                    <TableCell>
+                                        <IconButton disabled>
+                                            <SettingsIcon style={{ color: 'transparent' }}/>
+                                        </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {userQuizzes.map((row)=>(
                                     <TableRow key={row.title}
                                               sx={{border: 0}}>
-                                        <TableCell align="left"> 
-                                            <Link 
-                                                under line="hover" 
-                                                to={`/quiz/${row.quizID}`} 
+                                        <TableCell align="left">
+                                            <Link
+                                                under line="hover"
+                                                to={`/quiz/${row.quizID}`}
                                             >
                                                 {row.title}
-                                            </Link> 
+                                            </Link>
                                         </TableCell>
                                         <TableCell align="left"> {row.num_favorites} </TableCell>
                                         <TableCell align="left"> {row.rating} </TableCell>
