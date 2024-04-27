@@ -4,19 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="small bug fix&#10;&#10;login tried accessing element of api result before checking if it went through">
-      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/utils/siteSettings.js" afterDir="false" />
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile">
+      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/quizsocial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/quizsocial.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/.env" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/FollowController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/FollowController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/createQuiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/createQuiz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/utils/siteSettings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,11 +112,8 @@
       <workItem from="1713149738169" duration="3511000" />
       <workItem from="1713231021577" duration="1942000" />
       <workItem from="1713811716145" duration="13452000" />
-      <workItem from="1713902464233" duration="4380000" />
-      <workItem from="1713983122884" duration="3619000" />
-      <workItem from="1714068665719" duration="634000" />
-      <workItem from="1714091751472" duration="2011000" />
-      <workItem from="1714158398336" duration="18680000" />
+      <workItem from="1713902464233" duration="3446000" />
+      <workItem from="1714241012188" duration="8049000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -153,51 +163,22 @@
       <option name="project" value="LOCAL" />
       <updated>1713842249967</updated>
     </task>
-    <task id="LOCAL-00007" summary="Added profile pictures.&#10;- Can modify it on edit-profile page&#10;- uses a link to the image&#10;- changed data base to have a defualt profile pic link, and modified all user_profile rows to have this link">
-      <option name="closed" value="true" />
-      <created>1713906262698</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1713906262698</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Some small DB changes">
-      <option name="closed" value="true" />
-      <created>1713986323401</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1713986323401</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Sorry some small DB changes">
-      <option name="closed" value="true" />
-      <created>1713987228792</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1713987228792</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Icon placeholder to edit quizzes.&#10;&#10;Added a gear icon for quizzes in th quize table on the logged in users profile.">
-      <option name="closed" value="true" />
-      <created>1714092763728</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1714092763728</updated>
-    </task>
-    <task id="LOCAL-00011" summary="small bug fix&#10;&#10;login tried accessing element of api result before checking if it went through">
-      <option name="closed" value="true" />
-      <created>1714093760666</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1714093760666</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Login and Register (with navigation). &#10;+ some minor changes" />
@@ -206,11 +187,6 @@
     <MESSAGE value="Few more db tweaks" />
     <MESSAGE value="DB: quiz rating should be set right with this update" />
     <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
-    <MESSAGE value="Added profile pictures.&#10;- Can modify it on edit-profile page&#10;- uses a link to the image&#10;- changed data base to have a defualt profile pic link, and modified all user_profile rows to have this link" />
-    <MESSAGE value="Some small DB changes" />
-    <MESSAGE value="Sorry some small DB changes" />
-    <MESSAGE value="Icon placeholder to edit quizzes.&#10;&#10;Added a gear icon for quizzes in th quize table on the logged in users profile." />
-    <MESSAGE value="small bug fix&#10;&#10;login tried accessing element of api result before checking if it went through" />
-    <option name="LAST_COMMIT_MESSAGE" value="small bug fix&#10;&#10;login tried accessing element of api result before checking if it went through" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
   </component>
 </project>

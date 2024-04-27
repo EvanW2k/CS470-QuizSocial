@@ -1,37 +1,79 @@
-import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material';
 import API from '../../API_Interface/API_Interface';
+import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, Fragment } from 'react';
 
-const MatchGame = () => {
+
+export default function FastMultipleChoice() {
+
+    const navigate = useNavigate();
+    const quizID = 2;
+
+    //const { quizID } = useParams();
+    const [inGame, setInGame] = useState(true);
     const [cards, setCards] = useState([]);
-    const [flippedIndices, setFlippedIndices] = useState([]);
-    const [matchedPairs, setMatchedPairs] = useState([]);
-    const [gameOver, setGameOver] = useState(false);
-    const [gameSize, setGameSize] = useState(0); // 0 implies no size selected
+    const [curCard, setCurCard] = useState(undefined);
+
+    const [countdown, setCountdown] = useState(3); // Initial countdown value
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [gravitySpeed, setGravitySpeed] = useState(5);
+    const [allowMovement, setAllowMovement] = useState(false); // State to allow/disallow movement
+    const [aChoices, setAChoices] = useState([]);
+
+    const moveBox = (direction) => {
+        if (allowMovement) {
+            switch (direction) {
+                case 'left':
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x - 1}));
+                    break;
+                case 'right':
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x + 1}));
+                    break;
+                case 'down':
+                    setPosition(prevPosition => ({...prevPosition, y: prevPosition.y + 1}));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    const Bucket = ({ color, position, answer }) => (
+        <Box
+            sx={{
+                width: '200px',
+                height: '100px',
+                backgroundColor: color,
+                position: 'absolute',
+                left: `${position.x}px`,
+                bottom: `${position.y}px`,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <Typography variant="h6" sx={{ textAlign: 'center', margin: 'auto' }}>{answer}</Typography>
+        </Box>
+    );
 
     useEffect(() => {
-        if (gameSize !== 0) {
+        if (inGame) {
             fetchQuizzes();
         }
-    }, [gameSize]);
+    }, [inGame]);
 
     const fetchQuizzes = async () => {
         const api = new API();
         try {
-            const response = await api.getQuestionsForQuiz('001');
-            const pairsNeeded = gameSize * gameSize / 2;  // Calculate needed pairs based on game size
+            const response = await api.getQuestionsForQuiz(quizID);
 
-            if (response.data && response.data.length >= pairsNeeded) {
-                // Create potential pairs
-                const potentialPairs = response.data.slice(0, pairsNeeded).flatMap(d => [
-                    { id: d.questionID + '-q', content: d.question, type: 'question', questionID: d.questionID },
-                    { id: d.questionID + '-a', content: d.answer, type: 'answer', questionID: d.questionID }
-                ]);
+            if (response.data) {
 
-                // Shuffle cards to randomize the board layout
-                const shuffledCards = shuffleArray(potentialPairs);
+                const shuffledCards = shuffleArray(response.data);
 
-                setCards(shuffledCards);
+                setCards(shuffledCards.slice(1));
+                setCurCard(shuffledCards[0]);
+                generateRandomChoices(shuffledCards[0], shuffledCards.slice(1));
             } else {
                 console.error('Not enough quizzes found');
                 alert('Not enough questions to fill the board. Please choose a smaller size or add more questions.');
@@ -39,83 +81,208 @@ const MatchGame = () => {
         } catch (error) {
             console.error('Failed to fetch quizzes:', error);
         }
+
     };
 
-    const handleCardClick = index => {
-        if (gameOver || matchedPairs.includes(index) || (flippedIndices.length === 2 && !flippedIndices.includes(index))) {
-            return;
+    const generateRandomChoices = (currentCard, remainingCards) => {
+
+        const availableCards = remainingCards.filter(card => card.question !== currentCard.question);
+        const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+        console.log("!!!",availableCards)
+
+        const correctAnswerIndex = Math.floor(Math.random() * 2); // 0 or 1
+        const incorrectAnswerIndex = 1 - correctAnswerIndex; // Ensure the other index is selected
+
+        const choices = [
+            currentCard.answer, // Correct answer
+            randomCard.answer[Math.floor(Math.random() * randomCard.answer.length)] // Incorrect answer
+        ];
+
+        const aChoices = [
+            choices[correctAnswerIndex],
+            choices[incorrectAnswerIndex]
+        ];
+
+        console.log(aChoices)
+
+        setAChoices(aChoices);
+    };
+
+    const shuffleArray = array => {
+        // Loop through the array starting from the last element
+        for (let i = array.length - 1; i > 0; i--) {
+            // Generate a random index between 0 and i (inclusive)
+            const j = Math.floor(Math.random() * (i + 1));
+            // Swap the elements at positions i and j
+            [array[i], array[j]] = [array[j], array[i]];
         }
+        return array; // Return the shuffled array
+    };
 
-        const newFlippedIndices = flippedIndices.includes(index) ? flippedIndices : [...flippedIndices, index];
-        setFlippedIndices(newFlippedIndices);
 
-        if (newFlippedIndices.length === 2) {
-            const match = checkForMatch(newFlippedIndices);
-            if (match) {
-                const newMatches = [...matchedPairs, newFlippedIndices[0], newFlippedIndices[1]]; // Add both indices of the matched cards
-                setMatchedPairs(newMatches);
-                setFlippedIndices([]);
-                checkGameOver(newMatches);
-            } else {
-                setTimeout(() => {
-                    setFlippedIndices(flippedIndices.filter(i => !newFlippedIndices.includes(i)));
-                }, 1000);
+    const applyGravity = () => {
+        moveBox('down');
+    };
+
+    // Function to handle countdown
+    const handleCountdown = () => {
+        setCountdown(prevCountdown => prevCountdown - 1);
+    };
+
+    // Effect to handle countdown
+    useEffect(() => {
+        if (countdown > 0) {
+            const countdownInterval = setInterval(handleCountdown, 1000);
+            return () => clearInterval(countdownInterval); // Cleanup on component unmount
+        } else {
+            setAllowMovement(true);
+            const gravityInterval = setInterval(applyGravity, 1000 / gravitySpeed);
+            return () => clearInterval(gravityInterval); // Cleanup on component unmount
+        }
+    }, [countdown, gravitySpeed, allowMovement]);
+
+    // Event listener to handle keyboard inputs
+    const handleKeyDown = (event) => {
+        if (allowMovement) { // Check if movement is allowed
+            switch (event.key) {
+                case 'ArrowLeft':
+                    moveBox('left');
+                    break;
+                case 'ArrowRight':
+                    moveBox('right');
+                    break;
+                case 'ArrowDown':
+                    moveBox('down');
+                    break;
+                default:
+                    break;
             }
         }
     };
 
-    const checkForMatch = (indices) => {
-        const firstCard = cards[indices[0]];
-        const secondCard = cards[indices[1]];
-        return firstCard.questionID === secondCard.questionID && firstCard.type !== secondCard.type;
-    };
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [allowMovement]); // Add allowMovement to dependency array to update effect when it changes
 
-    const checkGameOver = (matches) => {
-        if (matches.length === cards.length) { // Check if the length of matchedPairs equals the number of cards
-            console.log('Game ended');
-            setGameOver(true);
-        }
-    };
 
-    const shuffleArray = array => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    };
+    if (curCard === undefined){
+        return (
+            <></>
+        )
+    }
 
     return (
-        <Box sx={{ flexGrow: 1, textAlign: 'center', maxWidth: 800, margin: 'auto' }}>
-            <Typography variant="h4" sx={{ m: 4 }}>Match Game</Typography>
-            {!gameSize ? (
-                <Box>
-                    <Button variant="contained" onClick={() => setGameSize(4)}>4x4 Game</Button>
-                    <Button variant="contained" sx={{ ml: 2 }} onClick={() => setGameSize(6)}>6x6 Game</Button>
-                </Box>
-            ) : (
-                <Grid container spacing={2} justifyContent="center">
-                    {cards.map((card, index) => (
-                        <Grid item key={card.id} xs={12 / gameSize} style={{ maxWidth: `${100 / gameSize}%` }}>
-                            <Card sx={{ width: '100%', height: 150, display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid lightgray', borderRadius: '5px', overflow: 'hidden',
-                                backgroundColor: matchedPairs.includes(index) ? 'lightgreen' : (flippedIndices.includes(index) ? 'lightblue' : 'lightgray') }}
-                                  onClick={() => handleCardClick(index)}>
-                                <CardContent>
-                                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
-                                        {flippedIndices.includes(index) || matchedPairs.includes(index) ? card.content : 'Click to reveal'}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+        <Grid container
+              sx={{
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                  mt: 2
+
+              }}>
+            <Typography variant='h4'>
+                Fast Multiple Choice
+            </Typography>
+            <hr
+                style={{
+                    color: 'black',
+                    backgroundColor: 'black',
+                    width: '100%',
+                }}
+            />
+            {inGame ? (
+                <Fragment>
+                    <Grid container direction={'column'}
+                          sx={{
+                              justifyContent: 'center',
+                              alignContent: 'center',
+                              mt: 2
+
+                          }}
+                    >
+                        <Typography variant='h4' sx={{ textAlign: 'center' }}>
+                            {curCard.question}
+                        </Typography>
+                        <Grid container direction={'column'}
+                              sx={{
+                                  justifyContent: 'center',
+                                  alignContent: 'center',
+                                  mt: 2
+
+                              }}>
+                            {countdown > 0 ? (
+                                <Typography variant='h4' mt={5}>
+                                    {countdown}
+                                </Typography>
+                                ) : (
+                                    <Box
+                                        sx={{
+                                            width: '30px',
+                                            height: '30px',
+                                            borderRadius: '50%',
+                                            backgroundColor: 'blue',
+                                            position: 'relative',
+                                            left: `${position.x * 10}px`, // Adjust the multiplier for smoother movement
+                                            top: `${position.y * 10}px`, // Adjust the multiplier for smoother movement
+                                            transition: 'left 0.3s, top 0.3s', // Smooth transition animation
+                                        }}
+                                    >
+                                    </Box>
+                                )
+                            }
                         </Grid>
-                    ))}
+                    </Grid>
+                    {allowMovement && (
+                        <>
+                            <Bucket color="green" position={{ x: 680, y: 0 }} answer={aChoices[0]} />
+                            <Bucket color="red" position={{ x: 950, y: 0 }} answer={aChoices[1]} />
+                        </>
+                    )}
+                </Fragment>
+            ) : (
+                <Grid container
+                      sx={{
+                          justifyContent: 'center',
+                          alignContent: 'center',
+                          mt: 5,
+
+                      }}
+                >
+                    <Typography variant='h5'>
+                        Play again?
+                    </Typography>
+                    <Grid container direction={'row'}
+                          sx={{
+                              justifyContent: 'center',
+                              alignContent: 'center',
+                              mt: 5,
+                              flexGrow: 1,
+                          }}>
+                        <Button
+                            sx={{
+                                border: 1,
+                                mr: 2
+                            }}
+
+                        >
+                            Play again
+                        </Button>
+                        <Button
+                            sx={{
+                                border: 1,
+                                ml: 2
+                            }}
+                            onClick={() => {
+                                navigate(`/quiz/${quizID}`)
+                            }}
+                        >
+                            Quiz page
+                        </Button>
+                    </Grid>
                 </Grid>
             )}
-            {gameOver && (
-                <Typography variant="h5" sx={{ mt: 4 }}>You got it!</Typography>
-            )}
-        </Box>
-    );
-};
-
-export default MatchGame;
-
+        </Grid>
+    )
+}

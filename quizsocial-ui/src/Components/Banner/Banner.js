@@ -2,9 +2,6 @@ import React, {useState, Fragment} from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import siteSettings from "../utils/siteSettings"
-import "../../App.css";
-
 const Banner = ({userID, setUserID}) => {
     const navigate = useNavigate();
 
@@ -13,15 +10,10 @@ const Banner = ({userID, setUserID}) => {
     };
 
     return (
-        <AppBar position="static" color={'primary'}>
+        <AppBar position="static" sx={{ backgroundColor: '#1976d2'}}>
             <Toolbar>
                 {/* Logo */}
-                <Typography variant="h6"
-                            sx={{ color: 'white',
-                                cursor: 'pointer',
-                                minWidth: '120px',
-                            }}
-                            onClick={() => handleNavigate('/')}>
+                <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '120px' }} onClick={() => handleNavigate('/')}>
                     Quiz Social
                 </Typography>
 
@@ -47,11 +39,11 @@ const Banner = ({userID, setUserID}) => {
                 {/* Login/Logout */}
 
                 {userID != undefined ? (
-                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px', ml: 2.5 }} onClick={() => {setUserID(undefined); handleNavigate('/')}}>
+                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px' }} onClick={() => {setUserID(undefined); handleNavigate('/')}}>
                         Logout
                     </Typography>
                 ) : (
-                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px', ml: 2.5 }} onClick={() => handleNavigate('/login')}>
+                    <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '80px' }} onClick={() => handleNavigate('/login')}>
                         Login
                     </Typography>
                 )}

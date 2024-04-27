@@ -1,4 +1,4 @@
-import {Link, Paper, Typography} from '@mui/material';
+import {Link, Typography} from '@mui/material';
 import React, {useState, useEffect, Fragment} from 'react';
 import API from '../../API_Interface/API_Interface';
 
@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import profileDimensions from "../utils/profileDimensions";
 
 export default function Register({setUser}) {
 
@@ -152,114 +151,62 @@ export default function Register({setUser}) {
 
     return (
         <Fragment>
-            <Paper sx={{
-                p: 3,
-                margin: 'auto',
-                mt: 3,
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                maxWidth: profileDimensions.page.width/3,
-                flexGrow: 1,
-                border: 0,
-                backgroundColor: 'white'
-            }}>
-                <Box display="flex" justifyContent="center" alignItems="center" width="100%" border={0} mt={2}>
-                    <Typography variant="h4" color="black">
-                        Register
-                    </Typography>
-                </Box>
-                <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={4}>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" border={0} mt={6}>
+                <Typography variant="h4">
+                    Register
+                </Typography>
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={4}>
 
-                    <TextField
-                        error={authFailed}
-                        id="outlined-error-helper-text"
-                        label="Enter new UserID"
-                        placeholder=""
-                        value={userIdInput}
-                        helperText={idMSG}
-                        onChange={handleIdInputChange}
-                        sx={{
-                            '& .MuiInputBase-input': {
-                                backgroundColor: '#FFFFFF',
-                                color: '#000000',
-                            },
-                            '& .MuiInputLabel-root': {
-                                color: '#000000',
-                            },
-                            '& .MuiFormHelperText-root': {
-                                color: '#000000',
-                            },
-                        }}
-                    />
-                    <Divider />
-                </Box>
+                <TextField
+                    error={authFailed}
+                    id="outlined-error-helper-text"
+                    label="Enter new UserID"
+                    placeholder=""
+                    value={userIdInput}
+                    helperText={idMSG}
+                    onChange={handleIdInputChange}
+                />
+                <Divider />
+            </Box>
 
-                <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={3}>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={4}>
 
-                    <TextField
-                        error={false}
-                        id="outlined-error-helper-text"
-                        label="Enter password"
-                        placeholder=""
-                        type="password"
-                        value={userPassInput}
-                        helperText={''}
-                        onChange={handlePassInputChange}
-                        sx={{
-                            '& .MuiInputBase-input': {
-                                backgroundColor: '#FFFFFF',
-                                color: '#000000',
-                            },
-                            '& .MuiInputLabel-root': {
-                                color: '#000000',
-                            },
-                            '& .MuiFormHelperText-root': {
-                                color: '#000000',
-                            },
-                        }}
-                    />
-                    <Divider />
-                </Box>
+                <TextField
+                    error={false}
+                    id="outlined-error-helper-text"
+                    label="Enter password"
+                    placeholder=""
+                    type="password"
+                    value={userPassInput}
+                    helperText={''}
+                    onChange={handlePassInputChange}
+                />
+                <Divider />
+            </Box>
 
-                <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={2}>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={2}>
 
-                    <TextField
-                        error={userPassInput !== userPassConfirmInput}
-                        id="outlined-error-helper-text"
-                        label="Confirm password"
-                        placeholder=""
-                        type="password"
-                        value={userPassConfirmInput}
-                        helperText={userPassInput !== userPassConfirmInput ? passMSG: ""}
-                        onChange={handlePassConfirmInputChange}
-                        sx={{
-                            '& .MuiInputBase-input': {
-                                backgroundColor: '#FFFFFF',
-                                color: '#000000',
-                            },
-                            '& .MuiInputLabel-root': {
-                                color: '#000000',
-                            },
-                            '& .MuiFormHelperText-root': {
-                                color: '#000000',
-                            },
-                        }}
-                    />
-                    <Divider />
-                </Box>
+                <TextField
+                    error={userPassInput !== userPassConfirmInput}
+                    id="outlined-error-helper-text"
+                    label="Confirm password"
+                    placeholder=""
+                    type="password"
+                    value={userPassConfirmInput}
+                    helperText={userPassInput !== userPassConfirmInput ? passMSG: ""}
+                    onChange={handlePassConfirmInputChange}
+                />
+                <Divider />
+            </Box>
 
-                <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={3}>
-                    <Button
-                        variant="outlined"
-                        size="medium"
-                        onClick={() => {handleCreateButton()}}
-                        style={{
-                            color: 'white', // Text color
-                            backgroundColor: '#1B1A55', // Background color
-                        }}
-                    >Create Account</Button>
-                </Box>
-            </Paper>
+            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={3}>
+                <Button
+                    variant="outlined"
+                    size="medium"
+                    onClick={() => {handleCreateButton()}}
+                >Create Account</Button>
+            </Box>
         </Fragment>
     )
 

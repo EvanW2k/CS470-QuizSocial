@@ -90,7 +90,7 @@ const MatchGame = () => {
 
     return (
         <Box sx={{ flexGrow: 1, textAlign: 'center', maxWidth: 800, margin: 'auto' }}>
-            <Typography variant="h4"  sx={{ m: 4 }}>Match Game</Typography>
+            <Typography variant="h4" sx={{ m: 4 }}>Match Game</Typography>
             {gameOver && (
                 <Typography variant="h5" sx={{ mt: 4 }}>You got it!</Typography>
             )}

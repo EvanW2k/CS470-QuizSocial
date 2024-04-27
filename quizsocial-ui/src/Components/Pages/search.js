@@ -6,8 +6,6 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import "../utils/siteSettings"
-
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchType, setSearchType] = useState('username');
@@ -56,25 +54,11 @@ export default function SearchPage() {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
             <Typography variant="h4" sx={{ mb: 4 }}>Search</Typography>
             <TextField
-                placeholder="Search"
+                label="Search"
                 variant="outlined"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                InputProps = {{
-                    sx: {
-                        bgcolor: '#1B1A55',
-                    },
-                }}
-                sx={{ mb: 2,
-                    width: '80%',
-                    maxWidth: 500,
-                    '& .MuiOutlinedInput-root': {
-                        '&.Mui-focused fieldset': {
-                            borderColor: '#4a5cc5', // change the outline color when focused
-                        },
-                    },
-
-                }}
+                sx={{ mb: 2, width: '80%', maxWidth: 500 }}
             />
             <ToggleButtonGroup
                 value={searchType}
@@ -114,7 +98,7 @@ export default function SearchPage() {
                             <Card key={result.quizID} sx={{ mb: 2, width: '100%', maxWidth: 700 }}>
                                 <CardContent>
                                     <Typography variant="h6" noWrap>{result.title}</Typography>
-                                    <Typography variant="subtitle2" color="text.secondary" noWrap>
+                                    <Typography variant="subtitle1" color="text.secondary" noWrap>
                                         ID: {result.quizID}
                                     </Typography>
                                     <Typography variant="body1">{result.description}</Typography>

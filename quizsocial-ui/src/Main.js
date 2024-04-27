@@ -13,6 +13,7 @@ import EditProfile from './Components/Pages/edit-profile';
 import Quiz from './Components/Pages/quiz';
 import FlashCard from "./Components/Pages/Games/FlashCard";
 import MatchGame from "./Components/Pages/Games/MatchGame";
+import FastMultipleChoice from "./Components/Pages/Games/FastMultipleChoice";
 import FillingTheBlank from "./Components/Pages/Games/FillingTheBank";
 import Register from './Components/Pages/register';
 import Search from  './Components/Pages/search';
@@ -37,6 +38,7 @@ export default function Main() {
                 <Route path="/quiz/:quizID" element={<Quiz loggedInUser={userID}/>} />
                 <Route path="/flash-cards/:quizID" element={<FlashCard/>} />
                 <Route path="/match-game/:quizID" element={<MatchGame/>} />
+                <Route path="/fastmc-game/:quizID" element={<FastMultipleChoice/>} />
                 <Route path="/filling-the-blank/:quizID" element={<FillingTheBlank/>} />
                 <Route path="/register" element={<Register userID={userID} setUserID={setUserID} />} />
                 <Route path="/search" element={<Search/>} />
