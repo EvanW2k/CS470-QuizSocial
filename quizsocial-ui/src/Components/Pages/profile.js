@@ -104,7 +104,7 @@ export default function Profile({loggedInUser}) {
                     break;
             }
         }
-    }, [sortMode, userQuizzes]);
+    }, [sortMode]);
 
     useEffect(() => {
         const api = new API();

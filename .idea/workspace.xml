@@ -4,32 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile">
-      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Early version of fast MC">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/quizsocial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/quizsocial.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/.env" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/FollowController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/FollowController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/createQuiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/createQuiz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/edit-profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/utils/siteSettings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +93,8 @@
       <workItem from="1713231021577" duration="1942000" />
       <workItem from="1713811716145" duration="13452000" />
       <workItem from="1713902464233" duration="3446000" />
-      <workItem from="1714241012188" duration="8049000" />
+      <workItem from="1714241012188" duration="8781000" />
+      <workItem from="1714330196681" duration="8069000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -163,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713842249967</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Early version of fast MC">
+      <option name="closed" value="true" />
+      <created>1714249228149</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714249228149</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +176,7 @@
     <MESSAGE value="Few more db tweaks" />
     <MESSAGE value="DB: quiz rating should be set right with this update" />
     <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
+    <MESSAGE value="Early version of fast MC" />
+    <option name="LAST_COMMIT_MESSAGE" value="Early version of fast MC" />
   </component>
 </project>
