@@ -17,7 +17,7 @@ import FastMultipleChoice from "./Components/Pages/Games/FastMultipleChoice";
 import FillingTheBlank from "./Components/Pages/Games/FillingTheBank";
 import Register from './Components/Pages/register';
 import Search from  './Components/Pages/search';
-import CreateQuiz from './Components/Pages/createQuiz';
+import EditQuiz from './Components/Pages/edit-quiz';
 
 export default function Main() {
 
@@ -42,7 +42,7 @@ export default function Main() {
                 <Route path="/filling-the-blank/:quizID" element={<FillingTheBlank/>} />
                 <Route path="/register" element={<Register userID={userID} setUserID={setUserID} />} />
                 <Route path="/search" element={<Search/>} />
-                <Route path="/createQuiz" element={<CreateQuiz loggedInUser={userID}/>} />
+                <Route path="/edit-quiz/:quizID" element={<EditQuiz loggedInUser={userID}/>} />
             </Routes>
         </Fragment>
     )

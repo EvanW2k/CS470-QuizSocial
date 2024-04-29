@@ -82,6 +82,32 @@ export default function Profile({loggedInUser}) {
         setSortMode(event.target.value);
     }
 
+    const handleCreateQuiz = () => {
+        if (!loggedInUser) {
+            navigate('/login');
+        }
+
+        const api = new API();
+        let title = "My New Quiz";
+        async function createQuiz() {
+            try {
+                const result = await api.createQuiz(loggedInUser, title);
+                if (result.status === 200) {
+                    // Handle success
+                    console.log("Quiz created successfully.");
+                } else {
+                    // Handle failure
+                    console.log("Failed to create quiz:", result.data);
+                }
+            } catch (error) {
+                // Handle any errors that occur during the API call
+                console.error("Error creating quiz:", error);
+            }
+        }
+        createQuiz();
+        console.log('new quiz');
+    };
+
     useEffect(() => {
         if (userQuizzes.length > 0) {
             switch (sortMode) {
@@ -294,7 +320,7 @@ export default function Profile({loggedInUser}) {
                                 (<Grid item>
                                     <Button
                                         onClick={() => {
-                                            navigate(`/createQuiz`)
+                                            handleCreateQuiz()
                                         }}
                                         sx={{
                                             border: 1,
@@ -384,7 +410,7 @@ export default function Profile({loggedInUser}) {
                                                 isCurrentLoggedUser ? (
                                                     <IconButton
                                                     onClick={() => {
-                                                        //navigate(`/edit-quiz`);
+                                                        navigate(`/edit-quiz/${row.quizID}`);
                                                     }}>
                                                         <SettingsIcon/>
                                                     </IconButton>

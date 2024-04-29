@@ -102,7 +102,31 @@ export default class APIInterface {
         return axiosAgent.get(`quizzes/rating/${quizID}`);
     }
 
+    async rateQuiz(quizID, userID, rating) {
+        return axiosAgent.post(`quizzes/rateQuiz/${quizID}/${userID}/${rating}`);
+    }
+
     async getALlUserInfoByID(userName) {
         return axiosAgent.get(`/search-info?${userName}`);
+    }
+
+    async createQuiz(userID, title) {
+        return axiosAgent.post(`quizzes/createQuiz/${userID}/${title}`);
+    }
+
+    async deleteQuestion(questionID) {
+        return axiosAgent.delete(`quizzes/deleteQuestion/${questionID}`);
+    }
+
+    async addQuestion(quizID, question, answer) {
+        return axiosAgent.post(`quizzes/addQuestion/${quizID}/${question}/${answer}`);
+    }
+
+    async changeTitle(quizID, title){
+        return axiosAgent.post(`quizzes/changeTitle/${quizID}`, {title});
+    }
+
+    async changePrivacy(quizID, isPublic) {
+        return axiosAgent.post(`quizzes/changePrivacy/${quizID}/${isPublic}`);
     }
 }

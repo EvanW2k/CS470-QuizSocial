@@ -3,17 +3,20 @@ import {Typography, Paper, Grid, Button, TextField, Form, Select} from '@mui/mat
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton } from '@mui/material';
 import {InputLabel, FormControl, MenuItem} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
 
-export default function CreateQuiz(loggedInUser) {
+export default function EditQuiz(loggedInUser) {
     const navigate = useNavigate();
 
+    const { quizID } = useParams();
     const [isPublic, setIsPublic] = useState(1);
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [title, setTitle] = useState('');
     const [quizData, setQuizData] = useState([]);
+    const [deleteQuestions, setDeleteQuestions] = useState([]);
+    const [addQuestions, setAddQuestions] = useState([]);
 
     const handlePrivacy = event => {
         setIsPublic(event.target.value);
@@ -37,14 +40,104 @@ export default function CreateQuiz(loggedInUser) {
         }
 
         setQuizData([...quizData, {question: question, answer: answer}]);
+        setAddQuestions([...addQuestions, {question: question, answer: answer}]);
 
         console.log('added new question and answer');
         console.log(quizData);
         setQuestion('');
         setAnswer('');
+        console.log(loggedInUser);
     };
 
+    const handleDeleteQuestion = index => {
+        let newQuizData = [...quizData];
+        console.log(newQuizData);
+        if (newQuizData[index].questionID) {
+            console.log("question id exists");
+            setDeleteQuestions([...deleteQuestions, newQuizData[index].questionID]);
+            console.log(deleteQuestions);
+        }
+        else {
+            console.log("it doesnt");
+        }
+        newQuizData.splice(index, 1);
+        setQuizData(newQuizData);
+    };
+
+    const handleSaveChanges = () => {
+        console.log("saving changes");
+
+        const api = new API();
+        async function removeQuestions() {
+            deleteQuestions.map(async (questionID) => {
+                console.log(questionID);
+                try {
+                    await api.deleteQuestion(questionID);
+                    console.log(`Question with ID ${questionID} deleted successfully.`);
+                } catch (error) {
+                    console.error(`Error deleting question with ID ${questionID}:`, error);
+                }
+            })
+
+            
+        }
+
+        async function updateQuestions() {
+            console.log('saving now');
+            addQuestions.map(async (qaPair) => {
+                try {
+                    await api.addQuestion(quizID, qaPair.question, qaPair.answer);
+                    console.log("successfully added question and answer");
+                } catch (error) {
+                    console.error("Error adding question and answer", error);
+                }
+            })
+        }
+
+        async function updateQuizInfo() {
+            try {
+                await api.changeTitle(quizID, title);
+                console.log("successfully changed title");
+            } catch (error) {
+                console.error("Error changing title", error);
+            }
+
+            try {
+                await api.changePrivacy(quizID, isPublic);
+            } catch (error) {
+                console.error("Error changing privacy", error);
+            }
+        }
+
+        removeQuestions();
+        updateQuestions();
+        updateQuizInfo();
+        navigate(`/quiz/${quizID}`);
+    };
     
+    useEffect(() => {
+        const api = new API();
+
+        async function getQuizInfoById() {
+            api.getQuizById(quizID)
+                .then( quizInfo => {
+                    console.log(`api returns quiz info: ${JSON.stringify(quizInfo)}`);
+                    setTitle(quizInfo.data.title);
+                    setIsPublic(quizInfo.data.isPublic);
+                });
+        };
+        
+        async function getQuestions() {
+            api.getQuestionsForQuiz(quizID)
+                .then( questions => {
+                    console.log(`api returns questions: ${JSON.stringify(questions)}`);
+                    setQuizData(questions.data);
+                })
+        };
+
+        getQuizInfoById();
+        getQuestions();
+    }, []);
 
     return (
         <Paper
@@ -184,7 +277,7 @@ export default function CreateQuiz(loggedInUser) {
                                         <TableCell>{row.question}</TableCell>
                                         <TableCell>{row.answer}</TableCell>
                                         <TableCell align="right">
-                                            <IconButton aria-label="delete">
+                                            <IconButton aria-label="delete" onClick={() => {handleDeleteQuestion(index)}}>
                                                 <DeleteIcon />
                                             </IconButton>
                                         </TableCell>
@@ -199,15 +292,15 @@ export default function CreateQuiz(loggedInUser) {
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginTop={2} marginBottom={2}>
                     <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
                         <Grid item justifyContext='center'>
-                            <Button variant='outlined'>
-                                Create Quiz
+                            <Button variant='outlined' onClick={() => handleSaveChanges()}>
+                                Save Changes
                             </Button>
                         </Grid>
                     </Grid>
                     <Grid container direction='column' justifyContext='center' marginTop={2} width={500}>
                         <Grid item>
                             <Button variant='outlined' onClick={() => {navigate(`/profile/${loggedInUser.loggedInUser}`)}}>
-                                Discard Quiz
+                                Discard Changes
                             </Button>
                         </Grid>
                     </Grid>
