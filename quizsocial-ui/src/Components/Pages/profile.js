@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect } from '@mui/material';
+import {Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect, Rating } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import React from 'react';
@@ -409,7 +409,7 @@ export default function Profile({loggedInUser}) {
                                             </Link> 
                                         </TableCell>
                                         <TableCell align="left"><Typography fontSize={'15px'}>{row.num_favorites}</Typography></TableCell>
-                                        <TableCell align="left"> <Typography fontSize={'15px'}>{row.rating}</Typography></TableCell>
+                                        <TableCell align="left"><Rating value={row.rating} precision={0.5} readOnly /></TableCell>
                                         <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
                                         <TableCell align="right">
                                             {
