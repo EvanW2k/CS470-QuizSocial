@@ -6,34 +6,61 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 export default function FastMultipleChoice() {
 
+    const { quizID } = useParams();
+
+    const finishLine = 800;
+
+    const bucketWidth = 300;
+    const bucketHeight = 150;
+    const leftBucketPos_x = window.innerWidth/2 - bucketWidth - 50;
+    const rightBucketPos_x = window.innerWidth/2 + 50;
+    const bucketPos_y = 675;
+
+    const ballDiameter = 30;
+    const ballStartPos_x = window.innerWidth/2 - ballDiameter/2;
+    const ballStartPos_y = window.innerHeight/4;
+
+    const baseFontSize = 25;
+    const minFontSize = 2;
+    const maxAnswerLength = 500;
+
+    const charsForExtraSec = 25;
+
+
     const navigate = useNavigate();
-    const quizID = 2;
 
-    //const { quizID } = useParams();
     const [inGame, setInGame] = useState(false);
-    const [cards, setCards] = useState([]);
-    const [curCard, setCurCard] = useState(undefined);
-    const [gameMSG, setGameMSG] = useState("");
+    const [cards, setCards] = useState(undefined);
+    const [gameMSG, setGameMSG] = useState("Use ASD or arrow keys to move the ball.");
 
+    const [cardQueue, setCardQueue] = useState([]);
+    const [curCard, setCurCard] = useState(undefined);
     const [score, setScore] = useState(0);
 
+
+    const [lastKeyDownTime, setLastKeyDownTime] = useState(0);
+    const [position, setPosition] = useState({ x: ballStartPos_x, y: ballStartPos_y });
+
+
+
     const [countdown, setCountdown] = useState(3);
-    const [position, setPosition] = useState({ x: 900, y: 0 });
+
     const [gravitySpeed, setGravitySpeed] = useState(5);
     const [allowMovement, setAllowMovement] = useState(false); // State to allow/disallow movement
     const [aChoices, setAChoices] = useState([]);
+
 
     const moveBall = (direction) => {
         if (allowMovement) {
             switch (direction) {
                 case 'left':
-                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x - 10}));
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x - 15}));
                     break;
                 case 'right':
-                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x + 10}));
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x + 15}));
                     break;
                 case 'down':
-                    setPosition(prevPosition => ({...prevPosition, y: prevPosition.y + 10}));
+                    setPosition(prevPosition => ({...prevPosition, y: prevPosition.y + 50}));
                     break;
                 default:
                     break;
@@ -41,37 +68,52 @@ export default function FastMultipleChoice() {
         }
     };
 
-    const Bucket = ({ color, position, answer }) => (
-        <Box
-            sx={{
-                width: '200px',
-                height: '100px',
-                backgroundColor: color,
-                position: 'absolute',
-                left: `${position.x}px`,
-                bottom: `${position.y}px`,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderLeft: 1,
-                borderRight: 1,
-                borderBottom: 1,
-                borderWidth: 3
-            }}
-        >
-            <Typography variant="h6" sx={{ textAlign: 'center', margin: 'auto' }}>{answer}</Typography>
-        </Box>
-    );
+    const Bucket = ({ color, position, answer }) => {
+
+        const fontSizeRatio = answer.length / maxAnswerLength;
+        const fontSize = Math.max(baseFontSize * (1-fontSizeRatio), minFontSize);
+
+        return (
+            <Box
+                sx={{
+                    width: `${bucketWidth}px`,
+                    height: `${bucketHeight}px`,
+                    backgroundColor: color,
+                    left: `${position.x}px`,
+                    top: `${position.y}px`,
+                    display: 'flex',
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderBottom: 1,
+                    borderWidth: 3
+                }}
+            >
+                <Typography sx={{fontSize: `${fontSize}px`, textAlign: 'center', margin: 'auto'}}>{answer}</Typography>
+            </Box>
+        );
+
+    }
+
 
     useEffect(() => {
-        if (inGame) {
-            setScore(0);
-            setGravitySpeed(5);
-            setPosition({x: 900, y: 0});
-            setGravitySpeed(5);
-            setScore(0);
+        if (!cards)
             fetchQuizzes();
+        else {
+            const shuffledCards = shuffleArray(cards);
+            setCardQueue(shuffledCards.slice(1));
+            setCurCard(shuffledCards[0]);
+            generateRandomChoices(shuffledCards[0], shuffledCards);
         }
+
+        setAllowMovement(false);
+        setScore(0);
+        setGravitySpeed(5);
+        setPosition({x: ballStartPos_x, y: ballStartPos_y});
+        setGravitySpeed(5);
+        setScore(0);
+
+
     }, [inGame]);
 
     const fetchQuizzes = async () => {
@@ -81,11 +123,15 @@ export default function FastMultipleChoice() {
 
             if (response.data) {
 
-                const shuffledCards = shuffleArray(response.data);
+                console.log(response.data);
 
-                setCards(shuffledCards.slice(1));
+                setCards(response.data);
+
+                const shuffledCards = shuffleArray(response.data);
+                setCardQueue(shuffledCards.slice(1));
                 setCurCard(shuffledCards[0]);
-                generateRandomChoices(shuffledCards[0], shuffledCards.slice(1));
+                generateRandomChoices(shuffledCards[0], shuffledCards);
+
             } else {
                 console.error('Not enough quizzes found');
                 alert('Not enough questions to fill the board. Please choose a smaller size or add more questions.');
@@ -96,28 +142,19 @@ export default function FastMultipleChoice() {
 
     };
 
-    const generateRandomChoices = (currentCard, remainingCards) => {
+    const generateRandomChoices = (currentCard, allCards) => {
 
-        let availableCards = remainingCards.filter(card => card.question !== currentCard.question);
-        let randomIDX = Math.floor(Math.random() * availableCards.length);
+        let availableCards = allCards.filter(card => card.answer !== currentCard.answer);
+        const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
 
-        while (availableCards[randomIDX].answer === currentCard.answer) {
-            availableCards = availableCards.slice(0, randomIDX).concat(availableCards.slice(randomIDX + 1));
-            randomIDX = Math.floor(Math.random() * availableCards.length);
-        }
-
-        if (availableCards.length === 0) {
-            fetchQuizzes();
-        }
-
-        const randomCard = availableCards[randomIDX];
+        console.log('!!!!', availableCards);
 
         const correctAnswerIndex = Math.floor(Math.random() * 2); // 0 or 1
         const incorrectAnswerIndex = 1 - correctAnswerIndex; // Ensure the other index is selected
 
         const choices = [
             currentCard.answer, // Correct answer
-            randomCard.answer[Math.floor(Math.random() * randomCard.answer.length)] // Incorrect answer
+            randomCard.answer // Incorrect answer
         ];
 
         const aChoices = [
@@ -127,7 +164,7 @@ export default function FastMultipleChoice() {
 
         setAChoices(aChoices);
 
-        setCountdown(3 + Math.round(currentCard.question.length/20))    // ~ 1 more second for every 20 additional characters
+        setCountdown(3 + Math.round(currentCard.question.length/charsForExtraSec))    // ~ 1 more second for every 20 additional characters
         setAllowMovement(false);
     };
 
@@ -144,7 +181,7 @@ export default function FastMultipleChoice() {
 
 
     const applyGravity = () => {
-        moveBall('down');
+        setPosition(prevPosition => ({...prevPosition, y: prevPosition.y + 10}));
     };
 
     // Function to handle countdown
@@ -154,57 +191,60 @@ export default function FastMultipleChoice() {
 
     // Effect to handle countdown
     useEffect(() => {
-        if (countdown > 0) {
-            const countdownInterval = setInterval(handleCountdown, 1000);
-            return () => clearInterval(countdownInterval); // Cleanup on component unmount
-        } else {
-            setAllowMovement(true);
-            const gravityInterval = setInterval(applyGravity, 1000 / gravitySpeed);
-            return () => clearInterval(gravityInterval); // Cleanup on component unmount
+        if (inGame && countdown !== undefined){
+            if (countdown > 0) {
+                const countdownInterval = setInterval(handleCountdown, 1000);
+                return () => clearInterval(countdownInterval); // Cleanup on component unmount
+            } else {
+                setAllowMovement(true);
+                const gravityInterval = setInterval(applyGravity, 1000 / gravitySpeed);
+                return () => clearInterval(gravityInterval); // Cleanup on component unmount
+            }
         }
-    }, [countdown, allowMovement]);
+    }, [countdown, allowMovement, inGame]);
 
     // Event listener to handle keyboard inputs
-    const handleKeyDown = (event) => {
+    const handleKeyDownWithDebounce = (event) => {
         if (allowMovement) { // Check if movement is allowed
-            switch (event.key) {
-                case 'ArrowLeft':
-                case 'a':
-                    moveBall('left');
-                    break;
-                case 'ArrowRight':
-                case 'd':
-                    moveBall('right');
-                    break;
-                case 'ArrowDown':
-                case 's':
-                    moveBall('down');
-                    break;
-                default:
-                    break;
+            const now = new Date().getTime();
+            if (now - lastKeyDownTime >= 100) { // Only allow input every 0.1 seconds
+                switch (event.key) {
+                    case 'ArrowLeft':
+                    case 'a':
+                        moveBall('left');
+                        break;
+                    case 'ArrowRight':
+                    case 'd':
+                        moveBall('right');
+                        break;
+                    case 'ArrowDown':
+                    case 's':
+                        moveBall('down');
+                        break;
+                    default:
+                        break;
+                }
+                setLastKeyDownTime(now);
             }
         }
     };
 
     useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keydown', handleKeyDownWithDebounce);
         return () => {
-            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keydown', handleKeyDownWithDebounce);
         };
-    }, [allowMovement]); // Add allowMovement to dependency array to update effect when it changes
+    }, [allowMovement, lastKeyDownTime]); // Add allowMovement to dependency array to update effect when it changes
 
 
     const nextQuestion = () => {
-        if (cards.length <= 2) {
-            fetchQuizzes();
-        }
-        else {
-            generateRandomChoices(cards[0], cards.slice(1));
-            setCurCard(cards[0]);
-            setCards(cards.slice(1));
-        }
 
-        setPosition({x: 900, y: 0});
+        generateRandomChoices(cardQueue[0], cards);
+        setCurCard(cardQueue[0]);
+        setCardQueue(cardQueue.slice(1));
+
+
+        setPosition({x: ballStartPos_x, y: ballStartPos_y});
         setGravitySpeed(gravitySpeed+1);
         setScore(score+1);
 
@@ -229,16 +269,15 @@ export default function FastMultipleChoice() {
 
     const checkCollision = () => {
         // Define positions and dimensions of buckets
-        const leftBucket = { x: 680, width: 200, height: 100 };
-        const rightBucket = { x: 950, width: 200, height: 100 };
+        const leftBucket = { x: leftBucketPos_x, width: bucketWidth, height: bucketHeight };
+        const rightBucket = { x: rightBucketPos_x, width: bucketWidth, height: bucketHeight };
 
-        const finishLine = 600;
 
         if (position.y >= finishLine) {
             // Check collision with left bucket
             if (
-                position.x >= leftBucket.x &&
-                position.x <= leftBucket.x + leftBucket.width
+                position.x + ballDiameter/2 >= leftBucket.x &&
+                position.x + ballDiameter/2 <= leftBucket.x + leftBucket.width
             ) {
                 console.log('Collided with LEFT bucket');
                 handleGuess('left');
@@ -246,8 +285,8 @@ export default function FastMultipleChoice() {
 
             // Check collision with right bucket
             else if (
-                position.x >= rightBucket.x &&
-                position.x <= rightBucket.x + rightBucket.width
+                position.x + ballDiameter/2 >= rightBucket.x &&
+                position.x + ballDiameter/2 <= rightBucket.x + rightBucket.width
             ) {
                 console.log('Collided with RIGHT bucket');
                 handleGuess('right');
@@ -272,6 +311,8 @@ export default function FastMultipleChoice() {
             <>Loading...</>
         )
     }
+
+
 
     return (
         <Grid container
@@ -303,43 +344,59 @@ export default function FastMultipleChoice() {
                             {curCard.question}
                         </Typography>
                         {(!allowMovement) ? (
-                            <Grid container direction={'column'}
+                            <Grid item
                                   sx={{
                                       justifyContent: 'center',
                                       alignContent: 'center',
                                       mt: 2
 
                                   }}>
-                                <Typography variant='h4' mt={5}>
+                                <Typography variant='h4' mt={3} sx={{ textAlign: 'center' }}>
                                     {countdown}
                                 </Typography>
                             </Grid>
                         ) : (
                             <Fragment>
-                                <Grid container direction={'column'}
-                                      sx={{
-                                          mt: 2
+                                <Grid container direction="column"
+                                      sx={{ mt: 2,
+                                          border: 0,
+                                          width: '100%',
+                                          height: '500px',
+                                          justifyContent: 'center'
                                       }}
                                 >
-                                    <Box
-                                        sx={{
-                                            width: '30px',
-                                            height: '30px',
-                                            borderRadius: '50%',
-                                            backgroundColor: 'blue',
-                                            position: 'relative',
-                                            left: `${position.x}px`, // Adjust the multiplier for smoother movement
-                                            top: `${position.y}px`, // Adjust the multiplier for smoother movement
-                                            transition: 'left 0.3s, top 0.3s', // Smooth transition animation
-                                            zIndex: 1
-                                        }}
+                                    {/* Ball */}
+                                    <Grid item>
+                                        <Box
+                                            sx={{
+                                                width: `${ballDiameter}px`,
+                                                height: `${ballDiameter}px`,
+                                                borderRadius: '50%',
+                                                backgroundColor: 'blue',
+                                                position: 'absolute',
+                                                left: `${position.x}px`,
+                                                top: `${position.y}px`,
+                                                zIndex: 1,
+                                                transition: 'left 0.05s Ease-out, top 0.05s Ease-out'
+                                            }}
+                                        />
+                                    </Grid>
+                                    {/* Boxes */}
+                                    <Grid item container direction="row"
+                                          sx={{
+                                              border: 0,
+                                              borderColor: 'red',
+                                              height: bucketHeight
+                                          }}
                                     >
-                                    </Box>
+                                        <Grid item border={0}>
+                                            <Bucket color="lightgreen" position={{ x: leftBucketPos_x, y: bucketPos_y }} answer={aChoices[0]} />
+                                        </Grid>
+                                        <Grid item border={0}>
+                                            <Bucket color="lightblue" position={{ x: rightBucketPos_x, y: bucketPos_y }} answer={aChoices[1]} />
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
-                                <>
-                                    <Bucket color="green" position={{ x: 680, y: 0 }} answer={aChoices[0]} />
-                                    <Bucket color="red" position={{ x: 950, y: 0 }} answer={aChoices[1]} />
-                                </>
                             </Fragment>
                         )
                         }
@@ -359,7 +416,7 @@ export default function FastMultipleChoice() {
                         {gameMSG}
                     </Typography>
                     <Typography variant='h6' sx={{ textAlign: 'center' }}>
-                        {gameMSG === "" ? ("") : (`Score: ${score}`)}
+                        {gameMSG !== "Game Over" ? ("") : (`Score: ${score}`)}
                     </Typography>
                     <Grid container direction={'row'}
                           sx={{
@@ -377,7 +434,7 @@ export default function FastMultipleChoice() {
                                 setInGame(true);
                             }}
                         >
-                            {gameMSG === "" ? ("Start Game") : ("Play Again")}
+                            {gameMSG !== "Game Over" ? ("Start Game") : ("Play Again")}
                         </Button>
                         <Button
                             sx={{

@@ -339,11 +339,15 @@ export default function Profile({loggedInUser}) {
                                       quizTableComps.map((component, idx) => (
                                           component !== "Date Created" ? (
                                             <TableCell align="left" key={idx}>
-                                                {component}
+                                                <Typography fontSize={'15px'}>
+                                                    {component}
+                                                </Typography>
                                             </TableCell>
                                           ) : (
                                               <TableCell align="right" key={idx}>
-                                                  {component}
+                                                  <Typography fontSize={'15px'}>
+                                                      {component}
+                                                  </Typography>
                                               </TableCell>
                                           )
                                     ))}
@@ -359,16 +363,22 @@ export default function Profile({loggedInUser}) {
                                     <TableRow key={row.title}
                                               sx={{border: 0}}>
                                         <TableCell align="left"> 
-                                            <Link 
-                                                under line="hover" 
-                                                to={`/quiz/${row.quizID}`} 
+                                            <Link
+                                                to={`/quiz/${row.quizID}`}
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color: 'blue'
+                                            }}
+
                                             >
-                                                {row.title}
+                                                <Typography fontSize={'15px'}>
+                                                    {row.title}
+                                                </Typography>
                                             </Link> 
                                         </TableCell>
-                                        <TableCell align="left"> {row.num_favorites} </TableCell>
-                                        <TableCell align="left"> {row.rating} </TableCell>
-                                        <TableCell align="right"> {row.created_at.split("T")[0]} </TableCell>
+                                        <TableCell align="left"><Typography fontSize={'15px'}>{row.num_favorites}</Typography></TableCell>
+                                        <TableCell align="left"> <Typography fontSize={'15px'}>{row.rating}</Typography></TableCell>
+                                        <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
                                         <TableCell align="right">
                                             {
                                                 isCurrentLoggedUser ? (
