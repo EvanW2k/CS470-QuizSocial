@@ -18,10 +18,11 @@ export default function Quiz({loggedInUser}) {
     const {quizID} = useParams();
     const navigate = useNavigate();
 
-    const [isCurrentLoggedUser, setIsCurrentLoggedUser] = useState(false);
+    
     const [quizInfo, setQuizInfo] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [rating, setRating] = useState(0);
+    const [favorited, setFavorited] = useState(false);
 
 
     const handleRating = newRating => {
@@ -48,6 +49,38 @@ export default function Quiz({loggedInUser}) {
         getRatings();
     };
 
+    const handleUnfavorite = () => {
+        const api = new API();
+
+        async function unfavorite() {
+            try {
+                await api.unfavoriteQuiz(quizID, loggedInUser);
+                console.log("Successfully unfavorited.");
+            } catch (error) {
+                console.error("Error unfavoriting:", error);
+            }
+        }
+
+        unfavorite();
+        setFavorited(false);
+    };
+
+    const handleFavorite = () => {
+        const api = new API();
+
+        async function favorite() {
+            try {
+                await api.favoriteQuiz(quizID, loggedInUser);
+                console.log("Successfully favorited.");
+            } catch (error) {
+                console.error("Error favoriting:", error);
+            }
+        }
+
+        favorite();
+        setFavorited(true);
+    };
+
     useEffect(() => {
         const api = new API();
 
@@ -55,27 +88,36 @@ export default function Quiz({loggedInUser}) {
 
             api.getQuizById(quizID)
                 .then( quizJSONstring => {
-                    console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
+                    //console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
                     setQuizInfo(quizJSONstring.data);
                 });
             
             api.getQuestionsForQuiz(quizID)
                 .then( questionsJSONstring => {
-                    console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
+                    //console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
                     setQuestions(questionsJSONstring.data);
-                })
+                });
 
             api.getQuizRatings(quizID)
                 .then( ratingsJSONstring => {
-                    console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
+                    //console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
                     setRating(ratingsJSONstring.data.rating);
-                })
+                });
+            
+            console.log("getting favorite for", loggedInUser, 'and', quizID);
+            api.checkFavorited(quizID, loggedInUser)
+                .then( favoritedJSONstring => {
+                    console.log(`api return favorite info: ${JSON.stringify(favoritedJSONstring.status)}`);
+                    if (favoritedJSONstring.status == 200) {
+                        setFavorited(true);
+                    }
+                });
+            
         } 
         
         getQuizInfoById();
         console.log('logged in', loggedInUser);
-        console.log(isCurrentLoggedUser);
-    }, [])
+    }, []);
 
     const goToFlashCards = () => {
         navigate(`/flash-cards/${quizID}`);
@@ -100,8 +142,7 @@ export default function Quiz({loggedInUser}) {
                 border: 0
             }}
         >
-            {/* Container for the whole page */
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!", quizInfo.userID)}
+            {/* Container for the whole page */}
             <Grid container direction='column' justifyContent='center' alignItems='flex-start'>
                 {/* Container for quiz info at the top */}
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start'>
@@ -138,9 +179,25 @@ export default function Quiz({loggedInUser}) {
                         spacing={2}
                     >
                         <Grid item>
-                            <Button variant='outlined' endIcon={<StarIcon />}>
-                                Favorite
-                            </Button>
+                            {
+                                loggedInUser != undefined && favorited ? (
+                                    <Button 
+                                        variant='outlined' 
+                                        endIcon={<StarIcon />}
+                                        onClick={handleUnfavorite}
+                                    >
+                                        Unfavorite
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        variant='outlined'
+                                        endIcon={<StarIcon />}
+                                        onClick={handleFavorite}
+                                    >
+                                        Favorite
+                                    </Button>
+                                )
+                            }
                         </Grid>
                         <Grid item>
                             <Button variant='outlined'>
@@ -174,14 +231,6 @@ export default function Quiz({loggedInUser}) {
                             onClick={goToFlashCards}
                         >
                             Flash Card
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button 
-                            variant='outlined'
-                            style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
-                        >
-                            Multiple Choice
                         </Button>
                     </Grid>
                     <Grid item>
