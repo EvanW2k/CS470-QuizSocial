@@ -132,8 +132,4 @@ export default class APIInterface {
     async changePrivacy(quizID, isPublic) {
         return axiosAgent.post(`quizzes/changePrivacy/${quizID}/${isPublic}`);
     }
-
-    async getFavorites(userID) {
-        return axiosAgent.post(`quizzes/getFavorites/${userID}`);
-    }
 }
