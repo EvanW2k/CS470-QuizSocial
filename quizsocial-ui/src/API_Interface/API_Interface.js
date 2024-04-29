@@ -80,6 +80,10 @@ export default class APIInterface {
         return axiosAgent.delete(`follow/deleteFollow/${followerID}/${followedID}`);
     }
 
+    async getFollowingActivities(userID) {
+        return axiosAgent.get(`follow/following/activities/${userID}`);
+    }
+
 
     // quizzes
     async allQuizzes() {
@@ -105,7 +109,6 @@ export default class APIInterface {
     async rateQuiz(quizID, userID, rating) {
         return axiosAgent.post(`quizzes/rateQuiz/${quizID}/${userID}/${rating}`);
     }
-
     async getALlUserInfoByID(userName) {
         return axiosAgent.get(`/search-info?${userName}`);
     }

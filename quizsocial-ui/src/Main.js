@@ -30,7 +30,7 @@ export default function Main() {
             <Routes>
                 <Route path="/"  element={<Home/>}/>
                 <Route path="/login" element={<Login setUserID={setUserID} />} />
-                <Route path="/activity" element={<Activity />} />
+                <Route path="/activity/:userID" element={<Activity />} />
                 <Route path="/following/:userID" element={<Following />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/profile/:userID" element={<Profile loggedInUser={userID}/>} />

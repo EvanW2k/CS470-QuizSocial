@@ -61,6 +61,7 @@ const followRouter = require('koa-router')({
 });
 
 followRouter.get('/:userID/following', FollowController.getFollowingByUserID, err => console.log(`getFollowingByUserID ran into an error: ${err}`));
+followRouter.get('/following/activities/:userID', FollowController.getFollowingActivitiesByUserID, err => console.log(`getFollowingByUserID ran into an error: ${err}`));
 followRouter.post('/createFollow/:followerID/:followedID', FollowController.createFollowWithIDs, err => console.log(`createFollowWithIDs ran into an error: ${err}`));
 followRouter.delete('/deleteFollow/:followerID/:followedID', FollowController.deleteFollowWithIDs, err => console.log(`deleteFollowWithIDs ran into an error: ${err}`));
 

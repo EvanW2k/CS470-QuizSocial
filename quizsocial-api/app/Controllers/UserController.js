@@ -257,6 +257,7 @@ const alterUserById = (ctx) => {
 }
 
 const getALlUserInfoByID = (ctx) => {
+    console.log("search user info")
     return new Promise((resolve, reject) => {
         const query = `
             SELECT u.*, up.*

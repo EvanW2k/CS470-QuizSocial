@@ -97,10 +97,51 @@ const getFollowingByUserID = (ctx) => {
     });
 }
 
+const getFollowingActivitiesByUserID = (ctx) => {
+    console.log("Getting following activities");
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT uf.follower_id, uf.followed_id, q.quizID, q.title, q.created_at, up.imageURL as userProfileImage
+            FROM user_follows uf
+            JOIN quizzes q ON uf.followed_id = q.userID
+            JOIN user_profile up ON uf.followed_id = up.userID
+            WHERE uf.follower_id = ? AND q.isPublic = 1
+            ORDER BY q.created_at DESC
+            LIMIT 30
+        `;
+
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in FollowController::getFollowingActivitiesByUserID", error);
+                ctx.body = "Error accessing the database";
+                ctx.status = 500;
+                return reject(error);
+            }
+            if (tuples.length === 0) {
+                ctx.body = "No recent activities from followed users.";
+                ctx.status = 404;
+            } else {
+                ctx.body = tuples;
+                ctx.status = 200;
+            }
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in getFollowingActivitiesByUserID.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+    });
+}
+
+
 
 
 module.exports = {
     getFollowingByUserID,
     createFollowWithIDs,
-    deleteFollowWithIDs
+    deleteFollowWithIDs,
+    getFollowingActivitiesByUserID
 };

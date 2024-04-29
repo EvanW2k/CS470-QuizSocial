@@ -22,7 +22,7 @@ const Banner = ({userID, setUserID}) => {
                     <Button sx={{ color: 'white' }} onClick={() => {userID !== undefined ? handleNavigate(`/profile/${userID}`) : handleNavigate('/login')}}>
                         My Profile
                     </Button>
-                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/activity')}>
+                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate(`activity/${userID}`)}>
                         Activity
                     </Button>
                     <Button sx={{ color: 'white' }} onClick={() => handleNavigate(`following/${userID}`)}>
