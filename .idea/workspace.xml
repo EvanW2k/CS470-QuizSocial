@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Early version of fast MC">
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Activity change with kathy changes and profile ui fix for new quizzes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/activity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/QuizzesController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/QuizzesController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Zeroxa &lt;2991971hz@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -57,6 +63,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Evan/Desktop/For turn in/CS470/CS470 - Project4&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -64,7 +71,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\29919\\AppData\\Local\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -95,6 +102,9 @@
       <workItem from="1713902464233" duration="3446000" />
       <workItem from="1714241012188" duration="8781000" />
       <workItem from="1714330196681" duration="8069000" />
+      <workItem from="1714411155314" duration="1535000" />
+      <workItem from="1714412909631" duration="11372000" />
+      <workItem from="1714426500119" duration="1300000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -152,7 +162,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714249228149</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Early version of fast MC">
+      <option name="closed" value="true" />
+      <created>1714420478453</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714420478454</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Activity change with kathy changes and profile ui fix for new quizzes">
+      <option name="closed" value="true" />
+      <created>1714426109040</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714426109040</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +203,7 @@
     <MESSAGE value="DB: quiz rating should be set right with this update" />
     <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
     <MESSAGE value="Early version of fast MC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Early version of fast MC" />
+    <MESSAGE value="Activity change with kathy changes and profile ui fix for new quizzes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Activity change with kathy changes and profile ui fix for new quizzes" />
   </component>
 </project>

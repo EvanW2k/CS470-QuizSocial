@@ -24,6 +24,29 @@ export default function Quiz({loggedInUser}) {
     const [rating, setRating] = useState(0);
 
 
+    const handleRating = newRating => {
+        const api = new API();
+
+        async function newQuizRating() {
+            try {
+                await api.rateQuiz(quizID, loggedInUser, newRating);
+                console.log("added new rating");
+            } catch (error) {
+                console.error("Error adding new rating", error);
+            }
+        }
+
+        async function getRatings() {
+            api.getQuizRatings(quizID)
+                .then( ratingsJSONstring => {
+                    console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
+                    setRating(ratingsJSONstring.data.rating);
+                })
+        }
+
+        newQuizRating();
+        getRatings();
+    };
 
     useEffect(() => {
         const api = new API();
@@ -34,10 +57,6 @@ export default function Quiz({loggedInUser}) {
                 .then( quizJSONstring => {
                     console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
                     setQuizInfo(quizJSONstring.data);
-                    let userID = quizInfo.userID;
-                    if (loggedInUser === userID) {
-                        setIsCurrentLoggedUser(true);
-                    }
                 });
             
             api.getQuestionsForQuiz(quizID)
@@ -56,7 +75,7 @@ export default function Quiz({loggedInUser}) {
         getQuizInfoById();
         console.log('logged in', loggedInUser);
         console.log(isCurrentLoggedUser);
-    }, [setIsCurrentLoggedUser])
+    }, [])
 
     const goToFlashCards = () => {
         navigate(`/flash-cards/${quizID}`);
@@ -104,7 +123,7 @@ export default function Quiz({loggedInUser}) {
                                 value={rating}
                                 precision={0.5}
                                 onChange={(event, newRating) => {
-                                    setRating(newRating)
+                                    handleRating(newRating);
                                 }}
                             />
                         </Grid>
@@ -129,9 +148,20 @@ export default function Quiz({loggedInUser}) {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <IconButton aria-label='settings'>
-                                <SettingsIcon/>
-                            </IconButton>
+                        {
+                            loggedInUser == quizInfo.userID ? (
+                                <IconButton onClick={() => {
+                                    navigate(`/edit-quiz/${quizID}`);
+                                }}>
+                                    <SettingsIcon/>
+                                </IconButton>
+                            ) : (
+                                <IconButton disabled>
+                                    <SettingsIcon style={{ color: 'transparent' }}/>
+                                </IconButton>
+                            )
+                        }
+                            
                         </Grid>
                     </Grid>
                 </Grid>

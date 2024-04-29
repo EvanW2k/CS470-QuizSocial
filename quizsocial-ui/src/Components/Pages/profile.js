@@ -25,6 +25,7 @@ export default function Profile({loggedInUser}) {
     const [followThisUser, setFollowThisUser] = useState(undefined);
 
     const [imageError, setImageError] = useState(false);
+    const [newQuizAdded, setNewQuizAdded] = useState(true);
 
     const handleImageError = () => {
         setImageError(true);
@@ -82,6 +83,33 @@ export default function Profile({loggedInUser}) {
         setSortMode(event.target.value);
     }
 
+    const handleCreateQuiz = () => {
+        if (!loggedInUser) {
+            navigate('/login');
+        }
+
+        const api = new API();
+        let title = "My New Quiz";
+        async function createQuiz() {
+            try {
+                const result = await api.createQuiz(loggedInUser, title);
+                if (result.status === 200) {
+                    // Handle success
+                    console.log("Quiz created successfully.");
+                } else {
+                    // Handle failure
+                    console.log("Failed to create quiz:", result.data);
+                }
+            } catch (error) {
+                // Handle any errors that occur during the API call
+                console.error("Error creating quiz:", error);
+            }
+        }
+        createQuiz();
+        setNewQuizAdded(true);
+        console.log('new quiz');
+    };
+
     useEffect(() => {
         if (userQuizzes.length > 0) {
             switch (sortMode) {
@@ -107,54 +135,58 @@ export default function Profile({loggedInUser}) {
     }, [sortMode]);
 
     useEffect(() => {
-        const api = new API();
-        async function getAllUserInfoById() {
+        if (newQuizAdded) {
+            const api = new API();
+            async function getAllUserInfoById() {
 
-            userID === loggedInUser ? setIsCurrentLoggedUser(true) : setIsCurrentLoggedUser(false);
+                userID === loggedInUser ? setIsCurrentLoggedUser(true) : setIsCurrentLoggedUser(false);
 
-            api.getUserById(userID)
-                .then( userJSONstring => {
-                    console.log(`api returns user INFO and it is: ${JSON.stringify(userJSONstring)}`);
-                    setUserInfo(userJSONstring.data);
-                });
-            api.getUserProfileById(userID)
-                .then( userProfileJSONstring => {
-                    console.log(`api returns user PROFILE INFO and it is: ${JSON.stringify(userProfileJSONstring)}`);
-                    setUserProfileInfo(userProfileJSONstring.data);
-                });
+                api.getUserById(userID)
+                    .then( userJSONstring => {
+                        console.log(`api returns user INFO and it is: ${JSON.stringify(userJSONstring)}`);
+                        setUserInfo(userJSONstring.data);
+                    });
+                api.getUserProfileById(userID)
+                    .then( userProfileJSONstring => {
+                        console.log(`api returns user PROFILE INFO and it is: ${JSON.stringify(userProfileJSONstring)}`);
+                        setUserProfileInfo(userProfileJSONstring.data);
+                    });
 
-            // only grab this if currently logged in
-            if (loggedInUser && loggedInUser !== userID) {
-                api.getFollowingByUserID(loggedInUser)
-                    .then(userFollowingJSONstring => {
-                        console.log(`Logged in user follows: ${JSON.stringify(userFollowingJSONstring)}`);
+                // only grab this if currently logged in
+                if (loggedInUser && loggedInUser !== userID) {
+                    api.getFollowingByUserID(loggedInUser)
+                        .then(userFollowingJSONstring => {
+                            console.log(`Logged in user follows: ${JSON.stringify(userFollowingJSONstring)}`);
 
-                        if (userFollowingJSONstring.status === 203) {
-                            console.log(userFollowingJSONstring.data);
-                            return;
-                        }
+                            if (userFollowingJSONstring.status === 203) {
+                                console.log(userFollowingJSONstring.data);
+                                return;
+                            }
 
-                        // Filter the array to get rows where followed_id is equal to userId
-                        const userFollows = userFollowingJSONstring.data.filter(item => item.followed_id === userID);
+                            // Filter the array to get rows where followed_id is equal to userId
+                            const userFollows = userFollowingJSONstring.data.filter(item => item.followed_id === userID);
 
-                        // Check if there are any elements in the filtered array
-                        const followThisUser = userFollows.length > 0;
+                            // Check if there are any elements in the filtered array
+                            const followThisUser = userFollows.length > 0;
 
-                        // Set followThisUser state
-                        setFollowThisUser(followThisUser);
+                            // Set followThisUser state
+                            setFollowThisUser(followThisUser);
 
+                        });
+                }
+
+                api.getQuizByUserId(userID)
+                    .then( userQuizzesJSONstring => {
+                        console.log(`quizzes: ${JSON.stringify(userQuizzesJSONstring)}`);
+                        setUserQuizzes(userQuizzesJSONstring.data);
                     });
             }
 
-            api.getQuizByUserId(userID)
-                .then( userQuizzesJSONstring => {
-                    console.log(`quizzes: ${JSON.stringify(userQuizzesJSONstring)}`);
-                    setUserQuizzes(userQuizzesJSONstring.data);
-                });
+            getAllUserInfoById();
+            setNewQuizAdded(false);
         }
 
-        getAllUserInfoById();
-    }, [userID, followThisUser]);   // if navigating from a profile page to another
+    }, [userID, followThisUser, newQuizAdded ]);   // if navigating from a profile page to another
 
     if (!userInfo || !userProfileInfo)
         return;
@@ -294,7 +326,7 @@ export default function Profile({loggedInUser}) {
                                 (<Grid item>
                                     <Button
                                         onClick={() => {
-                                            navigate(`/createQuiz`)
+                                            handleCreateQuiz()
                                         }}
                                         sx={{
                                             border: 1,
@@ -384,7 +416,7 @@ export default function Profile({loggedInUser}) {
                                                 isCurrentLoggedUser ? (
                                                     <IconButton
                                                     onClick={() => {
-                                                        //navigate(`/edit-quiz`);
+                                                        navigate(`/edit-quiz/${row.quizID}`);
                                                     }}>
                                                         <SettingsIcon/>
                                                     </IconButton>

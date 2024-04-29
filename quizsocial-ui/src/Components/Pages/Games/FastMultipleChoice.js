@@ -22,7 +22,7 @@ export default function FastMultipleChoice() {
 
     const baseFontSize = 25;
     const minFontSize = 2;
-    const maxAnswerLength = 500;
+    const maxAnswerLength = 250;
 
     const charsForExtraSec = 25;
 
@@ -147,8 +147,6 @@ export default function FastMultipleChoice() {
         let availableCards = allCards.filter(card => card.answer !== currentCard.answer);
         const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
 
-        console.log('!!!!', availableCards);
-
         const correctAnswerIndex = Math.floor(Math.random() * 2); // 0 or 1
         const incorrectAnswerIndex = 1 - correctAnswerIndex; // Ensure the other index is selected
 
@@ -239,10 +237,14 @@ export default function FastMultipleChoice() {
 
     const nextQuestion = () => {
 
-        generateRandomChoices(cardQueue[0], cards);
-        setCurCard(cardQueue[0]);
-        setCardQueue(cardQueue.slice(1));
+        const shuffled = cardQueue.length === 0 ? shuffleArray(cards) : cardQueue;
 
+        setCardQueue(shuffled.slice(1));
+        generateRandomChoices(shuffled[0], cards);
+        setCurCard(shuffled[0]);
+        setCardQueue(shuffled.slice(1));
+
+        console.log('!!!', cardQueue);
 
         setPosition({x: ballStartPos_x, y: ballStartPos_y});
         setGravitySpeed(gravitySpeed+1);

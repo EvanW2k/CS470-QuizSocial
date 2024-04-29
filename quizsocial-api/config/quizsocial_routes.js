@@ -61,6 +61,7 @@ const followRouter = require('koa-router')({
 });
 
 followRouter.get('/:userID/following', FollowController.getFollowingByUserID, err => console.log(`getFollowingByUserID ran into an error: ${err}`));
+followRouter.get('/following/activities/:userID', FollowController.getFollowingActivitiesByUserID, err => console.log(`getFollowingByUserID ran into an error: ${err}`));
 followRouter.post('/createFollow/:followerID/:followedID', FollowController.createFollowWithIDs, err => console.log(`createFollowWithIDs ran into an error: ${err}`));
 followRouter.delete('/deleteFollow/:followerID/:followedID', FollowController.deleteFollowWithIDs, err => console.log(`deleteFollowWithIDs ran into an error: ${err}`));
 
@@ -76,6 +77,15 @@ quizzesRouter.get('/byID/:userID', QuizzesController.getQuizByUserId);
 quizzesRouter.get('/:quizID', QuizzesController.getQuizById);
 quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
 quizzesRouter.get('/rating/:quizID', QuizzesController.getQuizRatings);
+quizzesRouter.post('/rateQuiz/:quizID/:userID/:rating', QuizzesController.rateQuiz);
+
+quizzesRouter.post('/createQuiz/:userID/:title', QuizzesController.createQuiz);
+quizzesRouter.delete('/deleteQuestion/:questionID', QuizzesController.deleteQuestion);
+quizzesRouter.post('/addQuestion/:quizID/:question/:answer', QuizzesController.addQuestion);
+quizzesRouter.post('/changeTitle/:quizID', QuizzesController.changeTitle);
+quizzesRouter.post('/changePrivacy/:quizID/:isPublic', QuizzesController.changePrivacy);
+
+quizzesRouter.get('/getFavorites/:userID', QuizzesController.getFavorites);
 
 
 /**
