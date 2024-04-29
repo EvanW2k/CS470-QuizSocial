@@ -32,7 +32,7 @@ export default function Main() {
                 <Route path="/login" element={<Login setUserID={setUserID} />} />
                 <Route path="/activity/:userID" element={<Activity />} />
                 <Route path="/following/:userID" element={<Following />} />
-                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/favorites/:userID" element={<Favorites />} />
                 <Route path="/profile/:userID" element={<Profile loggedInUser={userID}/>} />
                 <Route path="/edit-profile/:userID" element={<EditProfile loggedInUser={userID}/>} />
                 <Route path="/quiz/:quizID" element={<Quiz loggedInUser={userID}/>} />

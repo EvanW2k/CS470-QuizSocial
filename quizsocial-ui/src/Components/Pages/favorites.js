@@ -14,7 +14,8 @@ export default function Favorites() {
             setLoading(true);
             const api = new API();
             try {
-                const response = await api.getFavoritesByUserID(userID);
+                const response = await api.getFavorites(userID);
+                console.log(response);
                 if (Array.isArray(response.data)) {
                     setFavorites(response.data);
                 } else {
@@ -36,28 +37,25 @@ export default function Favorites() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
-            <Typography variant="h4" sx={{ mb: 4 }}>Following</Typography>
-            {favorites.length > 0 ? favorites.map((user) => (
-                <Card key={user.followed_id} sx={{ display: 'flex', flexDirection: 'row', mb: 2, width: '100%', maxWidth: 700 }}>
-                    <CardMedia
-                        component="img"
-                        sx={{ width: 151 }}
-                        image={user.imageURL || "https://via.placeholder.com/150"}
-                        alt="Profile Placeholder"
-                    />
+            <Typography variant="h4" sx={{ mb: 4 }}>Favorites</Typography>
+            {favorites.length > 0 ? favorites.map((quiz) => (
+                <Card key={quiz.ID} sx={{ display: 'flex', flexDirection: 'row', mb: 2, width: '100%', maxWidth: 700 }}>
                     <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
-                        <Typography variant="h6" noWrap>User ID: {user.followed_id}</Typography>
+                        <Typography variant="h6" noWrap>{quiz.title}</Typography>
                         <Typography variant="subtitle1" color="text.secondary" noWrap>
-                            Followed Date: {user.followed_date}
+                            Owner: {quiz.owner}
+                        </Typography>
+                        <Typography variant="subtitle1" color="text.secondary" noWrap>
+                            Favorited on: {quiz.dateFav.split("T")[0]}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" component={Link} to={`/profile/${user.followed_id}`}>
-                            View Profile
+                        <Button size="small" component={Link} to={`/quiz/${quiz.ID}`}>
+                            View Quiz
                         </Button>
                     </CardActions>
                 </Card>
-            )) : <Typography>You are not following anyone yet.</Typography>}
+            )) : <Typography>You have no favorites.</Typography>}
         </Box>
     );
 

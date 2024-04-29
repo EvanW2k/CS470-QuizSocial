@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="Activity change with kathy changes and profile ui fix for new quizzes">
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="beginning of fav page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/app/Controllers/QuizzesController.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/app/Controllers/QuizzesController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/config/quizsocial_routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +40,8 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="0ff91f0b-4945-4946-9d31-dc2e509daec5" />
-        <option name="url" value="https://github.com/EvanW2k/CS470-Capstone.git" />
+        <option name="accountId" value="3405cdea-7e5d-448c-8e6a-4f2335576071" />
+        <option name="url" value="https://github.com/EvanW2k/CS470-Capstone" />
       </UrlAndAccount>
     </option>
   </component>
@@ -104,7 +103,7 @@
       <workItem from="1714330196681" duration="8069000" />
       <workItem from="1714411155314" duration="1535000" />
       <workItem from="1714412909631" duration="11372000" />
-      <workItem from="1714426500119" duration="1300000" />
+      <workItem from="1714426500119" duration="3005000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -178,7 +177,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714426109040</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="beginning of fav page">
+      <option name="closed" value="true" />
+      <created>1714428421659</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714428421659</updated>
+    </task>
+    <task id="LOCAL-00011" summary="beginning of fav page">
+      <option name="closed" value="true" />
+      <created>1714428450833</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1714428450833</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,6 +219,7 @@
     <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
     <MESSAGE value="Early version of fast MC" />
     <MESSAGE value="Activity change with kathy changes and profile ui fix for new quizzes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Activity change with kathy changes and profile ui fix for new quizzes" />
+    <MESSAGE value="beginning of fav page" />
+    <option name="LAST_COMMIT_MESSAGE" value="beginning of fav page" />
   </component>
 </project>

@@ -28,7 +28,7 @@ const Banner = ({userID, setUserID}) => {
                     <Button sx={{ color: 'white' }} onClick={() => handleNavigate(`following/${userID}`)}>
                         Following
                     </Button>
-                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/favorites')}>
+                    <Button sx={{ color: 'white' }} onClick={() => handleNavigate(`/favorites/${userID}`)}>
                         Favorites
                     </Button>
                     <Button sx={{ color: 'white' }} onClick={() => handleNavigate('/search')}>
