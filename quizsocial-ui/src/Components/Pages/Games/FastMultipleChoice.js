@@ -22,7 +22,7 @@ export default function FastMultipleChoice() {
 
     const baseFontSize = 25;
     const minFontSize = 2;
-    const maxAnswerLength = 500;
+    const maxAnswerLength = 250;
 
     const charsForExtraSec = 25;
 
