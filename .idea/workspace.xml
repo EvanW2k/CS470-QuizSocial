@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="beginning of fav page">
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="fav page update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/API_Interface/API_Interface.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/favorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +100,7 @@
       <workItem from="1714330196681" duration="8069000" />
       <workItem from="1714411155314" duration="1535000" />
       <workItem from="1714412909631" duration="11372000" />
-      <workItem from="1714426500119" duration="3005000" />
+      <workItem from="1714426500119" duration="7674000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -193,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714428450833</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fav page update">
+      <option name="closed" value="true" />
+      <created>1714431770815</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1714431770815</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +225,7 @@
     <MESSAGE value="Early version of fast MC" />
     <MESSAGE value="Activity change with kathy changes and profile ui fix for new quizzes" />
     <MESSAGE value="beginning of fav page" />
-    <option name="LAST_COMMIT_MESSAGE" value="beginning of fav page" />
+    <MESSAGE value="fav page update" />
+    <option name="LAST_COMMIT_MESSAGE" value="fav page update" />
   </component>
 </project>
