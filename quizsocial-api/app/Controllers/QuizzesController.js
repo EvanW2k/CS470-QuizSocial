@@ -19,11 +19,11 @@ const allQuizzes = async (ctx) => {
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in RoutesController::allRoutes", error);
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples;
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in allRoutes.", err);
@@ -56,11 +56,11 @@ const getQuizById = (ctx) => {
                 console.log("Connection error in QuizController::getQuizById", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples[0]; // should only have 1 quiz match
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getQuizById.", err);
@@ -84,11 +84,11 @@ const getQuizByUserId = (ctx) => {
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in QuizController::getQuizByUserId", error);
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples;
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getQuizByUserId.", err);
@@ -108,11 +108,11 @@ const getQuestionsForQuiz = (ctx) => {
                 console.log("Connection error in QuizController::getQuestionsForQuiz", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples;
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getQuestionsForQuiz.", err);
@@ -138,7 +138,7 @@ const getQuizzesByTitle = (ctx) => {
                 console.log("Connection error in QuizController::getQuizzesByTitle", error);
                 ctx.body = "Error accessing the database";
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             if (tuples.length === 0) {
                 ctx.body = "No quizzes found with the given title part.";
@@ -147,7 +147,7 @@ const getQuizzesByTitle = (ctx) => {
                 ctx.body = tuples; // Returns all matching records
                 ctx.status = 200;
             }
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getQuizzesByTitle.", err);
@@ -173,11 +173,11 @@ const getQuizRatings = (ctx) => {
                 console.log("Connection error in QuizController::getQuizRatings", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples[0];
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connecttion error in getQuizRatings.", err);
@@ -203,11 +203,11 @@ const rateQuiz = (ctx) => {
                 console.log("Connection error in QuizController::rateQuiz delete rating", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = [];
             ctx.status = 200;
-            return resolve();
+            resolve();
         })
 
         const rateQuery = `
@@ -222,11 +222,11 @@ const rateQuiz = (ctx) => {
                 console.log("Connection error in QuizzesController::rateQuiz", error);
                 ctx.body = [];
                 ctx.status = 505;
-                return reject(error);
+                reject(error);
             }
             ctx.body = "Rated quiz successfully.";
             ctx.status = 200;
-            return resolve;
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in rateQuiz.", err);
@@ -250,11 +250,11 @@ const createQuiz = (ctx) => {
                 console.log("Connection error in QuizzesController::createQuiz", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body =  "Created quiz successfully.";
             ctx.status = 200;
-            return resolve;
+            return resolve();
         });
     }).catch(err => {
         console.log("Database connection error in createQuiz.", err);
@@ -278,11 +278,11 @@ const deleteQuestion = (ctx) => {
                 console.log("Connection error in QuizzesController::deleteQuestion", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = "Deleted question successfully.";
             ctx.status = 200;
-            return resolve;
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in deleteQuestion.", err);
@@ -306,11 +306,11 @@ const addQuestion = (ctx) => {
                 console.log("Connection error in QuizzesController::addQuestion", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = "Added question successfully.";
             ctx.status = 200;
-            return resolve;
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in addQuestion.", err);
@@ -335,11 +335,11 @@ const changeTitle = ctx => {
                 console.log("Connection error in QuizzesController::changeTitle", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = "Changed title successfully.";
             ctx.status = 200;
-            return resolve;
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in changeTitle.", err);
@@ -364,11 +364,11 @@ const changePrivacy = ctx => {
                 console.log("Connection error in QuizzesController::changePrivacy", error);
                 ctx.body = [];
                 ctx.status = 500;
-                return reject(error);
+                reject(error);
             }
             ctx.body = "Changed privacy successfully.";
             ctx.status = 200;
-            return resolve;
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in changePrivacy.", err);
@@ -406,11 +406,11 @@ const getFavorites = async (ctx) => {
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in QuizzesController::getFavorites", error);
-                return reject(error);
+                reject(error);
             }
             ctx.body = tuples;
             ctx.status = 200;
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getFavorites.", err);
@@ -421,6 +421,99 @@ const getFavorites = async (ctx) => {
     });
 }
 
+const unfavoriteQuiz = ctx => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM quiz_favorites
+            WHERE quizID = ?
+            AND userID = ?
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID, ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizzesController::unfavoriteQuiz", error);
+                ctx.body = [];
+                ctx.status = 500;
+                reject(error);
+            }
+            ctx.body = "Unfavorited quiz successfully.";
+            ctx.status = 200;
+            resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in unfavoriteQuiz.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+        throw err;
+    });
+}
+
+const favoriteQuiz = ctx => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO quiz_favorites (quizID, userID)
+            VALUES (?, ?)
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID, ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizzesController::favoriteQuiz", error);
+                ctx.body = [];
+                ctx.status = 500;
+                reject(error);
+            }
+            ctx.body = "Favorited quiz successfully.";
+            ctx.status = 200;
+            resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in favoriteQuiz.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+        throw err;
+    });
+}
+
+const checkFavorited = ctx => {
+    console.log("checking database for favorites");
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT * FROM quiz_favorites
+            WHERE quizID = ?
+            AND userID = ?
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID, ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizzesController::checkFavorited", error);
+                ctx.body = [];
+                ctx.status = 500;
+                reject(error);
+            }
+            if (tuples.length === 0) {
+                ctx.body = "This quiz isn't favorited.";
+                ctx.status = 201;
+            }
+            else {
+                ctx.body = tuples; // should only have one favorited row
+                ctx.status = 200;
+            } 
+            console.log("quiz favorites tuple:", tuples);
+            resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in checkFavorited.", err);
+        ctx.body = "Error accessing the database";
+        ctx.status = 500;
+        throw err;
+    });
+}
 
 module.exports = {
     getQuizById,
@@ -435,5 +528,8 @@ module.exports = {
     addQuestion,
     changeTitle,
     changePrivacy,
+    unfavoriteQuiz,
+    favoriteQuiz,
+    checkFavorited,
     getFavorites
 };
