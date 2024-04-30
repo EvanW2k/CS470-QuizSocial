@@ -24,6 +24,14 @@
   color: white;
 }
 
+body {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #535C91;
+}
+
 .App-link {
   color: #61dafb;
 }

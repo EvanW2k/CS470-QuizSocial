@@ -48,7 +48,7 @@ const Following = () => {
                     <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
                         <Typography variant="h6" noWrap>User ID: {user.followed_id}</Typography>
                         <Typography variant="subtitle1" color="text.secondary" noWrap>
-                            Followed Date: {user.followed_date}
+                            Followed Date: {user.followed_date.split("T")[0]}
                         </Typography>
                     </CardContent>
                     <CardActions>

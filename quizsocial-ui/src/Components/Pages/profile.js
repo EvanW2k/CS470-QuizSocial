@@ -1,5 +1,23 @@
 import {useEffect, useState, Fragment} from 'react';
-import { Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect, Rating } from '@mui/material';
+import {
+    Typography,
+    IconButton,
+    Paper,
+    Grid,
+    Box,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    InputLabel,
+    FormControl,
+    NativeSelect,
+    Rating,
+    MenuItem, Select
+} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -291,7 +309,9 @@ export default function Profile({loggedInUser}) {
                                         mt: 2
                                     }}
                                 >
-                                    Followers: {userInfo.num_follows}
+                                    <Typography variant={'h7'}>
+                                        {userInfo.num_follows} Followers
+                                    </Typography>
                                 </Box>
                             </Grid>
                             {!isCurrentLoggedUser &&
@@ -349,8 +369,14 @@ export default function Profile({loggedInUser}) {
                                             handleCreateQuiz()
                                         }}
                                         sx={{
-                                            border: 1,
-                                            mt: 2
+                                            border: 0,
+                                            mt: 2,
+                                            color:'white',
+                                            backgroundColor:'#535C91',
+                                            '&:hover':{
+                                                backgroundColor:'#404E7C'
+                                            }
+
                                         }}>
                                         Create Quiz
                                     </Button>
@@ -359,25 +385,26 @@ export default function Profile({loggedInUser}) {
                         </Box>
                         <Box border={0}>
                             <Grid item sx={{ justifySelf: 'flex-end', mr: 8, mt: 0}}>
-                                <Box sx={{ width: 100, border: 0 }}>
+                                <Box sx={{ width: 130, border: 0 }}>
                                     <FormControl fullWidth>
                                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                                             Sort by
                                         </InputLabel>
-                                        <NativeSelect
+                                        <Select
                                             defaultValue={sortMode}
                                             onChange={handleSortChange}
+                                            backgroundcolor = {'#070F2B'}
                                             inputProps={{
                                                 name: 'Sort',
                                                 id: 'uncontrolled-native',
                                             }}
                                         >
-                                            <option value={'New'}>New</option>
-                                            <option value={'Favorites'}>Favorites</option>
-                                            <option value={'Rating'}>Rating</option>
-                                            <option value={'Name'}>Name</option>
-                                            <option value={'Old'}>Old</option>
-                                        </NativeSelect>
+                                            <MenuItem value={'New'}>New</MenuItem>
+                                            <MenuItem value={'Favorites'}>Favorites</MenuItem>
+                                            <MenuItem value={'Rating'}>Rating</MenuItem>
+                                            <MenuItem value={'Name'}>Name</MenuItem>
+                                            <MenuItem value={'Old'}>Old</MenuItem>
+                                        </Select>
                                     </FormControl>
                                 </Box>
                             </Grid>

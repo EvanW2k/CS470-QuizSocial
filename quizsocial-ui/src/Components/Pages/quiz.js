@@ -172,7 +172,9 @@ export default function Quiz({loggedInUser}) {
                             <Typography variant='h3'>{quizInfo.title}</Typography>
                         </Grid>
                         <Grid item sx={{ marginBottom: 2 }}>
-                            {"By: "}
+                            <Typography component="span" >
+                                {"By: "}
+                            </Typography>
                             <Link
                                 underline="hover" // corrected the property name
                                 to={`/profile/${quizInfo.userID}`} // dynamically building the URL
@@ -250,7 +252,18 @@ export default function Quiz({loggedInUser}) {
                             variant='outlined'
                             style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
                             onClick={goToFlashCards}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+
+                            }}
                         >
+
                             Flash Card
                         </Button>
                     </Grid>
@@ -259,6 +272,16 @@ export default function Quiz({loggedInUser}) {
                             variant='outlined'
                             style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
                             onClick={goToFillingTheBlank}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+
+                            }}
                         >
                             Fill in the Blank
                         </Button>
@@ -268,6 +291,16 @@ export default function Quiz({loggedInUser}) {
                             variant='outlined'
                             style={{ maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px' }}
                             onClick={goToMatchGame}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+
+                            }}
                         >
                             Memory Match
                         </Button>
@@ -276,6 +309,16 @@ export default function Quiz({loggedInUser}) {
                         <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+
+                            }}
                         >
                             Fast Multiple Choice
                         </Button>

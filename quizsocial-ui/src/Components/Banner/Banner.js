@@ -10,7 +10,7 @@ const Banner = ({userID, setUserID}) => {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#1976d2'}}>
+        <AppBar position="static" color={'primary'}>
             <Toolbar>
                 {/* Logo */}
                 <Typography variant="h6" sx={{ color: 'white', cursor: 'pointer', minWidth: '120px' }} onClick={() => handleNavigate('/')}>

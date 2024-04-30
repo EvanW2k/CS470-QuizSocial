@@ -58,7 +58,21 @@ export default function SearchPage() {
                 variant="outlined"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                sx={{ mb: 2, width: '80%', maxWidth: 500 }}
+                InputProps = {{
+                    sx: {
+                        bgcolor: '#1B1A55',
+                    },
+                }}
+                sx={{ mb: 2,
+                    width: '80%',
+                    maxWidth: 500,
+                    '& .MuiOutlinedInput-root': {
+                        '&.Mui-focused fieldset': {
+                            borderColor: '#4a5cc5', // change the outline color when focused
+                        },
+                    },
+
+                }}
             />
             <ToggleButtonGroup
                 value={searchType}
