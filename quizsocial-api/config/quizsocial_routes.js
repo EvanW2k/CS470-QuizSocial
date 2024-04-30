@@ -77,7 +77,6 @@ quizzesRouter.get('/byID/:userID', QuizzesController.getQuizByUserId);
 quizzesRouter.get('/:quizID', QuizzesController.getQuizById);
 quizzesRouter.get('/:quizID/questions', QuizzesController.getQuestionsForQuiz);
 quizzesRouter.get('/rating/:quizID', QuizzesController.getQuizRatings);
-quizzesRouter.get('/checkFavorited/:quizID/:userID', QuizzesController.checkFavorited);
 
 quizzesRouter.post('/rateQuiz/:quizID/:userID/:rating', QuizzesController.rateQuiz);
 
@@ -90,6 +89,7 @@ quizzesRouter.post('/changePrivacy/:quizID/:isPublic', QuizzesController.changeP
 quizzesRouter.get('/getFavorites/:userID', QuizzesController.getFavorites);
 quizzesRouter.delete('/unfavoriteQuiz/:quizID/:userID', QuizzesController.unfavoriteQuiz);
 quizzesRouter.post('/favoriteQuiz/:quizID/:userID', QuizzesController.favoriteQuiz);
+quizzesRouter.get('/checkFavorited/:quizID/:userID', QuizzesController.checkFavorited);
 
 
 /**

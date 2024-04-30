@@ -1,10 +1,13 @@
-import {useEffect, useState} from 'react';
-import {Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect, Rating } from '@mui/material';
+import {useEffect, useState, Fragment} from 'react';
+import { Typography, IconButton, Paper, Grid, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, InputLabel, FormControl, NativeSelect, Rating } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
 import API from '../../API_Interface/API_Interface';
+import Delete from '@mui/icons-material/Delete';
+
 
 const quizTableComps = ['Quiz', 'Favorites', 'Rating', 'Date Created'];
 
@@ -412,18 +415,29 @@ export default function Profile({loggedInUser}) {
                                         <TableCell align="left"><Rating value={row.rating} precision={0.5} readOnly /></TableCell>
                                         <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
                                         <TableCell align="right">
+                                            
                                             {
                                                 isCurrentLoggedUser ? (
-                                                    <IconButton
-                                                    onClick={() => {
-                                                        navigate(`/edit-quiz/${row.quizID}`);
-                                                    }}>
-                                                        <SettingsIcon/>
-                                                    </IconButton>
+                                                    <Fragment>
+                                                        <IconButton
+                                                        onClick={() => {
+                                                            navigate(`/edit-quiz/${row.quizID}`);
+                                                        }}>
+                                                            <SettingsIcon/>
+                                                        </IconButton>
+                                                        <IconButton>
+                                                            <DeleteIcon/>
+                                                        </IconButton>
+                                                    </Fragment>
                                                 ) : (
-                                                    <IconButton disabled>
-                                                        <SettingsIcon style={{ color: 'transparent' }}/>
-                                                    </IconButton>
+                                                    <Fragment>
+                                                        <IconButton disabled>
+                                                            <SettingsIcon style={{ color: 'transparent' }}/>
+                                                        </IconButton>
+                                                        <IconButton disabled>
+                                                            <DeleteIcon style={{ color: 'transparent' }}/>
+                                                        </IconButton>
+                                                    </Fragment>
                                                 )
                                             }
                                         </TableCell>
