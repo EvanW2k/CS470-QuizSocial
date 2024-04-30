@@ -81,6 +81,27 @@ export default function Quiz({loggedInUser}) {
         setFavorited(true);
     };
 
+    const handleCopy = () => {
+        const api = new API();
+        const copyTitle = "Copy of " + quizInfo.title;
+        async function copyQuiz() {
+            try {
+                const newQuiz = await api.createQuiz(loggedInUser, copyTitle);
+                const newQuizID = newQuiz.data.insertId;
+                questions.map(async (qaPair) => {
+                    try {
+                        await api.addQuestion(newQuizID, qaPair.question, qaPair.answer);
+                    } catch (error) {
+                        console.error("Error adding question and answer", error);
+                    }
+                })
+            } catch (error) {
+                console.error("Error creating quiz:", error);
+            }
+        }
+        copyQuiz();
+    };
+
     useEffect(() => {
         const api = new API();
 
@@ -94,7 +115,7 @@ export default function Quiz({loggedInUser}) {
             
             api.getQuestionsForQuiz(quizID)
                 .then( questionsJSONstring => {
-                    //console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
+                    console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
                     setQuestions(questionsJSONstring.data);
                 });
 
@@ -108,7 +129,7 @@ export default function Quiz({loggedInUser}) {
             api.checkFavorited(quizID, loggedInUser)
                 .then( favoritedJSONstring => {
                     console.log(`api return favorite info: ${JSON.stringify(favoritedJSONstring.status)}`);
-                    if (favoritedJSONstring.status == 200) {
+                    if (favoritedJSONstring.status === 200) {
                         setFavorited(true);
                     }
                 });
@@ -200,7 +221,7 @@ export default function Quiz({loggedInUser}) {
                             }
                         </Grid>
                         <Grid item>
-                            <Button variant='outlined'>
+                            <Button variant='outlined' onClick={handleCopy}>
                                 Copy
                             </Button>
                         </Grid>

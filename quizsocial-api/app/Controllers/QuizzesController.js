@@ -252,9 +252,9 @@ const createQuiz = (ctx) => {
                 ctx.status = 500;
                 reject(error);
             }
-            ctx.body =  "Created quiz successfully.";
+            ctx.body = tuples;
             ctx.status = 200;
-            return resolve();
+            resolve(tuples);
         });
     }).catch(err => {
         console.log("Database connection error in createQuiz.", err);
@@ -515,6 +515,64 @@ const checkFavorited = ctx => {
     });
 }
 
+const deleteQuizQuestions = ctx => {
+    console.log("deleting quiz questions");
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM questions
+            WHERE quizID = ?
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizzesController::deleteQuizQuestions", error);
+                ctx.body = [];
+                ctx.status = 500;
+                reject(error);
+            }
+            ctx.body = "Questions successfully deleted.";
+            ctx.status = 200;
+            resolve(tuples);
+        });
+    }).catch(err => {
+        console.log("Database connection error in deleteQuizQuestions.", err);
+        ctx.body = "Error accessing database";
+        ctx.status = 500;
+        throw err;
+    });
+}
+
+const deleteQuiz = ctx => {
+    console.log("deleting quiz");
+    return new Promise ((resolve, reject) => {
+        const query = `
+            DELETE FROM quizzes
+            WHERE quizID = ?
+        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.quizID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in QuizzesController::deleteQuiz", error);
+                ctx.body = [];
+                ctx.status = 500;
+                reject(error);
+            }
+            ctx.body = "Quiz successfully deleted.";
+            ctx.status = 200;
+            resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in deleteQuiz.", err);
+        ctx.body = "Error accessing database";
+        ctx.status = 500;
+        throw err;
+    });
+}
+
 module.exports = {
     getQuizById,
     getQuestionsForQuiz,
@@ -531,5 +589,7 @@ module.exports = {
     unfavoriteQuiz,
     favoriteQuiz,
     checkFavorited,
-    getFavorites
+    getFavorites,
+    deleteQuizQuestions,
+    deleteQuiz
 };

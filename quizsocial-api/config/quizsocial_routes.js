@@ -81,6 +81,8 @@ quizzesRouter.get('/rating/:quizID', QuizzesController.getQuizRatings);
 quizzesRouter.post('/rateQuiz/:quizID/:userID/:rating', QuizzesController.rateQuiz);
 
 quizzesRouter.post('/createQuiz/:userID/:title', QuizzesController.createQuiz);
+quizzesRouter.delete('/deleteQuiz/:quizID', QuizzesController.deleteQuiz);
+quizzesRouter.delete('/deleteQuizQuestions/:quizID', QuizzesController.deleteQuizQuestions);
 quizzesRouter.delete('/deleteQuestion/:questionID', QuizzesController.deleteQuestion);
 quizzesRouter.post('/addQuestion/:quizID/:question/:answer', QuizzesController.addQuestion);
 quizzesRouter.post('/changeTitle/:quizID', QuizzesController.changeTitle);

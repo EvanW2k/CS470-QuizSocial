@@ -29,6 +29,7 @@ export default function Profile({loggedInUser}) {
 
     const [imageError, setImageError] = useState(false);
     const [newQuizAdded, setNewQuizAdded] = useState(true);
+    const [quizDeleted, setQuizDeleted] = useState(true);
 
     const handleImageError = () => {
         setImageError(true);
@@ -113,6 +114,21 @@ export default function Profile({loggedInUser}) {
         console.log('new quiz');
     };
 
+    const handleDeleteQuiz = quizID => {
+        const api = new API();
+
+        async function deleteQuizById() {
+            try {
+                await api.deleteQuiz(quizID);
+            } catch (error) {
+                console.error("Error deleting quiz", quizID, error);
+            }
+        }
+        deleteQuizById();
+        setQuizDeleted(true);
+        console.log("deleted quiz");
+    };
+
     useEffect(() => {
         if (userQuizzes.length > 0) {
             switch (sortMode) {
@@ -138,7 +154,7 @@ export default function Profile({loggedInUser}) {
     }, [sortMode]);
 
     useEffect(() => {
-        if (newQuizAdded) {
+        if (newQuizAdded || quizDeleted) {
             const api = new API();
             async function getAllUserInfoById() {
 
@@ -187,9 +203,10 @@ export default function Profile({loggedInUser}) {
 
             getAllUserInfoById();
             setNewQuizAdded(false);
+            setQuizDeleted(false);
         }
 
-    }, [userID, followThisUser, newQuizAdded ]);   // if navigating from a profile page to another
+    }, [userID, followThisUser, newQuizAdded, quizDeleted ]);   // if navigating from a profile page to another
 
     if (!userInfo || !userProfileInfo)
         return;
@@ -425,7 +442,10 @@ export default function Profile({loggedInUser}) {
                                                         }}>
                                                             <SettingsIcon/>
                                                         </IconButton>
-                                                        <IconButton>
+                                                        
+                                                        <IconButton
+                                                        onClick={() => {handleDeleteQuiz(row.quizID)}}
+                                                        >
                                                             <DeleteIcon/>
                                                         </IconButton>
                                                     </Fragment>

@@ -148,4 +148,12 @@ export default class APIInterface {
     async checkFavorited(quizID, userID) {
         return axiosAgent.get(`quizzes/checkFavorited/${quizID}/${userID}`);
     }
+
+    async deleteQuizQuestions(quizID) {
+        return axiosAgent.delete(`quizzes/deleteQuizQuestions/${quizID}`);
+    }
+
+    async deleteQuiz(quizID) {
+        return axiosAgent.delete(`quizzes/deleteQuiz/${quizID}`);
+    }
 }
