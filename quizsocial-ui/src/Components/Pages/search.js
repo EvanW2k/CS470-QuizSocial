@@ -74,42 +74,54 @@ export default function SearchPage() {
             </Button>
             {searchResults.length > 0 && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
-                    {searchResults.map((result) => (
-                        searchType === 'username' ?
-                            <Card key={result.userID} sx={{ display: 'flex', flexDirection: 'row', mb: 2, width: '100%', maxWidth: 700 }}>
-                                <CardMedia
-                                    component="img"
-                                    sx={{ width: 151 }}
-                                    image= {result.imageURL}
-                                    alt="Placeholder"
-                                />
-                                <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
-                                    <Typography variant="h6" noWrap>{result.username}</Typography>
-                                    <Typography variant="subtitle1" color="text.secondary" noWrap>
-                                        ID: {result.userID}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" component={Link} to={`/profile/${result.userID}`}>
-                                        View Profile
-                                    </Button>
-                                </CardActions>
-                            </Card> :
-                            <Card key={result.quizID} sx={{ mb: 2, width: '100%', maxWidth: 700 }}>
-                                <CardContent>
-                                    <Typography variant="h6" noWrap>{result.title}</Typography>
-                                    <Typography variant="subtitle1" color="text.secondary" noWrap>
-                                        ID: {result.quizID}
-                                    </Typography>
-                                    <Typography variant="body1">{result.description}</Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" component={Link} to={`/quiz/${result.quizID}`}>
-                                        View Quiz
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                    ))}
+                    {searchResults.map((result) => {
+
+                        if (searchType === 'username') {
+                            return (
+                                <Card key={result.userID} sx={{ display: 'flex', flexDirection: 'row', mb: 2, width: '100%', maxWidth: 700 }}>
+                                    <CardMedia
+                                        component="img"
+                                        sx={{ width: 151 }}
+                                        image= {result.imageURL}
+                                        alt="Placeholder"
+                                    />
+                                    <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
+                                        <Typography variant="h6" noWrap>{result.username}</Typography>
+                                        <Typography variant="subtitle1" color="text.secondary" noWrap>
+                                            ID: {result.userID}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button size="small" component={Link} to={`/profile/${result.userID}`}>
+                                            View Profile
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            )
+                        }
+                        else {
+
+                            if (!result.isPublic)
+                                return;
+
+                            return (
+                                <Card key={result.quizID} sx={{ mb: 2, width: '100%', maxWidth: 700 }}>
+                                    <CardContent>
+                                        <Typography variant="h6" noWrap>{result.title}</Typography>
+                                        <Typography variant="subtitle1" color="text.secondary" noWrap>
+                                            ID: {result.quizID}
+                                        </Typography>
+                                        <Typography variant="body1">{result.description}</Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button size="small" component={Link} to={`/quiz/${result.quizID}`}>
+                                            View Quiz
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            )
+                        }
+                    })}
                 </Box>
             )}
         </Box>

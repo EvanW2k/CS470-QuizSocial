@@ -150,6 +150,31 @@ export default function Quiz({loggedInUser}) {
         navigate(`/filling-the-blank/${quizID}`);
     };
 
+
+    if (!quizInfo.isPublic && loggedInUser !== quizInfo.userID) {
+        return (
+            <Paper
+                sx={{
+                    p: 3,
+                    margin: 'auto',
+                    mt: 3,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    maxWidth: 1000,
+                    flexGrow: 1,
+                    border: 0
+                }}
+            >
+                <Typography variant='h3' align="center">
+                    This quiz is Private.
+                </Typography>
+                <Typography variant='h5' mt={3} align="center">
+                    Sorry for the inconvenience.
+                </Typography>
+            </Paper>
+        )
+    }
+
     return (
         <Paper
             sx={{
@@ -227,7 +252,7 @@ export default function Quiz({loggedInUser}) {
                         </Grid>
                         <Grid item>
                         {
-                            loggedInUser == quizInfo.userID ? (
+                            loggedInUser === quizInfo.userID ? (
                                 <IconButton onClick={() => {
                                     navigate(`/edit-quiz/${quizID}`);
                                 }}>

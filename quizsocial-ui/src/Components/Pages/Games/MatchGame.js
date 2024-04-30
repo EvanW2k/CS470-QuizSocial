@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material';
+import {Box, Card, CardContent, Typography, Grid, Button, Paper} from '@mui/material';
 import API from '../../../API_Interface/API_Interface';
 import { useParams } from 'react-router-dom';
 
-const MatchGame = () => {
+const MatchGame = ({loggedInUser}) => {
     const { quizID } = useParams();
     console.log("MatchGame Loaded", quizID);
     const [cards, setCards] = useState([]);
@@ -11,6 +11,8 @@ const MatchGame = () => {
     const [matchedPairs, setMatchedPairs] = useState([]);
     const [gameOver, setGameOver] = useState(false);
     const [gameSize, setGameSize] = useState(0);
+
+    const [quizInfo, setQuizInfo] = useState([]);
 
     useEffect(() => {
         if (gameSize !== 0) {
@@ -21,6 +23,11 @@ const MatchGame = () => {
     const fetchQuizzes = async () => {
         const api = new API();
         try {
+
+            const quiz = await api.getQuizById(quizID);
+            console.log(`api returns quiz info: ${JSON.stringify(quiz)}`);
+            setQuizInfo(quiz.data);
+
             const response = await api.getQuestionsForQuiz(quizID);
             const pairsNeeded = gameSize * gameSize / 2;
 
@@ -87,6 +94,30 @@ const MatchGame = () => {
         }
         return array;
     };
+
+    if (!quizInfo.isPublic && loggedInUser !== quizInfo.userID && quizInfo.length) {
+        return (
+            <Paper
+                sx={{
+                    p: 3,
+                    margin: 'auto',
+                    mt: 3,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    maxWidth: 1000,
+                    flexGrow: 1,
+                    border: 0
+                }}
+            >
+                <Typography variant='h3' align="center">
+                    This quiz is Private.
+                </Typography>
+                <Typography variant='h5' mt={3} align="center">
+                    Sorry for the inconvenience.
+                </Typography>
+            </Paper>
+        )
+    }
 
     return (
         <Box sx={{ flexGrow: 1, textAlign: 'center', maxWidth: 800, margin: 'auto' }}>
