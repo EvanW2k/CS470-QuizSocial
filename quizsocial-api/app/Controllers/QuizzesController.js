@@ -124,7 +124,7 @@ const getQuestionsForQuiz = (ctx) => {
 const getQuizzesByTitle = (ctx) => {
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT quizID, userID, title, description
+            SELECT quizID, userID, title, description, isPublic
             FROM quizzes
             WHERE title LIKE ?
         `;

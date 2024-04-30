@@ -438,59 +438,65 @@ export default function Profile({loggedInUser}) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {userQuizzes.map((row)=>(
-                                    <TableRow key={row.title}
-                                              sx={{border: 0}}>
-                                        <TableCell align="left"> 
-                                            <Link
-                                                to={`/quiz/${row.quizID}`}
-                                                style={{
-                                                    textDecoration: "none",
-                                                    color: 'blue'
-                                            }}
+                                {userQuizzes.map((row)=> {
 
-                                            >
-                                                <Typography fontSize={'15px'}>
-                                                    {row.title}
-                                                </Typography>
-                                            </Link> 
-                                        </TableCell>
-                                        <TableCell align="left"><Typography fontSize={'15px'}>{row.num_favorites}</Typography></TableCell>
-                                        <TableCell align="left"><Rating value={row.rating} precision={0.5} readOnly /></TableCell>
-                                        <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
-                                        <TableCell align="right">
-                                            
-                                            {
-                                                isCurrentLoggedUser ? (
-                                                    <Fragment>
-                                                        <IconButton
-                                                        onClick={() => {
-                                                            navigate(`/edit-quiz/${row.quizID}`);
-                                                        }}>
-                                                            <SettingsIcon/>
-                                                        </IconButton>
-                                                        
-                                                        <IconButton
-                                                        onClick={() => {handleDeleteQuiz(row.quizID)}}
-                                                        >
-                                                            <DeleteIcon/>
-                                                        </IconButton>
-                                                    </Fragment>
-                                                ) : (
-                                                    <Fragment>
-                                                        <IconButton disabled>
-                                                            <SettingsIcon style={{ color: 'transparent' }}/>
-                                                        </IconButton>
-                                                        <IconButton disabled>
-                                                            <DeleteIcon style={{ color: 'transparent' }}/>
-                                                        </IconButton>
-                                                    </Fragment>
-                                                )
-                                            }
-                                        </TableCell>
-                                    </TableRow>
+                                    if (!row.isPublic && loggedInUser !== userID)
+                                        return;
 
-                                ))}
+                                    return (
+
+                                        <TableRow key={row.title}
+                                                  sx={{border: 0}}>
+                                            <TableCell align="left">
+                                                <Link
+                                                    to={`/quiz/${row.quizID}`}
+                                                    style={{
+                                                        textDecoration: "none",
+                                                        color: 'blue'
+                                                }}
+
+                                                >
+                                                    <Typography fontSize={'15px'}>
+                                                        {row.title}
+                                                    </Typography>
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell align="left"><Typography fontSize={'15px'}>{row.num_favorites}</Typography></TableCell>
+                                            <TableCell align="left"><Rating value={row.rating} precision={0.5} readOnly /></TableCell>
+                                            <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
+                                            <TableCell align="right">
+
+                                                {
+                                                    isCurrentLoggedUser ? (
+                                                        <Fragment>
+                                                            <IconButton
+                                                            onClick={() => {
+                                                                navigate(`/edit-quiz/${row.quizID}`);
+                                                            }}>
+                                                                <SettingsIcon/>
+                                                            </IconButton>
+
+                                                            <IconButton
+                                                            onClick={() => {handleDeleteQuiz(row.quizID)}}
+                                                            >
+                                                                <DeleteIcon/>
+                                                            </IconButton>
+                                                        </Fragment>
+                                                    ) : (
+                                                        <Fragment>
+                                                            <IconButton disabled>
+                                                                <SettingsIcon style={{ color: 'transparent' }}/>
+                                                            </IconButton>
+                                                            <IconButton disabled>
+                                                                <DeleteIcon style={{ color: 'transparent' }}/>
+                                                            </IconButton>
+                                                        </Fragment>
+                                                    )
+                                                }
+                                            </TableCell>
+                                        </TableRow>
+
+                                )})}
                             </TableBody>
                         </Table>
                     </TableContainer>

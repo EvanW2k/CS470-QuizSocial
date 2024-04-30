@@ -36,10 +36,10 @@ export default function Main() {
                 <Route path="/profile/:userID" element={<Profile loggedInUser={userID}/>} />
                 <Route path="/edit-profile/:userID" element={<EditProfile loggedInUser={userID}/>} />
                 <Route path="/quiz/:quizID" element={<Quiz loggedInUser={userID}/>} />
-                <Route path="/flash-cards/:quizID" element={<FlashCard/>} />
-                <Route path="/match-game/:quizID" element={<MatchGame/>} />
-                <Route path="/fastmc-game/:quizID" element={<FastMultipleChoice/>} />
-                <Route path="/filling-the-blank/:quizID" element={<FillingTheBlank/>} />
+                <Route path="/flash-cards/:quizID" element={<FlashCard loggedInUser={userID}/>} />
+                <Route path="/match-game/:quizID" element={<MatchGame loggedInUser={userID}/>} />
+                <Route path="/fastmc-game/:quizID" element={<FastMultipleChoice loggedInUser={userID}/>} />
+                <Route path="/filling-the-blank/:quizID" element={<FillingTheBlank loggedInUser={userID}/>} />
                 <Route path="/register" element={<Register userID={userID} setUserID={setUserID} />} />
                 <Route path="/search" element={<Search/>} />
                 <Route path="/edit-quiz/:quizID" element={<EditQuiz loggedInUser={userID}/>} />
