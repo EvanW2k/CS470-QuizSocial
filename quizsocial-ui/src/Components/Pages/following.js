@@ -46,13 +46,23 @@ const Following = () => {
                         alt="Profile Placeholder"
                     />
                     <CardContent sx={{ flex: '1 0 auto', maxWidth: 'calc(100% - 170px)' }}>
-                        <Typography variant="h6" noWrap>User ID: {user.followed_id}</Typography>
+                        <Typography variant="h6" noWrap>{user.username}</Typography>
                         <Typography variant="subtitle1" color="text.secondary" noWrap>
                             Followed Date: {user.followed_date.split("T")[0]}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" component={Link} to={`/profile/${user.followed_id}`}>
+                        <Button size="small" component={Link} to={`/profile/${user.followed_id}`}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             View Profile
                         </Button>
                     </CardActions>

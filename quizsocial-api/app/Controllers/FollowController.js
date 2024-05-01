@@ -65,9 +65,10 @@ const getFollowingByUserID = (ctx) => {
     console.log("Getting following info");
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT uf.follower_id, uf.followed_id, uf.followed_date, up.bio, up.imageURL, up.color
+            SELECT uf.follower_id, uf.followed_id, uf.followed_date, up.bio, up.imageURL, up.color, u.username
             FROM user_follows uf
             INNER JOIN user_profile up ON uf.followed_id = up.userID
+            INNER JOIN users u ON uf.followed_id = u.userID
             WHERE uf.follower_id = ?
         `;
 
@@ -101,13 +102,14 @@ const getFollowingActivitiesByUserID = (ctx) => {
     console.log("Getting following activities");
     return new Promise((resolve, reject) => {
         const query = `
-            SELECT uf.follower_id, uf.followed_id, q.quizID, q.title, q.created_at, up.imageURL as userProfileImage
-            FROM user_follows uf
-            JOIN quizzes q ON uf.followed_id = q.userID
-            JOIN user_profile up ON uf.followed_id = up.userID
-            WHERE uf.follower_id = ? AND q.isPublic = 1
-            ORDER BY q.created_at DESC
-            LIMIT 30
+            SELECT uf.follower_id, uf.followed_id, q.quizID, q.title, q.created_at, up.imageURL as userProfileImage, u.username
+                FROM user_follows uf
+                JOIN quizzes q ON uf.followed_id = q.userID
+                JOIN user_profile up ON uf.followed_id = up.userID
+                JOIN users u ON uf.followed_id = u.userID
+                WHERE uf.follower_id = ? AND q.isPublic = 1
+                ORDER BY q.created_at DESC
+                LIMIT 30
         `;
 
         dbConnection.query({

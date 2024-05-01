@@ -50,7 +50,17 @@ export default function Favorites() {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" component={Link} to={`/quiz/${quiz.ID}`}>
+                        <Button size="small" component={Link} to={`/quiz/${quiz.ID}`}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             View Quiz
                         </Button>
                     </CardActions>

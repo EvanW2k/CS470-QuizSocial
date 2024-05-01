@@ -22,10 +22,14 @@ export default function Quiz({loggedInUser}) {
     const [quizInfo, setQuizInfo] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [rating, setRating] = useState(0);
+    const [isRated, setIsRated] = useState(true);
     const [favorited, setFavorited] = useState(false);
 
 
     const handleRating = newRating => {
+
+        setIsRated(true);
+
         const api = new API();
 
         async function newQuizRating() {
@@ -103,42 +107,47 @@ export default function Quiz({loggedInUser}) {
     };
 
     useEffect(() => {
-        const api = new API();
+        if (isRated) {
+            const api = new API();
 
-        async function getQuizInfoById() {
+            async function getQuizInfoById() {
 
-            api.getQuizById(quizID)
-                .then( quizJSONstring => {
-                    //console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
-                    setQuizInfo(quizJSONstring.data);
-                });
-            
-            api.getQuestionsForQuiz(quizID)
-                .then( questionsJSONstring => {
-                    console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
-                    setQuestions(questionsJSONstring.data);
-                });
+                api.getQuizById(quizID)
+                    .then( quizJSONstring => {
+                        //console.log(`api returns quiz info: ${JSON.stringify(quizJSONstring)}`);
+                        setQuizInfo(quizJSONstring.data);
+                    });
 
-            api.getQuizRatings(quizID)
-                .then( ratingsJSONstring => {
-                    //console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
-                    setRating(ratingsJSONstring.data.rating);
-                });
-            
-            console.log("getting favorite for", loggedInUser, 'and', quizID);
-            api.checkFavorited(quizID, loggedInUser)
-                .then( favoritedJSONstring => {
-                    console.log(`api return favorite info: ${JSON.stringify(favoritedJSONstring.status)}`);
-                    if (favoritedJSONstring.status === 200) {
-                        setFavorited(true);
-                    }
-                });
-            
-        } 
-        
-        getQuizInfoById();
-        console.log('logged in', loggedInUser);
-    }, []);
+                api.getQuestionsForQuiz(quizID)
+                    .then( questionsJSONstring => {
+                        console.log(`api returns questions: ${JSON.stringify(questionsJSONstring)}`);
+                        setQuestions(questionsJSONstring.data);
+                    });
+
+                api.getQuizRatings(quizID)
+                    .then( ratingsJSONstring => {
+                        //console.log(`api ratings: ${JSON.stringify(ratingsJSONstring)})`);
+                        setRating(ratingsJSONstring.data.rating);
+                    });
+
+                console.log("getting favorite for", loggedInUser, 'and', quizID);
+                api.checkFavorited(quizID, loggedInUser)
+                    .then( favoritedJSONstring => {
+                        console.log(`api return favorite info: ${JSON.stringify(favoritedJSONstring.status)}`);
+                        if (favoritedJSONstring.status === 200) {
+                            setFavorited(true);
+                        }
+                    });
+
+            }
+
+            getQuizInfoById();
+            console.log('logged in', loggedInUser);
+
+            setIsRated(false);
+        }
+
+    }, [isRated]);
 
     const goToFlashCards = () => {
         navigate(`/flash-cards/${quizID}`);
@@ -154,14 +163,6 @@ export default function Quiz({loggedInUser}) {
         navigate(`/fastmc-game/${quizID}`);
     };
 
-
-    if (quizInfo.length === 0) {
-        return (
-            <Typography variant='h5' mt={3} align="center">
-                Loading...
-            </Typography>
-        )
-    }
 
     if (!quizInfo.isPublic && loggedInUser !== quizInfo.userID) {
         return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
-import { Box, Typography, Card, CardContent, CardMedia, Grid } from '@mui/material';
+import {Box, Typography, Card, CardContent, CardMedia, Grid, Button} from '@mui/material';
 
 const Activity = () => {
     const { userID } = useParams();
@@ -50,13 +50,26 @@ const Activity = () => {
                                     />
                                 </Grid>
                                 <Grid item xs>
-                                    <Typography variant="subtitle1">{activity.followed_id} created</Typography>
+                                    <Typography variant="subtitle1">{activity.username} created</Typography>
                                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                                        <Link to={`/quiz/${activity.quizID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                            {activity.title}
-                                        </Link>
+                                        {activity.title}
                                     </Typography>
                                     <Typography variant="body2">{new Date(activity.created_at).toLocaleDateString()}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Button size="small" component={Link} to={`/quiz/${activity.quizID}`}
+                                            sx={{
+                                                border: 0,
+                                                mr: 2,
+                                                color:'white',
+                                                backgroundColor:'#535C91',
+                                                '&:hover':{
+                                                    backgroundColor:'#404E7C'
+                                                }
+                                            }}
+                                    >
+                                        View Quiz
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </CardContent>

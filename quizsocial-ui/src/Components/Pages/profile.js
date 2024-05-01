@@ -504,7 +504,7 @@ export default function Profile({loggedInUser}) {
                                                         }
                                                     }}
                                                 >
-                                                    Study
+                                                    View
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="right">
@@ -538,7 +538,17 @@ export default function Profile({loggedInUser}) {
                                                                     </DialogContentText>
                                                                 </DialogContent>
                                                                 <DialogActions>
-                                                                    <Button onClick={() => setIsDialogOpen(false)}>
+                                                                    <Button onClick={() => setIsDialogOpen(false)}
+                                                                            sx={{
+                                                                                border: 0,
+                                                                                mr: 2,
+                                                                                color:'white',
+                                                                                backgroundColor:'#535C91',
+                                                                                '&:hover':{
+                                                                                    backgroundColor:'#404E7C'
+                                                                                }
+                                                                            }}
+                                                                    >
                                                                         Cancel
                                                                     </Button>
                                                                     <Button
@@ -547,6 +557,15 @@ export default function Profile({loggedInUser}) {
                                                                             setIsDialogOpen(false);
                                                                         }}
                                                                         autoFocus
+                                                                        sx={{
+                                                                            border: 0,
+                                                                            mr: 2,
+                                                                            color:'white',
+                                                                            backgroundColor:'#535C91',
+                                                                            '&:hover':{
+                                                                                backgroundColor:'#404E7C'
+                                                                            }
+                                                                        }}
                                                                     >
                                                                         Delete
                                                                     </Button>
