@@ -204,27 +204,37 @@ export default function Profile({loggedInUser}) {
                         setUserProfileInfo(userProfileJSONstring.data);
                     });
 
+
                 // only grab this if currently logged in
                 if (loggedInUser && loggedInUser !== userID) {
-                    api.getFollowingByUserID(loggedInUser)
-                        .then(userFollowingJSONstring => {
-                            console.log(`Logged in user follows: ${JSON.stringify(userFollowingJSONstring)}`);
+                    try {
+                        api.getFollowingByUserID(loggedInUser)
+                            .then(userFollowingJSONstring => {
 
-                            if (userFollowingJSONstring.status === 203) {
-                                console.log(userFollowingJSONstring.data);
-                                return;
-                            }
+                                if (userFollowingJSONstring.status === 400) {
+                                    setFollowThisUser(false);
+                                }
 
-                            // Filter the array to get rows where followed_id is equal to userId
-                            const userFollows = userFollowingJSONstring.data.filter(item => item.followed_id === userID);
+                                console.log(`Logged in user follows: ${JSON.stringify(userFollowingJSONstring)}`);
 
-                            // Check if there are any elements in the filtered array
-                            const followThisUser = userFollows.length > 0;
+                                if (userFollowingJSONstring.status === 203) {
+                                    console.log(userFollowingJSONstring.data);
+                                    return;
+                                }
 
-                            // Set followThisUser state
-                            setFollowThisUser(followThisUser);
+                                // Filter the array to get rows where followed_id is equal to userId
+                                const userFollows = userFollowingJSONstring.data.filter(item => item.followed_id === userID);
 
-                        });
+                                // Check if there are any elements in the filtered array
+                                const followThisUser = userFollows.length > 0;
+
+                                // Set followThisUser state
+                                setFollowThisUser(followThisUser);
+
+                            });
+                    } catch (error) {
+                        setFollowThisUser(false);
+                    }
                 }
 
                 api.getQuizByUserId(userID)

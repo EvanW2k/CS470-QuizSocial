@@ -11,6 +11,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {useParams, useNavigate, Link} from 'react-router-dom';
 import API from '../../API_Interface/API_Interface';
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
 
 
 export default function Quiz({loggedInUser}) {
@@ -24,11 +29,12 @@ export default function Quiz({loggedInUser}) {
     const [rating, setRating] = useState(0);
     const [isRated, setIsRated] = useState(true);
     const [favorited, setFavorited] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 
     const handleRating = newRating => {
 
-        setIsRated(true);
+        setIsRated(true)
 
         const api = new API();
 
@@ -104,6 +110,7 @@ export default function Quiz({loggedInUser}) {
             }
         }
         copyQuiz();
+        setIsDialogOpen(true);
     };
 
     useEffect(() => {
@@ -290,6 +297,35 @@ export default function Quiz({loggedInUser}) {
                                 Copy
                             </Button>
                         </Grid>
+                        <Dialog
+                            open={isDialogOpen}
+                            onClose={() => setIsDialogOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                            BackdropProps={{ invisible: true }}
+                        >
+                            <DialogTitle id="alert-dialog-title">Success!</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {quizInfo.title} has been added to your profile.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setIsDialogOpen(false)}
+                                        sx={{
+                                            border: 0,
+                                            mr: 2,
+                                            color:'white',
+                                            backgroundColor:'#535C91',
+                                            '&:hover':{
+                                                backgroundColor:'#404E7C'
+                                            }
+                                        }}
+                                >
+                                    Ok
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                         <Grid item>
                         {
                             loggedInUser === quizInfo.userID ? (

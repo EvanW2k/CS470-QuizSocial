@@ -83,13 +83,13 @@ const getFollowingByUserID = (ctx) => {
                 return reject(error);
             }
             if (tuples.length === 0) {
-                ctx.body = "This user doesn't follow any other user.";
-                ctx.status = 404;
+                ctx.body = tuples;
+                ctx.status = 203;
             } else {
                 ctx.body = tuples;
                 ctx.status = 200;
             }
-            return resolve();
+            resolve();
         });
     }).catch(err => {
         console.log("Database connection error in getFollowingByUserID.", err);
