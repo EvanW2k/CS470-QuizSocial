@@ -269,7 +269,7 @@ export default function EditQuiz(loggedInUser) {
                         </Grid>
                     </Grid>
                     <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={2} marginTop={0} >
-                        <Grid item>
+                        <Grid item mr={1.5}>
                             <Typography variant='h6'>
                                 Add answer:
                             </Typography>

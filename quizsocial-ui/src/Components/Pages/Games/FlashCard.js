@@ -15,7 +15,7 @@ function FlashCard() {
             try {
                 const response = await api.getQuestionsForQuiz(quizID);
                 if (response.data && response.data.length > 0) {
-                    setCards(response.data);
+                    setCards(shuffleArray(response.data));
                 } else {
                     console.log('No quizzes found');
                 }
@@ -26,6 +26,14 @@ function FlashCard() {
 
         fetchQuizzes();
     }, [quizID]);
+
+    const shuffleArray = array => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
 
     const handlePrev = () => {
         if (currentCardIndex > 0) {

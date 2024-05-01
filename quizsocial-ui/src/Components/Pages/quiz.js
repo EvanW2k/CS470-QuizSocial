@@ -155,6 +155,14 @@ export default function Quiz({loggedInUser}) {
     };
 
 
+    if (quizInfo.length === 0) {
+        return (
+            <Typography variant='h5' mt={3} align="center">
+                Loading...
+            </Typography>
+        )
+    }
+
     if (!quizInfo.isPublic && loggedInUser !== quizInfo.userID) {
         return (
             <Paper
