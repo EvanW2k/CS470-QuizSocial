@@ -52,7 +52,7 @@ export default function SearchPage() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
-            <Typography variant="h4" sx={{ mb: 4 }}>Search</Typography>
+            <Typography variant="h4" sx={{ mb: 4}}>Search</Typography>
             <TextField
                 label="Search"
                 variant="outlined"
@@ -62,6 +62,14 @@ export default function SearchPage() {
                     sx: {
                         bgcolor: '#1B1A55',
                     },
+                }}
+                InputLabelProps={{
+                    style: { color: '#aaa' },  // Default label color
+                    sx: {
+                        '&.Mui-focused': {
+                            color: '#4a5cc5',  // Label color when input is focused
+                        }
+                    }
                 }}
                 sx={{ mb: 2,
                     width: '80%',
