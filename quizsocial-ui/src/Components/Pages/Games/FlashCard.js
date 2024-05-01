@@ -47,7 +47,7 @@ function FlashCard() {
         <Box sx={{ maxWidth: 650, margin: 'auto', textAlign: 'center', mt: 4 }}>
             {cards.length > 0 && (
                 <Card variant="outlined" sx={{ mb: 2 }}>
-                    <CardContent>
+                    <CardContent sx={{ textAlign: 'center', border: 0 }}>
                         <Typography variant="h5" sx={{ fontSize: 20, mb: 2 }}>
                             {isQuestion ? 'Question' : 'Answer'}:
                         </Typography>
@@ -56,13 +56,41 @@ function FlashCard() {
                         </Typography>
                     </CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', p: 2 }}>
-                        <Button onClick={handlePrev} disabled={currentCardIndex === 0}>
+                        <Button onClick={handlePrev} disabled={currentCardIndex === 0}
+                                sx={{
+                                    border: 0,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             Previous
                         </Button>
-                        <Button onClick={flipCard}>
+                        <Button onClick={flipCard}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             Flip
                         </Button>
-                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}>
+                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}
+                                sx={{
+                                    border: 0,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             Next
                         </Button>
                     </Box>

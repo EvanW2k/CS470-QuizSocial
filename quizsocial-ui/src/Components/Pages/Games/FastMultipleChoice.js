@@ -427,8 +427,13 @@ export default function FastMultipleChoice() {
                           }}>
                         <Button
                             sx={{
-                                border: 1,
-                                mr: 2
+                                mr: 2,
+                                border: 0,
+                                color:'white',
+                                backgroundColor:'#1b1a55',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
                             }}
                             onClick={() => {
                                 setInGame(true);
@@ -438,8 +443,13 @@ export default function FastMultipleChoice() {
                         </Button>
                         <Button
                             sx={{
-                                border: 1,
-                                ml: 2
+                                ml: 2,
+                                border: 0,
+                                color:'white',
+                                backgroundColor:'#1b1a55',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
                             }}
                             onClick={() => {
                                 navigate(`/quiz/${quizID}`)

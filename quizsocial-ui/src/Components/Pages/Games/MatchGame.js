@@ -138,7 +138,7 @@ const MatchGame = ({loggedInUser}) => {
                                 backgroundColor: matchedPairs.includes(index) ? 'lightgreen' : (flippedIndices.includes(index) ? 'lightblue' : 'lightgray') }}
                                   onClick={() => handleCardClick(index)}>
                                 <CardContent>
-                                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                                    <Typography variant="body1" sx={{ textAlign: 'center', color:'black' }}>
                                         {flippedIndices.includes(index) || matchedPairs.includes(index) ? card.content : 'Click to reveal'}
                                     </Typography>
                                 </CardContent>

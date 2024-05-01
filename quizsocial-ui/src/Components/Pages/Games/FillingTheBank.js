@@ -74,18 +74,60 @@ export default function FillingTheBlank(props) {
                             onChange={handleInputChange}
                             sx={{ mb: 1 }}
                         />
-                        <Typography color="primary" sx={{ mb: 2 }}>
-                            {answerFeedback}
-                        </Typography>
+                        {answerFeedback === 'Correct!' ?
+                            <Typography color="green" variant='h4' sx={{ mb: 2 }}>
+                                {answerFeedback}
+                            </Typography>
+
+                            : answerFeedback === "" ?
+
+                            <Typography color="transparent" variant='h4' sx={{ mb: 2 }}>
+                                _
+                            </Typography>
+
+                            :
+
+                            <Typography color="red" variant='h4' sx={{ mb: 2 }}>
+                                {answerFeedback}
+                            </Typography>
+                        }
                     </CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', p: 2 }}>
-                        <Button onClick={handlePrev} disabled={currentCardIndex === 0}>
+                        <Button onClick={handlePrev} disabled={currentCardIndex === 0}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}>
                             Previous
                         </Button>
-                        <Button onClick={checkAnswer}>
+                        <Button onClick={checkAnswer}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}>
                             Check
                         </Button>
-                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}>
+                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}
+                                sx={{
+                                    border: 0,
+                                    mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#535C91',
+                                    '&:hover':{
+                                        backgroundColor:'#404E7C'
+                                    }
+                                }}
+                        >
                             Next
                         </Button>
                     </Box>

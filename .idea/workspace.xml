@@ -4,20 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="fav page update">
-      <change afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/utils/siteSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_13_2024_12_45_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_13_2024_12_45_PM__Changes_.xml" afterDir="false" />
+    <list default="true" id="b39ab2b0-37ab-4ae2-ab80-dbf5bc295c00" name="Changes" comment="UI changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-api/database/mySQLconnect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Banner/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/following.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/following.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/quiz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FastMultipleChoice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FillingTheBank.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/FlashCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" beforeDir="false" afterPath="$PROJECT_DIR$/quizsocial-ui/src/Components/Pages/Games/MatchGame.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +24,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Zeroxa &lt;2991971hz@gmail.com&gt;" />
-      </list>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -48,8 +36,8 @@
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="3405cdea-7e5d-448c-8e6a-4f2335576071" />
-        <option name="url" value="https://github.com/EvanW2k/CS470-Capstone" />
+        <option name="accountId" value="0ff91f0b-4945-4946-9d31-dc2e509daec5" />
+        <option name="url" value="https://github.com/EvanW2k/CS470-Capstone.git" />
       </UrlAndAccount>
     </option>
   </component>
@@ -64,24 +52,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Node.js.App.js.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/29919/Downloads/CS470-Capstone-UI-changes",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "ts.external.directory.path": "C:\\Users\\29919\\AppData\\Local\\JetBrains\\WebStorm 2023.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.App.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Evan/Desktop/For turn in/CS470/CS470 - Project4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Evan\WebstormProjects\CS470-Capstone\quizsocial-api" />
@@ -109,10 +96,7 @@
       <workItem from="1713902464233" duration="3446000" />
       <workItem from="1714241012188" duration="8781000" />
       <workItem from="1714330196681" duration="8069000" />
-      <workItem from="1714411155314" duration="1535000" />
-      <workItem from="1714412909631" duration="11372000" />
-      <workItem from="1714426500119" duration="7674000" />
-      <workItem from="1714512933447" duration="7326000" />
+      <workItem from="1714514685647" duration="3042000" />
     </task>
     <task id="LOCAL-00001" summary="Login and Register (with navigation). &#10;+ some minor changes">
       <option name="closed" value="true" />
@@ -170,47 +154,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714249228149</updated>
     </task>
-    <task id="LOCAL-00008" summary="Early version of fast MC">
+    <task id="LOCAL-00008" summary="UI changes">
       <option name="closed" value="true" />
-      <created>1714420478453</created>
+      <created>1714526863909</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1714420478454</updated>
+      <updated>1714526863909</updated>
     </task>
-    <task id="LOCAL-00009" summary="Activity change with kathy changes and profile ui fix for new quizzes">
+    <task id="LOCAL-00009" summary="UI changes">
       <option name="closed" value="true" />
-      <created>1714426109040</created>
+      <created>1714527185052</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1714426109040</updated>
+      <updated>1714527185052</updated>
     </task>
-    <task id="LOCAL-00010" summary="beginning of fav page">
-      <option name="closed" value="true" />
-      <created>1714428421659</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1714428421659</updated>
-    </task>
-    <task id="LOCAL-00011" summary="beginning of fav page">
-      <option name="closed" value="true" />
-      <created>1714428450833</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1714428450833</updated>
-    </task>
-    <task id="LOCAL-00012" summary="fav page update">
-      <option name="closed" value="true" />
-      <created>1714431770815</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1714431770815</updated>
-    </task>
-    <option name="localTasksCounter" value="13" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,9 +195,7 @@
     <MESSAGE value="DB: quiz rating should be set right with this update" />
     <MESSAGE value="Edit Profile, Quiz Table, and some DB&#10;&#10;- Click gear on profile to change username or bio&#10;&#10;- on profile the quiz table displays favorites and rating. The sort also works.&#10;&#10;- some reformatting on profile" />
     <MESSAGE value="Early version of fast MC" />
-    <MESSAGE value="Activity change with kathy changes and profile ui fix for new quizzes" />
-    <MESSAGE value="beginning of fav page" />
-    <MESSAGE value="fav page update" />
-    <option name="LAST_COMMIT_MESSAGE" value="fav page update" />
+    <MESSAGE value="UI changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI changes" />
   </component>
 </project>
