@@ -411,7 +411,7 @@ export default function Profile({loggedInUser}) {
                         </Box>
                         <Box border={0}>
                             <Grid item sx={{ justifySelf: 'flex-end', mr: 8, mt: 0}}>
-                                <Box sx={{ width: 130, border: 0 }}>
+                                <Box sx={{ width: 130, border: 0, backgroundColor: '#535C91', borderRadius: '5px' }}>
                                     <FormControl fullWidth>
                                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                                             Sort by
@@ -420,6 +420,7 @@ export default function Profile({loggedInUser}) {
                                             defaultValue={sortMode}
                                             onChange={handleSortChange}
                                             backgroundcolor = {'#070F2B'}
+
                                             inputProps={{
                                                 name: 'Sort',
                                                 id: 'uncontrolled-native',
