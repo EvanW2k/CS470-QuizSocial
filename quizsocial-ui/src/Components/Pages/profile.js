@@ -24,7 +24,11 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import React from 'react';
 import profileDimensions from "../utils/profileDimensions";
 import API from '../../API_Interface/API_Interface';
-import Delete from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 const quizTableComps = ['Quiz', 'Favorites', 'Rating', 'Date Created'];
@@ -48,6 +52,10 @@ export default function Profile({loggedInUser}) {
     const [imageError, setImageError] = useState(false);
     const [newQuizAdded, setNewQuizAdded] = useState(true);
     const [quizDeleted, setQuizDeleted] = useState(true);
+    const [deleteQuizId, setDeleteQuizId] = useState(0);
+    const [deleteQuizTitle, setDeleteQuizTitle] = useState('');
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
 
     const handleImageError = () => {
         setImageError(true);
@@ -146,6 +154,13 @@ export default function Profile({loggedInUser}) {
         setQuizDeleted(true);
         console.log("deleted quiz");
     };
+
+    const handleDeleteIcon = (quizID, quizTitle) => {
+        setDeleteQuizId(quizID);
+        setDeleteQuizTitle(quizTitle);
+        console.log("delete:", quizID, quizTitle);
+        setIsDialogOpen(true);
+    }
 
     useEffect(() => {
         if (userQuizzes.length > 0) {
@@ -477,10 +492,38 @@ export default function Profile({loggedInUser}) {
                                                             </IconButton>
 
                                                             <IconButton
-                                                            onClick={() => {handleDeleteQuiz(row.quizID)}}
+                                                            onClick={() => {handleDeleteIcon(row.quizID, row.title)}}
                                                             >
                                                                 <DeleteIcon/>
                                                             </IconButton>
+                                                            <Dialog
+                                                                open={isDialogOpen}
+                                                                onClose={() => setIsDialogOpen(false)}
+                                                                aria-labelledby="alert-dialog-title"
+                                                                aria-describedby="alert-dialog-description"
+                                                                BackdropProps={{ invisible: true }}
+                                                            >
+                                                                <DialogTitle id="alert-dialog-title">Confirm Deletion</DialogTitle>
+                                                                <DialogContent>
+                                                                    <DialogContentText id="alert-dialog-description">
+                                                                        Are you sure you want to delete {deleteQuizTitle}?
+                                                                    </DialogContentText>
+                                                                </DialogContent>
+                                                                <DialogActions>
+                                                                    <Button onClick={() => setIsDialogOpen(false)}>
+                                                                        Cancel
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() => {
+                                                                            handleDeleteQuiz(deleteQuizId);
+                                                                            setIsDialogOpen(false);
+                                                                        }}
+                                                                        autoFocus
+                                                                    >
+                                                                        Delete
+                                                                    </Button>
+                                                                </DialogActions>
+                                                            </Dialog>
                                                         </Fragment>
                                                     ) : (
                                                         <Fragment>
