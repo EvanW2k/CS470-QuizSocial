@@ -114,7 +114,17 @@ export default function SearchPage() {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" component={Link} to={`/profile/${result.userID}`}>
+                                        <Button size="small" component={Link} to={`/profile/${result.userID}`}
+                                                sx={{
+                                                    border: 0,
+                                                    mr: 2,
+                                                    color:'white',
+                                                    backgroundColor:'#535C91',
+                                                    '&:hover':{
+                                                        backgroundColor:'#404E7C'
+                                                    }
+                                                }}
+                                        >
                                             View Profile
                                         </Button>
                                     </CardActions>
@@ -136,7 +146,17 @@ export default function SearchPage() {
                                         <Typography variant="body1">{result.description}</Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" component={Link} to={`/quiz/${result.quizID}`}>
+                                        <Button size="small" component={Link} to={`/quiz/${result.quizID}`}
+                                                sx={{
+                                                    border: 0,
+                                                    mr: 2,
+                                                    color:'white',
+                                                    backgroundColor:'#535C91',
+                                                    '&:hover':{
+                                                        backgroundColor:'#404E7C'
+                                                    }
+                                                }}
+                                        >
                                             View Quiz
                                         </Button>
                                     </CardActions>
