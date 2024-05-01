@@ -230,7 +230,8 @@ export default function Profile({loggedInUser}) {
                 api.getQuizByUserId(userID)
                     .then( userQuizzesJSONstring => {
                         console.log(`quizzes: ${JSON.stringify(userQuizzesJSONstring)}`);
-                        setUserQuizzes(userQuizzesJSONstring.data);
+                        const data = [...userQuizzesJSONstring.data]
+                        setUserQuizzes([...data].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
                     });
             }
 
@@ -334,8 +335,13 @@ export default function Profile({loggedInUser}) {
                                     {followThisUser ? (
                                         <Button
                                             sx={{
-                                                border: 1,
-                                                mt: 2
+                                                mt: 2,
+                                                border: 0,
+                                                color:'white',
+                                                backgroundColor:'#535C91',
+                                                '&:hover':{
+                                                    backgroundColor:'#404E7C'
+                                                }
                                             }}
                                             onClick={handleUnfollow} // Add onClick event handler for unfollow
                                         >
@@ -344,8 +350,13 @@ export default function Profile({loggedInUser}) {
                                     ) : (
                                         <Button
                                             sx={{
-                                                border: 1,
-                                                mt: 2
+                                                mt: 2,
+                                                border: 0,
+                                                color:'white',
+                                                backgroundColor:'#535C91',
+                                                '&:hover':{
+                                                    backgroundColor:'#404E7C'
+                                                }
                                             }}
                                             onClick={handleFollow} // Add onClick event handler for follow
                                         >
@@ -445,6 +456,16 @@ export default function Profile({loggedInUser}) {
                                               </TableCell>
                                           )
                                     ))}
+                                    <TableCell align="right">
+                                        <Button
+                                            disabled
+                                            sx={{
+                                                border: 0,
+                                                backgroundColor: 'transparent', // Transparent background
+                                            }}
+                                        >
+                                        </Button>
+                                    </TableCell>
                                     <TableCell>
                                         <IconButton disabled>
                                             <SettingsIcon style={{ color: 'transparent' }}/>
@@ -463,22 +484,28 @@ export default function Profile({loggedInUser}) {
                                         <TableRow key={row.title}
                                                   sx={{border: 0}}>
                                             <TableCell align="left">
-                                                <Link
-                                                    to={`/quiz/${row.quizID}`}
-                                                    style={{
-                                                        textDecoration: "none",
-                                                        color: 'blue'
-                                                }}
-
-                                                >
-                                                    <Typography fontSize={'15px'}>
-                                                        {row.title}
-                                                    </Typography>
-                                                </Link>
+                                                <Typography fontSize={'15px'}>
+                                                    {row.title}
+                                                </Typography>
                                             </TableCell>
                                             <TableCell align="left"><Typography fontSize={'15px'}>{row.num_favorites}</Typography></TableCell>
                                             <TableCell align="left"><Rating value={row.rating} precision={0.5} readOnly /></TableCell>
                                             <TableCell align="right"> <Typography fontSize={'15px'}>{row.created_at.split("T")[0]}</Typography></TableCell>
+                                            <TableCell align="right">
+                                                <Button
+                                                    onClick={()=>{navigate(`/quiz/${row.quizID}`)}}
+                                                    sx={{
+                                                        border: 0,
+                                                        color:'white',
+                                                        backgroundColor:'#535C91',
+                                                        '&:hover':{
+                                                            backgroundColor:'#404E7C'
+                                                        }
+                                                    }}
+                                                >
+                                                    Study
+                                                </Button>
+                                            </TableCell>
                                             <TableCell align="right">
 
                                                 {

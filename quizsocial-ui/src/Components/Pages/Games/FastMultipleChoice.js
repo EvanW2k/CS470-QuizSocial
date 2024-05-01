@@ -9,6 +9,7 @@ export default function FastMultipleChoice() {
     const { quizID } = useParams();
 
     const finishLine = 800;
+    const startGrav = 8;
 
     const bucketWidth = 300;
     const bucketHeight = 150;
@@ -45,7 +46,7 @@ export default function FastMultipleChoice() {
 
     const [countdown, setCountdown] = useState(3);
 
-    const [gravitySpeed, setGravitySpeed] = useState(5);
+    const [gravitySpeed, setGravitySpeed] = useState(startGrav);
     const [allowMovement, setAllowMovement] = useState(false); // State to allow/disallow movement
     const [aChoices, setAChoices] = useState([]);
 
@@ -54,10 +55,10 @@ export default function FastMultipleChoice() {
         if (allowMovement) {
             switch (direction) {
                 case 'left':
-                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x - 15}));
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x - 20}));
                     break;
                 case 'right':
-                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x + 15}));
+                    setPosition(prevPosition => ({...prevPosition, x: prevPosition.x + 20}));
                     break;
                 case 'down':
                     setPosition(prevPosition => ({...prevPosition, y: prevPosition.y + 50}));
@@ -89,7 +90,7 @@ export default function FastMultipleChoice() {
                     borderWidth: 3
                 }}
             >
-                <Typography sx={{fontSize: `${fontSize}px`, textAlign: 'center', margin: 'auto'}}>{answer}</Typography>
+                <Typography sx={{fontSize: `${fontSize}px`, textAlign: 'center', margin: 'auto', color: 'black'}}>{answer}</Typography>
             </Box>
         );
 
@@ -97,23 +98,22 @@ export default function FastMultipleChoice() {
 
 
     useEffect(() => {
-        if (!cards)
-            fetchQuizzes();
-        else {
-            const shuffledCards = shuffleArray(cards);
-            setCardQueue(shuffledCards.slice(1));
-            setCurCard(shuffledCards[0]);
-            generateRandomChoices(shuffledCards[0], shuffledCards);
+        if (inGame) {
+            if (!cards)
+                fetchQuizzes();
+            else {
+                const shuffledCards = shuffleArray(cards);
+                setCardQueue(shuffledCards.slice(1));
+                setCurCard(shuffledCards[0]);
+                generateRandomChoices(shuffledCards[0], shuffledCards);
+            }
+
+            setAllowMovement(false);
+            setGravitySpeed(startGrav);
+            setPosition({x: ballStartPos_x, y: ballStartPos_y});
+            setGravitySpeed(startGrav);
+            setScore(0);
         }
-
-        setAllowMovement(false);
-        setScore(0);
-        setGravitySpeed(5);
-        setPosition({x: ballStartPos_x, y: ballStartPos_y});
-        setGravitySpeed(5);
-        setScore(0);
-
-
     }, [inGame]);
 
     const fetchQuizzes = async () => {
@@ -243,8 +243,6 @@ export default function FastMultipleChoice() {
         generateRandomChoices(shuffled[0], cards);
         setCurCard(shuffled[0]);
         setCardQueue(shuffled.slice(1));
-
-        console.log('!!!', cardQueue);
 
         setPosition({x: ballStartPos_x, y: ballStartPos_y});
         setGravitySpeed(gravitySpeed+1);

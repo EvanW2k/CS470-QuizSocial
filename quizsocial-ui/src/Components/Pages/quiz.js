@@ -150,6 +150,10 @@ export default function Quiz({loggedInUser}) {
         navigate(`/filling-the-blank/${quizID}`);
     };
 
+    const goToFastMC = () => {
+        navigate(`/fastmc-game/${quizID}`);
+    };
+
 
     if (!quizInfo.isPublic && loggedInUser !== quizInfo.userID) {
         return (
@@ -233,6 +237,14 @@ export default function Quiz({loggedInUser}) {
                                         variant='outlined' 
                                         endIcon={<StarIcon />}
                                         onClick={handleUnfavorite}
+                                        sx={{
+                                            border: 0,
+                                            color:'white',
+                                            backgroundColor:'#535C91',
+                                            '&:hover':{
+                                                backgroundColor:'#404E7C'
+                                            }
+                                        }}
                                     >
                                         Unfavorite
                                     </Button>
@@ -241,6 +253,14 @@ export default function Quiz({loggedInUser}) {
                                         variant='outlined'
                                         endIcon={<StarIcon />}
                                         onClick={handleFavorite}
+                                        sx={{
+                                            border: 0,
+                                            color:'white',
+                                            backgroundColor:'#535C91',
+                                            '&:hover':{
+                                                backgroundColor:'#404E7C'
+                                            }
+                                        }}
                                     >
                                         Favorite
                                     </Button>
@@ -248,7 +268,16 @@ export default function Quiz({loggedInUser}) {
                             }
                         </Grid>
                         <Grid item>
-                            <Button variant='outlined' onClick={handleCopy}>
+                            <Button variant='outlined' onClick={handleCopy}
+                                    sx={{
+                                        border: 0,
+                                        color:'white',
+                                        backgroundColor:'#535C91',
+                                        '&:hover':{
+                                            backgroundColor:'#404E7C'
+                                        }
+                                    }}
+                            >
                                 Copy
                             </Button>
                         </Grid>
@@ -334,6 +363,7 @@ export default function Quiz({loggedInUser}) {
                         <Button 
                             variant='outlined'
                             style={{maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'}}
+                            onClick={goToFastMC}
                             sx={{
                                 border: 0,
                                 mt: 2,
