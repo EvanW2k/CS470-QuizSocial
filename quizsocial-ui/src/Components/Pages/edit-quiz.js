@@ -164,9 +164,21 @@ export default function EditQuiz(loggedInUser) {
                     <Grid item>
                         <TextField 
                             id='outlined-basic' 
-                            label='Quiz Name' 
                             variant='outlined' 
-                            sx={{width:500}} 
+                            sx={{
+                                width:500,
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: '#404E7C',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'white',
+                                    },
+                                }
+                            }} 
                             value={title}
                             onChange={handleQuizNameChange}
                         />
@@ -177,7 +189,22 @@ export default function EditQuiz(loggedInUser) {
                 <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={2}>
                     <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
                         <Grid item>
-                            <FormControl sx={{width: 200}}>
+                            <FormControl
+                                sx={{
+                                    width:200,
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#404E7C',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                    }
+                                }} 
+                            >
                                 <InputLabel id='quiz-privacy'>Privacy</InputLabel>
                                 <Select
                                     value={isPublic}
@@ -219,9 +246,21 @@ export default function EditQuiz(loggedInUser) {
                         <Grid item>
                             <TextField 
                                 id='outlined-basic' 
-                                label='Question' 
                                 variant='outlined' 
-                                sx={{width:500}} 
+                                sx={{
+                                    width:500,
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#404E7C',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                    }
+                                }} 
                                 value={question}
                                 onChange={handleQuestionChange}
                             />
@@ -235,18 +274,40 @@ export default function EditQuiz(loggedInUser) {
                         </Grid>
                         <Grid item>
                             <TextField 
-                                id='outlined-basic' 
-                                label='Answer' 
+                                id='outlined-basic'
                                 variant='outlined' 
-                                sx={{width:500}} 
+                                sx={{
+                                    width:500,
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#404E7C',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'white',
+                                        },
+                                    }
+                                }} 
                                 value={answer}
                                 onChange={handleAnswerChange}
                             />
 
                         </Grid>
                     </Grid>
-                    <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginBottom={5} marginTop={0}>
-                        <Button variant='outlined' onClick={() => {handleAddQuizItem()}}>
+                    <Grid container direction='row' justifyContent='center' border={0} spacing={2} marginBottom={5} marginTop={0}>
+                        <Button 
+                        onClick={() => {handleAddQuizItem()}} 
+                        sx={{
+                            border: 0,
+                            mt: 2,
+                            color:'white',
+                            backgroundColor:'#535C91',
+                            '&:hover':{
+                                backgroundColor:'#404E7C'
+                            }
+                        }}>
                             Add
                         </Button>
                     </Grid>
@@ -257,12 +318,17 @@ export default function EditQuiz(loggedInUser) {
                     direction='row'
                     justifyContent='center'
                     alignItems='flex-start'
-                    border={1}
+                    border={0}
                     spacing={2}
                     bottomMargin={2}
                     topMargin={2}
                 >
-                    <TableContainer component={Paper}>
+                    <TableContainer 
+                        component={Paper}
+                        sx={{
+                            border: '1px solid #404E7C'
+                        }}
+                    >
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -289,21 +355,39 @@ export default function EditQuiz(loggedInUser) {
                 </Grid>
                 
                 {/* create and delete quiz button */}
-                <Grid container direction='row' justifyContent='center' alignItems='flex-start' border={0} spacing={2} marginTop={2} marginBottom={2}>
-                    <Grid container direction='column' justifyContext='center' marginTop={2} maxWidth={500}>
-                        <Grid item justifyContext='center'>
-                            <Button variant='outlined' onClick={() => handleSaveChanges()}>
-                                Save Changes
-                            </Button>
-                        </Grid>
+                <Grid container direction='row' justifyContent='center' border={0} spacing={2} marginTop={2} marginBottom={2}>
+                    <Grid item>
+                        <Button 
+                            onClick={() => handleSaveChanges()}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+                            }}
+                        >
+                            Save Changes
+                        </Button>
                     </Grid>
-                    <Grid container direction='column' justifyContext='center' marginTop={2} width={500}>
-                        <Grid item>
-                            <Button variant='outlined' onClick={() => {navigate(`/profile/${loggedInUser.loggedInUser}`)}}>
-                                Discard Changes
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <Grid item>
+                        <Button
+                            onClick={() => {navigate(`/profile/${loggedInUser.loggedInUser}`)}}
+                            sx={{
+                                border: 0,
+                                mt: 2,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+                            }}
+                        >
+                            Discard Changes
+                        </Button>
+                    </Grid> 
                 </Grid>
             </Grid>
         </Paper>
