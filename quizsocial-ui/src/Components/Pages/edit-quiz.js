@@ -205,11 +205,13 @@ export default function EditQuiz(loggedInUser) {
                                     }
                                 }} 
                             >
-                                <InputLabel id='quiz-privacy'>Privacy</InputLabel>
+                                <InputLabel id='quiz-privacy' style={{ color: 'white' }}>Privacy</InputLabel>
                                 <Select
                                     value={isPublic}
                                     label='Privacy'
                                     onChange={handlePrivacy}
+
+
                                 >
                                     <MenuItem value={1}>Public</MenuItem>
                                     <MenuItem value={0}>Private</MenuItem>

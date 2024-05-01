@@ -411,9 +411,9 @@ export default function Profile({loggedInUser}) {
                         </Box>
                         <Box border={0}>
                             <Grid item sx={{ justifySelf: 'flex-end', mr: 8, mt: 0}}>
-                                <Box sx={{ width: 130, border: 0, backgroundColor: '#535C91', borderRadius: '5px' }}>
+                                <Box sx={{ width: 130, border: 0 }}>
                                     <FormControl fullWidth>
-                                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                        <InputLabel style={{ color: 'white' }}>
                                             Sort by
                                         </InputLabel>
                                         <Select
