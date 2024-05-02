@@ -245,6 +245,14 @@ export default function EditProfile ({loggedInUser}) {
                 <Grid item container justifyContent="center" alignItems="center" border={0} mt={5}>
                     <Button variant="outlined"
                             onClick={() => handleSubmitChanges()}
+                            sx={{
+                                border: 0,
+                                color:'white',
+                                backgroundColor:'#535C91',
+                                '&:hover':{
+                                    backgroundColor:'#404E7C'
+                                }
+                            }}
                     >
                         Submit Changes
                     </Button>

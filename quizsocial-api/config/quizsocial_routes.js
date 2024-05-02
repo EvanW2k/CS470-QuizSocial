@@ -84,7 +84,7 @@ quizzesRouter.post('/createQuiz/:userID/:title', QuizzesController.createQuiz);
 quizzesRouter.delete('/deleteQuiz/:quizID', QuizzesController.deleteQuiz);
 quizzesRouter.delete('/deleteQuizQuestions/:quizID', QuizzesController.deleteQuizQuestions);
 quizzesRouter.delete('/deleteQuestion/:questionID', QuizzesController.deleteQuestion);
-quizzesRouter.post('/addQuestion/:quizID/:question/:answer', QuizzesController.addQuestion);
+quizzesRouter.post('/addQuestion/:quizID', QuizzesController.addQuestion);
 quizzesRouter.post('/changeTitle/:quizID', QuizzesController.changeTitle);
 quizzesRouter.post('/changePrivacy/:quizID/:isPublic', QuizzesController.changePrivacy);
 

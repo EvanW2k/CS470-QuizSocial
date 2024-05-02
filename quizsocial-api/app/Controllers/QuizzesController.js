@@ -294,14 +294,17 @@ const deleteQuestion = (ctx) => {
 
 const addQuestion = (ctx) => {
     return new Promise((resolve, reject) => {
+        console.log("insert Q/A");
         const query = `
             INSERT INTO questions (quizID, question, answer)
             VALUES (?, ?, ?)
         `;
+
         dbConnection.query({
             sql: query,
-            values: [ctx.params.quizID, ctx.params.question, ctx.params.answer]
+            values: [ctx.params.quizID, ctx.request.body.question, ctx.request.body.answer]
         }, (error, tuples) => {
+
             if (error) {
                 console.log("Connection error in QuizzesController::addQuestion", error);
                 ctx.body = [];

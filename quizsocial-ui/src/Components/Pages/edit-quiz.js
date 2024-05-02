@@ -85,6 +85,7 @@ export default function EditQuiz(loggedInUser) {
         async function updateQuestions() {
             console.log('saving now');
             addQuestions.map(async (qaPair) => {
+                console.log(qaPair);
                 try {
                     await api.addQuestion(quizID, qaPair.question, qaPair.answer);
                     console.log("successfully added question and answer");

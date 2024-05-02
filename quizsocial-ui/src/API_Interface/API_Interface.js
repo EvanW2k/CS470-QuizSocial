@@ -122,7 +122,7 @@ export default class APIInterface {
     }
 
     async addQuestion(quizID, question, answer) {
-        return axiosAgent.post(`quizzes/addQuestion/${quizID}/${question}/${answer}`);
+        return axiosAgent.post(`quizzes/addQuestion/${quizID}`, {question, answer});
     }
 
     async changeTitle(quizID, title){
