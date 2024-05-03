@@ -52,14 +52,14 @@ function FlashCard() {
     };
 
     return (
-        <Box sx={{ maxWidth: 650, margin: 'auto', textAlign: 'center', mt: 4 }}>
+        <Box sx={{ maxWidth: 800, margin: 'auto', textAlign: 'center', mt: 4 }}>
             {cards.length > 0 && (
-                <Card variant="outlined" sx={{ mb: 2 }}>
+                <Card variant="outlined" sx={{ mb: 2, padding: 3 }}>
                     <CardContent sx={{ textAlign: 'center', border: 0 }}>
-                        <Typography variant="h5" sx={{ fontSize: 20, mb: 2 }}>
+                        <Typography variant="h4" sx={{ fontSize: 24, mb: 2 }}>
                             {isQuestion ? 'Question' : 'Answer'}:
                         </Typography>
-                        <Typography sx={{ fontSize: 18 }}>
+                        <Typography sx={{ fontSize: 20 }}> {/* Increased font size */}
                             {isQuestion ? cards[currentCardIndex].question : cards[currentCardIndex].answer}
                         </Typography>
                     </CardContent>
@@ -104,7 +104,7 @@ function FlashCard() {
                     </Box>
                 </Card>
             )}
-            {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
+            {cards.length === 0 && <Typography variant="h6" sx={{ fontSize: 18 }}>No cards available for this quiz.</Typography>}
         </Box>
     );
 }

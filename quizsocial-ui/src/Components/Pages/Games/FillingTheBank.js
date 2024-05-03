@@ -1,13 +1,15 @@
+import API from '../../../API_Interface/API_Interface';
 import React, { useState, useEffect } from 'react';
 import { Box, Card, CardContent, Typography, Button, TextField } from '@mui/material';
-import API from '../../../API_Interface/API_Interface';
 import { useParams } from 'react-router-dom';
+
 export default function FillingTheBlank(props) {
     const { quizID } = useParams();
     const [cards, setCards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState('');
     const [answerFeedback, setAnswerFeedback] = useState('');
+    const [showAnswer, setShowAnswer] = useState(false);
 
     useEffect(() => {
         const fetchQuizzes = async () => {
@@ -25,7 +27,7 @@ export default function FillingTheBlank(props) {
         };
 
         fetchQuizzes();
-    }, []);
+    }, [quizID]);
 
     const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -40,6 +42,7 @@ export default function FillingTheBlank(props) {
             setCurrentCardIndex(currentCardIndex - 1);
             setAnswerFeedback('');
             setUserAnswer('');
+            setShowAnswer(false);
         }
     };
 
@@ -48,6 +51,7 @@ export default function FillingTheBlank(props) {
             setCurrentCardIndex(currentCardIndex + 1);
             setAnswerFeedback('');
             setUserAnswer('');
+            setShowAnswer(false);
         }
     };
 
@@ -63,15 +67,19 @@ export default function FillingTheBlank(props) {
         setUserAnswer(event.target.value);
     };
 
+    const viewAnswer = () => {
+        setShowAnswer(prev => !prev);
+    };
+
     return (
-        <Box sx={{ maxWidth: 650, margin: 'auto', textAlign: 'center', mt: 4 }}>
+        <Box sx={{ maxWidth: 800, margin: 'auto', textAlign: 'center', mt: 4 }}>
             {cards.length > 0 && (
-                <Card variant="outlined" sx={{ mb: 2 }}>
+                <Card variant="outlined" sx={{ mb: 2, p: 3 }}>
                     <CardContent>
-                        <Typography variant="h5" sx={{ fontSize: 20, mb: 2 }}>
+                        <Typography variant="h5" sx={{ fontSize: 22, mb: 2 }}>
                             Question:
                         </Typography>
-                        <Typography sx={{ fontSize: 18, mb: 2 }}>
+                        <Typography sx={{ fontSize: 20, mb: 2 }}>
                             {cards[currentCardIndex].question}
                         </Typography>
                         <TextField
@@ -82,23 +90,14 @@ export default function FillingTheBlank(props) {
                             onChange={handleInputChange}
                             sx={{ mb: 1 }}
                         />
-                        {answerFeedback === 'Correct!' ?
-                            <Typography color="green" variant='h4' sx={{ mb: 2 }}>
-                                {answerFeedback}
+                        <Typography variant="h6" sx={{ color: answerFeedback === 'Correct!' ? 'green' : 'red', mb: 2 }}>
+                            {answerFeedback}
+                        </Typography>
+                        {showAnswer && (
+                            <Typography variant="h6" sx={{ color: 'white', mb: 2 }}>
+                                Correct Answer: {cards[currentCardIndex].answer}
                             </Typography>
-
-                            : answerFeedback === "" ?
-
-                            <Typography color="transparent" variant='h4' sx={{ mb: 2 }}>
-                                _
-                            </Typography>
-
-                            :
-
-                            <Typography color="red" variant='h4' sx={{ mb: 2 }}>
-                                {answerFeedback}
-                            </Typography>
-                        }
+                        )}
                     </CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', p: 2 }}>
                         <Button onClick={handlePrev} disabled={currentCardIndex === 0}
@@ -125,10 +124,21 @@ export default function FillingTheBlank(props) {
                                 }}>
                             Check
                         </Button>
-                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}
+                        <Button onClick={viewAnswer}
                                 sx={{
                                     border: 0,
                                     mr: 2,
+                                    color:'white',
+                                    backgroundColor:'#4071F4',
+                                    '&:hover':{
+                                        backgroundColor:'#3051D3'
+                                    }
+                                }}>
+                            {showAnswer ? 'Hide Answer' : 'View Answer'}
+                        </Button>
+                        <Button onClick={handleNext} disabled={currentCardIndex === cards.length - 1}
+                                sx={{
+                                    border: 0,
                                     color:'white',
                                     backgroundColor:'#535C91',
                                     '&:hover':{
@@ -141,7 +151,7 @@ export default function FillingTheBlank(props) {
                     </Box>
                 </Card>
             )}
-            {cards.length === 0 && <Typography>No cards available for this quiz.</Typography>}
+            {cards.length === 0 && <Typography variant="h6" sx={{ mt: 2 }}>No cards available for this quiz.</Typography>}
         </Box>
     );
 };
